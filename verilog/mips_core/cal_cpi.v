@@ -42,8 +42,8 @@
 ////                                                             ////
 //// Version: 0.0.1                                              ////
 ////                                                             ////
-//// Description:                                                ////
-////                                                             ////
+//// Description:  For simulations only to calculate the CPI     ////
+////                     Cycles Per Instruction                   ////
 ////                                                             ////
 /////////////////////////////////////////////////////////////////////
 ////                                                             ////
