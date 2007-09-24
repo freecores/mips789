@@ -1,0 +1,68 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  r5_reg_cls.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Altera
+
+# RTL and technology files
+vif_add_library -original $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -original -verilog ../../rtl/verilog/ctl_fsm.v
+vif_add_file -original -verilog ../../rtl/verilog/decode_pipe.v
+vif_add_file -original -verilog ../../rtl/verilog/dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/EXEC_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/fifo.v
+vif_add_file -original -verilog ../../rtl/verilog/forward.v
+vif_add_file -original -verilog ../../rtl/verilog/mem_module.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_core.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_sys.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_uart.v
+vif_add_file -original -verilog ../../rtl/verilog/ram_module.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_components.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/sim_ram.v
+vif_add_file -original -verilog ../../rtl/verilog/tools.v
+vif_set_top_module -original -top r5_reg_cls
+ 
+vif_add_library -translated $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -translated -verilog r5_reg_cls.vqm
+vif_set_top_module -translated -top r5_reg_cls 
+# Read FSM encoding
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+
+# Technology sequential redundancies
+
+# Inversion map points
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+
+# Retimed Registers
+
+# Altera MAC annotations
+

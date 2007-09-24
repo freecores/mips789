@@ -1,0 +1,606 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  mips_core.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Altera
+
+# RTL and technology files
+vif_add_library -original $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -original -verilog ../../rtl/verilog/ctl_fsm.v
+vif_add_file -original -verilog ../../rtl/verilog/decode_pipe.v
+vif_add_file -original -verilog ../../rtl/verilog/dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/EXEC_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/fifo.v
+vif_add_file -original -verilog ../../rtl/verilog/forward.v
+vif_add_file -original -verilog ../../rtl/verilog/mem_module.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_core.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_sys.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_uart.v
+vif_add_file -original -verilog ../../rtl/verilog/ram_module.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_components.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/sim_ram.v
+vif_add_file -original -verilog ../../rtl/verilog/tools.v
+vif_add_file -original -verilog ../../rtl/verilog/fifo512_cyclone.v
+vif_set_top_module -original -top mips_core
+ 
+vif_add_library -translated $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -translated -verilog mips_core.vqm
+vif_set_top_module -translated -top mips_core 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 iRF_stage/MIAN_FSM/CurrState_Sreg0[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 iRF_stage/MIAN_FSM/CurrState_Sreg0[8:0]
+vif_set_state_map -fsm fsm_0 -original "0000" -translated "000000001"
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "000000010"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "000000100"
+vif_set_state_map -fsm fsm_0 -original "0011" -translated "000001000"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "000010000"
+vif_set_state_map -fsm fsm_0 -original "0101" -translated "000100000"
+vif_set_state_map -fsm fsm_0 -original "0110" -translated "001000000"
+vif_set_state_map -fsm fsm_0 -original "0111" -translated "010000000"
+vif_set_state_map -fsm fsm_0 -original "1000" -translated "100000000"
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+vif_set_merge -original  iexec_stage/MIPS_alu/muldiv_ff/op2_sign_reged iexec_stage/MIPS_alu/muldiv_ff/op2_reged[32]
+vif_set_merge -original  alu_pass0/r32_o[0] MEM_CTL/dmem_ctl_post/byte_addr_o[0]
+vif_set_merge -original  alu_pass0/r32_o[1] MEM_CTL/dmem_ctl_post/byte_addr_o[1]
+
+# Technology sequential redundancies
+
+# Inversion map points
+vif_set_map_point -register -inverted -original iRF_stage/MIAN_FSM/CurrState_Sreg0[0] -translated iRF_stage/MIAN_FSM/CurrState_Sreg0_i_0__Z
+
+# Port mappping and directions
+
+# Black box mapping
+vif_set_black_box synplicity_altsyncram4_r_w
+
+vif_set_map_point -blackbox -original iRF_stage/reg_bank/reg_bank/altsyncram -translated iRF_stage/reg_bank/reg_bank.I_1
+vif_set_map_point -blackbox -original iRF_stage/reg_bank/reg_bank_1/altsyncram -translated iRF_stage/reg_bank/reg_bank_1.I_1
+
+# Other sequential cells, including multidimensional arrays
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[7] -translated MEM_CTL/i_mem_dout_ctl/dout_1_7__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[6] -translated MEM_CTL/i_mem_dout_ctl/dout_1_6__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[5] -translated MEM_CTL/i_mem_dout_ctl/dout_1_5__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[4] -translated MEM_CTL/i_mem_dout_ctl/dout_1_4__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[3] -translated MEM_CTL/i_mem_dout_ctl/dout_1_3__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[2] -translated MEM_CTL/i_mem_dout_ctl/dout_1_2__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[1] -translated MEM_CTL/i_mem_dout_ctl/dout_1_1__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[0] -translated MEM_CTL/i_mem_dout_ctl/dout_1_0__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[15] -translated MEM_CTL/i_mem_dout_ctl/dout_1_15__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[14] -translated MEM_CTL/i_mem_dout_ctl/dout_1_14__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[13] -translated MEM_CTL/i_mem_dout_ctl/dout_1_13__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[12] -translated MEM_CTL/i_mem_dout_ctl/dout_1_12__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[11] -translated MEM_CTL/i_mem_dout_ctl/dout_1_11__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[10] -translated MEM_CTL/i_mem_dout_ctl/dout_1_10__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[9] -translated MEM_CTL/i_mem_dout_ctl/dout_1_9__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[8] -translated MEM_CTL/i_mem_dout_ctl/dout_1_8__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[31] -translated MEM_CTL/i_mem_dout_ctl/dout_1_31__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[30] -translated MEM_CTL/i_mem_dout_ctl/dout_1_30__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[29] -translated MEM_CTL/i_mem_dout_ctl/dout_1_29__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[28] -translated MEM_CTL/i_mem_dout_ctl/dout_1_28__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[27] -translated MEM_CTL/i_mem_dout_ctl/dout_1_27__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[26] -translated MEM_CTL/i_mem_dout_ctl/dout_1_26__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[25] -translated MEM_CTL/i_mem_dout_ctl/dout_1_25__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[24] -translated MEM_CTL/i_mem_dout_ctl/dout_1_24__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[23] -translated MEM_CTL/i_mem_dout_ctl/dout_1_23__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[22] -translated MEM_CTL/i_mem_dout_ctl/dout_1_22__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[21] -translated MEM_CTL/i_mem_dout_ctl/dout_1_21__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[20] -translated MEM_CTL/i_mem_dout_ctl/dout_1_20__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[19] -translated MEM_CTL/i_mem_dout_ctl/dout_1_19__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[18] -translated MEM_CTL/i_mem_dout_ctl/dout_1_18__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[17] -translated MEM_CTL/i_mem_dout_ctl/dout_1_17__Z
+vif_set_map_point -latch -original MEM_CTL/i_mem_dout_ctl/dout[16] -translated MEM_CTL/i_mem_dout_ctl/dout_1_16__Z
+vif_set_map_point -latch -original decoder_pipe/idecoder/fsm_dly[2] -translated decoder_pipe/idecoder/fsm_dly_1_2__Z
+vif_set_map_point -latch -original decoder_pipe/idecoder/fsm_dly[1] -translated decoder_pipe/idecoder/fsm_dly_1_1__Z
+
+# Constant Registers
+
+# Retimed Registers
+vif_set_sequential_verify -retimed -register -original MEM_CTL/dmem_ctl_post/ctl_o[0] -translated MEM_CTL/dmem_ctl_post/ctl_o_0__Z
+vif_set_sequential_verify -retimed -register -original MEM_CTL/dmem_ctl_post/ctl_o[1] -translated MEM_CTL/dmem_ctl_post/ctl_o_1__Z
+vif_set_sequential_verify -retimed -register -original MEM_CTL/dmem_ctl_post/ctl_o[2] -translated MEM_CTL/dmem_ctl_post/ctl_o_2__Z
+vif_set_sequential_verify -retimed -register -original MEM_CTL/dmem_ctl_post/ctl_o[3] -translated MEM_CTL/dmem_ctl_post/ctl_o_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/delay_counter_Sreg0[2] -translated iRF_stage/MIAN_FSM/delay_counter_Sreg0_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/delay_counter_Sreg0[3] -translated iRF_stage/MIAN_FSM/delay_counter_Sreg0_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/delay_counter_Sreg0[4] -translated iRF_stage/MIAN_FSM/delay_counter_Sreg0_4__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/delay_counter_Sreg0[5] -translated iRF_stage/MIAN_FSM/delay_counter_Sreg0_5__Z
+# Retimed registers from FSM not handled in VIF
+//vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/CurrState_Sreg0[0] -translated iRF_stage/MIAN_FSM/CurrState_Sreg0_i_0__Z
+# Retimed registers from FSM not handled in VIF
+//vif_set_sequential_verify -retimed -register -original iRF_stage/MIAN_FSM/CurrState_Sreg0[6] -translated iRF_stage/MIAN_FSM/CurrState_Sreg0_6__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[24] -translated iRF_stage/ins_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[23] -translated iRF_stage/ins_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[20] -translated iRF_stage/ins_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[19] -translated iRF_stage/ins_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[16] -translated iRF_stage/ins_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[15] -translated iRF_stage/ins_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[12] -translated iRF_stage/ins_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[11] -translated iRF_stage/ins_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[8] -translated iRF_stage/ins_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[7] -translated iRF_stage/ins_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[4] -translated iRF_stage/ins_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[3] -translated iRF_stage/ins_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[0] -translated iRF_stage/ins_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[25] -translated iRF_stage/ins_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[22] -translated iRF_stage/ins_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[21] -translated iRF_stage/ins_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[18] -translated iRF_stage/ins_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[17] -translated iRF_stage/ins_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[14] -translated iRF_stage/ins_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[13] -translated iRF_stage/ins_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[10] -translated iRF_stage/ins_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[9] -translated iRF_stage/ins_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[6] -translated iRF_stage/ins_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[5] -translated iRF_stage/ins_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[2] -translated iRF_stage/ins_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/ins_reg/r32_o[1] -translated iRF_stage/ins_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wren -translated iRF_stage/reg_bank/r_wren_Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_a[0] -translated iRF_stage/reg_bank/r_rdaddress_a_0__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_a[1] -translated iRF_stage/reg_bank/r_rdaddress_a_1__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_a[2] -translated iRF_stage/reg_bank/r_rdaddress_a_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_a[3] -translated iRF_stage/reg_bank/r_rdaddress_a_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_a[4] -translated iRF_stage/reg_bank/r_rdaddress_a_4__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_b[0] -translated iRF_stage/reg_bank/r_rdaddress_b_0__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_b[1] -translated iRF_stage/reg_bank/r_rdaddress_b_1__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_b[2] -translated iRF_stage/reg_bank/r_rdaddress_b_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_b[3] -translated iRF_stage/reg_bank/r_rdaddress_b_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_rdaddress_b[4] -translated iRF_stage/reg_bank/r_rdaddress_b_4__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[0] -translated iRF_stage/reg_bank/r_data_0__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[1] -translated iRF_stage/reg_bank/r_data_1__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[2] -translated iRF_stage/reg_bank/r_data_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[3] -translated iRF_stage/reg_bank/r_data_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[4] -translated iRF_stage/reg_bank/r_data_4__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[5] -translated iRF_stage/reg_bank/r_data_5__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[6] -translated iRF_stage/reg_bank/r_data_6__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[7] -translated iRF_stage/reg_bank/r_data_7__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[8] -translated iRF_stage/reg_bank/r_data_8__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[9] -translated iRF_stage/reg_bank/r_data_9__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[10] -translated iRF_stage/reg_bank/r_data_10__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[11] -translated iRF_stage/reg_bank/r_data_11__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[12] -translated iRF_stage/reg_bank/r_data_12__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[13] -translated iRF_stage/reg_bank/r_data_13__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[14] -translated iRF_stage/reg_bank/r_data_14__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[15] -translated iRF_stage/reg_bank/r_data_15__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[16] -translated iRF_stage/reg_bank/r_data_16__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[17] -translated iRF_stage/reg_bank/r_data_17__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[18] -translated iRF_stage/reg_bank/r_data_18__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[19] -translated iRF_stage/reg_bank/r_data_19__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[20] -translated iRF_stage/reg_bank/r_data_20__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[21] -translated iRF_stage/reg_bank/r_data_21__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[22] -translated iRF_stage/reg_bank/r_data_22__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[23] -translated iRF_stage/reg_bank/r_data_23__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[24] -translated iRF_stage/reg_bank/r_data_24__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[25] -translated iRF_stage/reg_bank/r_data_25__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[26] -translated iRF_stage/reg_bank/r_data_26__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[27] -translated iRF_stage/reg_bank/r_data_27__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[28] -translated iRF_stage/reg_bank/r_data_28__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[29] -translated iRF_stage/reg_bank/r_data_29__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[30] -translated iRF_stage/reg_bank/r_data_30__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_data[31] -translated iRF_stage/reg_bank/r_data_31__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wraddress[0] -translated iRF_stage/reg_bank/r_wraddress_0__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wraddress[1] -translated iRF_stage/reg_bank/r_wraddress_1__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wraddress[2] -translated iRF_stage/reg_bank/r_wraddress_2__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wraddress[3] -translated iRF_stage/reg_bank/r_wraddress_3__Z
+vif_set_sequential_verify -retimed -register -original iRF_stage/reg_bank/r_wraddress[4] -translated iRF_stage/reg_bank/r_wraddress_4__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/add1 -translated iexec_stage/MIPS_alu/muldiv_ff/add1_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/addop2 -translated iexec_stage/MIPS_alu/muldiv_ff/addop2_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/addnop2 -translated iexec_stage/MIPS_alu/muldiv_ff/addnop2_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/overflow -translated iexec_stage/MIPS_alu/muldiv_ff/overflow_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/sub_or_yn -translated iexec_stage/MIPS_alu/muldiv_ff/sub_or_yn_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/finish -translated iexec_stage/MIPS_alu/muldiv_ff/finish_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_sign_reged -translated iexec_stage/MIPS_alu/muldiv_ff/op2_sign_reged_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op1_sign_reged -translated iexec_stage/MIPS_alu/muldiv_ff/op1_sign_reged_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/start -translated iexec_stage/MIPS_alu/muldiv_ff/start_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/sign -translated iexec_stage/MIPS_alu/muldiv_ff/sign_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/mul -translated iexec_stage/MIPS_alu/muldiv_ff/mul_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/rdy -translated iexec_stage/MIPS_alu/muldiv_ff/rdy_Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[0] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_0__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[1] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_1__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[2] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_2__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[3] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_3__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[4] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_4__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[5] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_5__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[6] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_6__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[7] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_7__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[8] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_8__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[9] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_9__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[10] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_10__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[11] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_11__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[12] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_12__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[13] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_13__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[14] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_14__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[15] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_15__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[16] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_16__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[17] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_17__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[18] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_18__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[19] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_19__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[20] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_20__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[21] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_21__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[22] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_22__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[23] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_23__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[24] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_24__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[25] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_25__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[26] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_26__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[27] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_27__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[28] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_28__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[29] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_29__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[30] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_30__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/MIPS_alu/muldiv_ff/op2_reged[31] -translated iexec_stage/MIPS_alu/muldiv_ff/op2_reged_31__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[2] -translated iexec_stage/pc_nxt/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[3] -translated iexec_stage/pc_nxt/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[4] -translated iexec_stage/pc_nxt/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[5] -translated iexec_stage/pc_nxt/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[6] -translated iexec_stage/pc_nxt/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[7] -translated iexec_stage/pc_nxt/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[8] -translated iexec_stage/pc_nxt/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[9] -translated iexec_stage/pc_nxt/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[10] -translated iexec_stage/pc_nxt/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[11] -translated iexec_stage/pc_nxt/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[12] -translated iexec_stage/pc_nxt/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[13] -translated iexec_stage/pc_nxt/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[14] -translated iexec_stage/pc_nxt/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[15] -translated iexec_stage/pc_nxt/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[16] -translated iexec_stage/pc_nxt/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[17] -translated iexec_stage/pc_nxt/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[18] -translated iexec_stage/pc_nxt/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[19] -translated iexec_stage/pc_nxt/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[20] -translated iexec_stage/pc_nxt/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[21] -translated iexec_stage/pc_nxt/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[22] -translated iexec_stage/pc_nxt/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[23] -translated iexec_stage/pc_nxt/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[24] -translated iexec_stage/pc_nxt/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[25] -translated iexec_stage/pc_nxt/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[26] -translated iexec_stage/pc_nxt/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[27] -translated iexec_stage/pc_nxt/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[28] -translated iexec_stage/pc_nxt/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[29] -translated iexec_stage/pc_nxt/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[30] -translated iexec_stage/pc_nxt/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[31] -translated iexec_stage/pc_nxt/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[1] -translated iexec_stage/pc_nxt/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/pc_nxt/r32_o[0] -translated iexec_stage/pc_nxt/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[0] -translated iexec_stage/spc/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[1] -translated iexec_stage/spc/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[2] -translated iexec_stage/spc/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[3] -translated iexec_stage/spc/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[4] -translated iexec_stage/spc/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[5] -translated iexec_stage/spc/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[6] -translated iexec_stage/spc/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[7] -translated iexec_stage/spc/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[8] -translated iexec_stage/spc/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[9] -translated iexec_stage/spc/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[10] -translated iexec_stage/spc/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[11] -translated iexec_stage/spc/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[12] -translated iexec_stage/spc/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[13] -translated iexec_stage/spc/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[14] -translated iexec_stage/spc/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[15] -translated iexec_stage/spc/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[16] -translated iexec_stage/spc/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[17] -translated iexec_stage/spc/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[18] -translated iexec_stage/spc/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[19] -translated iexec_stage/spc/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[20] -translated iexec_stage/spc/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[21] -translated iexec_stage/spc/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[22] -translated iexec_stage/spc/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[23] -translated iexec_stage/spc/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[24] -translated iexec_stage/spc/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[25] -translated iexec_stage/spc/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[26] -translated iexec_stage/spc/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[27] -translated iexec_stage/spc/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[28] -translated iexec_stage/spc/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[29] -translated iexec_stage/spc/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[30] -translated iexec_stage/spc/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original iexec_stage/spc/r32_o[31] -translated iexec_stage/spc/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[0] -translated alu_pass0/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[1] -translated alu_pass0/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[2] -translated alu_pass0/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[3] -translated alu_pass0/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[4] -translated alu_pass0/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[5] -translated alu_pass0/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[6] -translated alu_pass0/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[7] -translated alu_pass0/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[8] -translated alu_pass0/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[9] -translated alu_pass0/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[10] -translated alu_pass0/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[11] -translated alu_pass0/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[12] -translated alu_pass0/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[13] -translated alu_pass0/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[14] -translated alu_pass0/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[15] -translated alu_pass0/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[16] -translated alu_pass0/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[17] -translated alu_pass0/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[18] -translated alu_pass0/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[19] -translated alu_pass0/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[20] -translated alu_pass0/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[21] -translated alu_pass0/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[22] -translated alu_pass0/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[23] -translated alu_pass0/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[24] -translated alu_pass0/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[25] -translated alu_pass0/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[26] -translated alu_pass0/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[27] -translated alu_pass0/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[28] -translated alu_pass0/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[29] -translated alu_pass0/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[30] -translated alu_pass0/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original alu_pass0/r32_o[31] -translated alu_pass0/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[0] -translated alu_pass1/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[1] -translated alu_pass1/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[2] -translated alu_pass1/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[3] -translated alu_pass1/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[4] -translated alu_pass1/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[5] -translated alu_pass1/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[6] -translated alu_pass1/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[7] -translated alu_pass1/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[8] -translated alu_pass1/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[9] -translated alu_pass1/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[10] -translated alu_pass1/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[11] -translated alu_pass1/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[12] -translated alu_pass1/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[13] -translated alu_pass1/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[14] -translated alu_pass1/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[15] -translated alu_pass1/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[16] -translated alu_pass1/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[17] -translated alu_pass1/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[18] -translated alu_pass1/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[19] -translated alu_pass1/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[20] -translated alu_pass1/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[21] -translated alu_pass1/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[22] -translated alu_pass1/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[23] -translated alu_pass1/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[24] -translated alu_pass1/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[25] -translated alu_pass1/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[26] -translated alu_pass1/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[27] -translated alu_pass1/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[28] -translated alu_pass1/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[29] -translated alu_pass1/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[30] -translated alu_pass1/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original alu_pass1/r32_o[31] -translated alu_pass1/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[0] -translated cop_data_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[1] -translated cop_data_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[2] -translated cop_data_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[3] -translated cop_data_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[4] -translated cop_data_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[5] -translated cop_data_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[6] -translated cop_data_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[7] -translated cop_data_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[8] -translated cop_data_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[9] -translated cop_data_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[10] -translated cop_data_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[11] -translated cop_data_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[12] -translated cop_data_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[13] -translated cop_data_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[14] -translated cop_data_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[15] -translated cop_data_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[16] -translated cop_data_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[17] -translated cop_data_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[18] -translated cop_data_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[19] -translated cop_data_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[20] -translated cop_data_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[21] -translated cop_data_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[22] -translated cop_data_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[23] -translated cop_data_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[24] -translated cop_data_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[25] -translated cop_data_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[26] -translated cop_data_reg/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[27] -translated cop_data_reg/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[28] -translated cop_data_reg/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[29] -translated cop_data_reg/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[30] -translated cop_data_reg/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original cop_data_reg/r32_o[31] -translated cop_data_reg/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[0] -translated cop_dout_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[1] -translated cop_dout_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[2] -translated cop_dout_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[3] -translated cop_dout_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[4] -translated cop_dout_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[5] -translated cop_dout_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[6] -translated cop_dout_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[7] -translated cop_dout_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[8] -translated cop_dout_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[9] -translated cop_dout_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[10] -translated cop_dout_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[11] -translated cop_dout_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[12] -translated cop_dout_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[13] -translated cop_dout_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[14] -translated cop_dout_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[15] -translated cop_dout_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[16] -translated cop_dout_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[17] -translated cop_dout_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[18] -translated cop_dout_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[19] -translated cop_dout_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[20] -translated cop_dout_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[21] -translated cop_dout_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[22] -translated cop_dout_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[23] -translated cop_dout_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[24] -translated cop_dout_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[25] -translated cop_dout_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[26] -translated cop_dout_reg/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[27] -translated cop_dout_reg/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[28] -translated cop_dout_reg/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[29] -translated cop_dout_reg/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[30] -translated cop_dout_reg/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original cop_dout_reg/r32_o[31] -translated cop_dout_reg/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U12/wb_we_o[0] -translated decoder_pipe/pipereg/U12/wb_we_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U18/wb_mux_ctl_o[0] -translated decoder_pipe/pipereg/U18/wb_mux_ctl_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U20/wb_we_o[0] -translated decoder_pipe/pipereg/U20/wb_we_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U21/wb_mux_ctl_o[0] -translated decoder_pipe/pipereg/U21/wb_mux_ctl_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U22/wb_we_o[0] -translated decoder_pipe/pipereg/U22/wb_we_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U9/dmem_ctl_o[0] -translated decoder_pipe/pipereg/U9/dmem_ctl_o_0__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U9/dmem_ctl_o[1] -translated decoder_pipe/pipereg/U9/dmem_ctl_o_1__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U9/dmem_ctl_o[2] -translated decoder_pipe/pipereg/U9/dmem_ctl_o_2__Z
+vif_set_sequential_verify -retimed -register -original decoder_pipe/pipereg/U9/dmem_ctl_o[3] -translated decoder_pipe/pipereg/U9/dmem_ctl_o_3__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[0] -translated ext_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[1] -translated ext_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[2] -translated ext_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[3] -translated ext_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[4] -translated ext_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[5] -translated ext_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[6] -translated ext_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[7] -translated ext_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[8] -translated ext_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[9] -translated ext_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[10] -translated ext_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[11] -translated ext_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[12] -translated ext_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[13] -translated ext_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[14] -translated ext_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[15] -translated ext_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[16] -translated ext_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[17] -translated ext_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[18] -translated ext_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[19] -translated ext_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[20] -translated ext_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[21] -translated ext_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[22] -translated ext_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[23] -translated ext_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[24] -translated ext_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[25] -translated ext_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[26] -translated ext_reg/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[27] -translated ext_reg/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[28] -translated ext_reg/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[29] -translated ext_reg/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[30] -translated ext_reg/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original ext_reg/r32_o[31] -translated ext_reg/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rns/q[0] -translated iforward/fw_reg_rns/q_0__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rns/q[1] -translated iforward/fw_reg_rns/q_1__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rns/q[2] -translated iforward/fw_reg_rns/q_2__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rns/q[3] -translated iforward/fw_reg_rns/q_3__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rns/q[4] -translated iforward/fw_reg_rns/q_4__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rnt/q[0] -translated iforward/fw_reg_rnt/q_0__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rnt/q[1] -translated iforward/fw_reg_rnt/q_1__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rnt/q[2] -translated iforward/fw_reg_rnt/q_2__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rnt/q[3] -translated iforward/fw_reg_rnt/q_3__Z
+vif_set_sequential_verify -retimed -register -original iforward/fw_reg_rnt/q[4] -translated iforward/fw_reg_rnt/q_4__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[0] -translated pc/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[1] -translated pc/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[2] -translated pc/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[3] -translated pc/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[4] -translated pc/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[5] -translated pc/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[6] -translated pc/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[7] -translated pc/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[8] -translated pc/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[9] -translated pc/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[10] -translated pc/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[11] -translated pc/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[12] -translated pc/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[13] -translated pc/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[14] -translated pc/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[15] -translated pc/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[16] -translated pc/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[17] -translated pc/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[18] -translated pc/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[19] -translated pc/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[20] -translated pc/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[21] -translated pc/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[22] -translated pc/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[23] -translated pc/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[24] -translated pc/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[25] -translated pc/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[26] -translated pc/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[27] -translated pc/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[28] -translated pc/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[29] -translated pc/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[30] -translated pc/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original pc/r32_o[31] -translated pc/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass0/r5_o[0] -translated rnd_pass0/r5_o_0__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass0/r5_o[1] -translated rnd_pass0/r5_o_1__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass0/r5_o[2] -translated rnd_pass0/r5_o_2__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass0/r5_o[3] -translated rnd_pass0/r5_o_3__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass0/r5_o[4] -translated rnd_pass0/r5_o_4__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass1/r5_o[0] -translated rnd_pass1/r5_o_0__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass1/r5_o[1] -translated rnd_pass1/r5_o_1__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass1/r5_o[2] -translated rnd_pass1/r5_o_2__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass1/r5_o[3] -translated rnd_pass1/r5_o_3__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass1/r5_o[4] -translated rnd_pass1/r5_o_4__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass2/r5_o[0] -translated rnd_pass2/r5_o_0__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass2/r5_o[1] -translated rnd_pass2/r5_o_1__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass2/r5_o[2] -translated rnd_pass2/r5_o_2__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass2/r5_o[3] -translated rnd_pass2/r5_o_3__Z
+vif_set_sequential_verify -retimed -register -original rnd_pass2/r5_o[4] -translated rnd_pass2/r5_o_4__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[0] -translated rs_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[1] -translated rs_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[2] -translated rs_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[3] -translated rs_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[4] -translated rs_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[5] -translated rs_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[6] -translated rs_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[7] -translated rs_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[8] -translated rs_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[9] -translated rs_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[10] -translated rs_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[11] -translated rs_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[12] -translated rs_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[13] -translated rs_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[14] -translated rs_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[15] -translated rs_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[16] -translated rs_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[17] -translated rs_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[18] -translated rs_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[19] -translated rs_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[20] -translated rs_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[21] -translated rs_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[22] -translated rs_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[23] -translated rs_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[24] -translated rs_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[25] -translated rs_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[26] -translated rs_reg/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[27] -translated rs_reg/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[28] -translated rs_reg/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[29] -translated rs_reg/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[30] -translated rs_reg/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original rs_reg/r32_o[31] -translated rs_reg/r32_o_31__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[0] -translated rt_reg/r32_o_0__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[1] -translated rt_reg/r32_o_1__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[2] -translated rt_reg/r32_o_2__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[3] -translated rt_reg/r32_o_3__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[4] -translated rt_reg/r32_o_4__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[5] -translated rt_reg/r32_o_5__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[6] -translated rt_reg/r32_o_6__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[7] -translated rt_reg/r32_o_7__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[8] -translated rt_reg/r32_o_8__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[9] -translated rt_reg/r32_o_9__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[10] -translated rt_reg/r32_o_10__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[11] -translated rt_reg/r32_o_11__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[12] -translated rt_reg/r32_o_12__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[13] -translated rt_reg/r32_o_13__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[14] -translated rt_reg/r32_o_14__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[15] -translated rt_reg/r32_o_15__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[16] -translated rt_reg/r32_o_16__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[17] -translated rt_reg/r32_o_17__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[18] -translated rt_reg/r32_o_18__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[19] -translated rt_reg/r32_o_19__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[20] -translated rt_reg/r32_o_20__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[21] -translated rt_reg/r32_o_21__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[22] -translated rt_reg/r32_o_22__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[23] -translated rt_reg/r32_o_23__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[24] -translated rt_reg/r32_o_24__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[25] -translated rt_reg/r32_o_25__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[26] -translated rt_reg/r32_o_26__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[27] -translated rt_reg/r32_o_27__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[28] -translated rt_reg/r32_o_28__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[29] -translated rt_reg/r32_o_29__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[30] -translated rt_reg/r32_o_30__Z
+vif_set_sequential_verify -retimed -register -original rt_reg/r32_o[31] -translated rt_reg/r32_o_31__Z
+
+# Altera MAC annotations
+

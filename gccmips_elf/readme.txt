@@ -1,13 +1,5 @@
-Download a file from
-http://www.opencores.org/projects.cgi/web/mips/gccmips_elf.zip
 
-Extract it and copy files listed below in this folder.
-
-cywin1.dll
-as.exe
-gcc.exe
-ld.exe
-objdump.exe
+run copy2win in this file to copy file to folder c:\windows,which is default system path
 
 The usage of conver_sp.exe genmif.exe and gensim.exe please refrence to course code. 
 

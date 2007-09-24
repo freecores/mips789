@@ -1,0 +1,250 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  mips_sys.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Altera
+
+# RTL and technology files
+vif_add_library -original $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -original -verilog ../../rtl/verilog/ctl_fsm.v
+vif_add_file -original -verilog ../../rtl/verilog/decode_pipe.v
+vif_add_file -original -verilog ../../rtl/verilog/dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/EXEC_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/fifo.v
+vif_add_file -original -verilog ../../rtl/verilog/forward.v
+vif_add_file -original -verilog ../../rtl/verilog/mem_module.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_core.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_dvc.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_sys.v
+vif_add_file -original -verilog ../../rtl/verilog/mips_uart.v
+vif_add_file -original -verilog ../../rtl/verilog/ram_module.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_components.v
+vif_add_file -original -verilog ../../rtl/verilog/RF_stage.v
+vif_add_file -original -verilog ../../rtl/verilog/sim_ram.v
+vif_add_file -original -verilog ../../rtl/verilog/tools.v
+vif_add_file -original -verilog ../../rtl/verilog/fifo512_cyclone.v
+vif_set_top_module -original -top mips_sys
+ 
+vif_add_library -translated $env(QUARTUS_ROOTDIR)/eda/fv_lib/verilog
+vif_add_file -translated -verilog mips_sys.vqm
+vif_set_top_module -translated -top mips_sys 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 mips_core/iRF_stage/MIAN_FSM/CurrState_Sreg0[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 mips_core/iRF_stage/MIAN_FSM/CurrState_Sreg0[8:0]
+vif_set_state_map -fsm fsm_0 -original "0000" -translated "000000001"
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "000000010"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "000000100"
+vif_set_state_map -fsm fsm_0 -original "0011" -translated "000001000"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "000010000"
+vif_set_state_map -fsm fsm_0 -original "0101" -translated "000100000"
+vif_set_state_map -fsm fsm_0 -original "0110" -translated "001000000"
+vif_set_state_map -fsm fsm_0 -original "0111" -translated "010000000"
+vif_set_state_map -fsm fsm_0 -original "1000" -translated "100000000"
+vif_set_fsm -fsm fsm_9
+vif_set_fsmreg -original -fsm fsm_9 imips_dvc/iuart0/uart_rd_tak/ua_state[2:0]
+vif_set_fsmreg -translated -fsm  fsm_9 imips_dvc/iuart0/uart_rd_tak/ua_state[4:0]
+vif_set_state_map -fsm fsm_9 -original "000" -translated "00001"
+vif_set_state_map -fsm fsm_9 -original "001" -translated "00010"
+vif_set_state_map -fsm fsm_9 -original "010" -translated "00100"
+vif_set_state_map -fsm fsm_9 -original "011" -translated "01000"
+vif_set_state_map -fsm fsm_9 -original "100" -translated "10000"
+vif_set_fsm -fsm fsm_15
+vif_set_fsmreg -original -fsm fsm_15 imips_dvc/iuart0/uart_txd/ua_state[2:0]
+vif_set_fsmreg -translated -fsm  fsm_15 imips_dvc/iuart0/uart_txd/ua_state[7:0]
+vif_set_state_map -fsm fsm_15 -original "000" -translated "00000001"
+vif_set_state_map -fsm fsm_15 -original "001" -translated "00000010"
+vif_set_state_map -fsm fsm_15 -original "010" -translated "00000100"
+vif_set_state_map -fsm fsm_15 -original "011" -translated "00001000"
+vif_set_state_map -fsm fsm_15 -original "100" -translated "00010000"
+vif_set_state_map -fsm fsm_15 -original "101" -translated "00100000"
+vif_set_state_map -fsm fsm_15 -original "110" -translated "01000000"
+vif_set_state_map -fsm fsm_15 -original "111" -translated "10000000"
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+vif_set_merge -original  mips_core/MEM_CTL/dmem_ctl_post/byte_addr_o[0] mips_core/alu_pass0/r32_o[0]
+vif_set_merge -original  mips_core/MEM_CTL/dmem_ctl_post/byte_addr_o[1] mips_core/alu_pass0/r32_o[1]
+vif_set_merge -original  mips_core/iexec_stage/MIPS_alu/muldiv_ff/op2_sign_reged mips_core/iexec_stage/MIPS_alu/muldiv_ff/op2_reged[32]
+
+# Technology sequential redundancies
+
+# Inversion map points
+vif_set_map_point -register -inverted -original mips_core/iRF_stage/MIAN_FSM/CurrState_Sreg0[0] -translated mips_core/iRF_stage/MIAN_FSM/CurrState_Sreg0_i_0__Z
+vif_set_map_point -register -inverted -original imips_dvc/iuart0/uart_rd_tak/ua_state[0] -translated imips_dvc/iuart0/uart_rd_tak/ua_state_i_0__Z
+vif_set_map_point -register -inverted -original imips_dvc/iuart0/uart_txd/ua_state[0] -translated imips_dvc/iuart0/uart_txd/ua_state_i_0__Z
+
+# Port mappping and directions
+
+# Black box mapping
+vif_set_black_box synplicity_altsyncram4_r_w
+vif_set_black_box scfifo
+
+vif_set_map_point -blackbox -original mips_core/iRF_stage/reg_bank/reg_bank/altsyncram -translated mips_core/iRF_stage/reg_bank/reg_bank.I_1
+vif_set_map_point -blackbox -original mips_core/iRF_stage/reg_bank/reg_bank_1/altsyncram -translated mips_core/iRF_stage/reg_bank/reg_bank_1.I_1
+vif_set_map_point -blackbox -original imips_dvc/iuart0/uart_txd/fifo/scfifo_component -translated imips_dvc/iuart0/uart_txd/fifo/scfifo_component
+
+# Other sequential cells, including multidimensional arrays
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[7] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_7__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[6] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_6__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[5] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_5__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[4] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_4__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[3] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_3__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[2] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_2__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[1] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_1__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[0] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_0__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[15] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_15__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[14] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_14__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[13] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_13__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[12] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_12__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[11] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_11__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[10] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_10__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[9] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_9__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[8] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_8__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[31] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_31__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[30] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_30__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[29] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_29__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[28] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_28__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[27] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_27__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[26] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_26__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[25] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_25__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[24] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_24__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[23] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_23__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[22] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_22__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[21] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_21__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[20] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_20__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[19] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_19__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[18] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_18__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[17] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_17__Z
+vif_set_map_point -latch -original mips_core/MEM_CTL/i_mem_dout_ctl/dout[16] -translated mips_core/MEM_CTL/i_mem_dout_ctl/dout_1_16__Z
+vif_set_map_point -latch -original mips_core/decoder_pipe/idecoder/fsm_dly[2] -translated mips_core/decoder_pipe/idecoder/fsm_dly_1_2__Z
+vif_set_map_point -latch -original mips_core/decoder_pipe/idecoder/fsm_dly[1] -translated mips_core/decoder_pipe/idecoder/fsm_dly_1_1__Z
+
+# Constant Registers
+vif_set_constant -original -1 mips_core/iRF_stage/MIAN_FSM/CurrState_Sreg0[5]
+vif_set_transparent -original 1 mips_core/iRF_stage/MIAN_FSM/iack
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[31]
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[30]
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[29]
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[28]
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[27]
+vif_set_constant -original -1 mips_core/iRF_stage/ins_reg/r32_o[26]
+vif_set_constant -original -1 imips_dvc/mips_tmr0/itmr_d/q
+vif_set_constant -original -1 imips_dvc/key2_addr[31]
+vif_set_constant -original -1 imips_dvc/key2_addr[30]
+vif_set_constant -original -1 imips_dvc/key2_addr[29]
+vif_set_constant -original -1 imips_dvc/key2_addr[28]
+vif_set_constant -original -1 imips_dvc/key2_addr[27]
+vif_set_constant -original -1 imips_dvc/key2_addr[26]
+vif_set_constant -original -1 imips_dvc/key2_addr[25]
+vif_set_constant -original -1 imips_dvc/key2_addr[24]
+vif_set_constant -original -1 imips_dvc/key2_addr[23]
+vif_set_constant -original -1 imips_dvc/key2_addr[22]
+vif_set_constant -original -1 imips_dvc/key2_addr[21]
+vif_set_constant -original -1 imips_dvc/key2_addr[20]
+vif_set_constant -original -1 imips_dvc/key2_addr[19]
+vif_set_constant -original -1 imips_dvc/key2_addr[18]
+vif_set_constant -original -1 imips_dvc/key2_addr[17]
+vif_set_constant -original -1 imips_dvc/key2_addr[16]
+vif_set_constant -original -1 imips_dvc/key2_addr[15]
+vif_set_constant -original -1 imips_dvc/key2_addr[14]
+vif_set_constant -original -1 imips_dvc/key2_addr[13]
+vif_set_constant -original -1 imips_dvc/key2_addr[12]
+vif_set_constant -original -1 imips_dvc/key2_addr[11]
+vif_set_constant -original -1 imips_dvc/key2_addr[10]
+vif_set_constant -original -1 imips_dvc/key2_addr[9]
+vif_set_constant -original -1 imips_dvc/key2_addr[8]
+vif_set_constant -original -1 imips_dvc/key2_addr[7]
+vif_set_constant -original -1 imips_dvc/key2_addr[6]
+vif_set_constant -original -1 imips_dvc/key2_addr[5]
+vif_set_constant -original -1 imips_dvc/key2_addr[4]
+vif_set_constant -original -1 imips_dvc/key2_addr[3]
+vif_set_constant -original -1 imips_dvc/key2_addr[2]
+vif_set_constant -original -1 imips_dvc/key2_addr[1]
+vif_set_constant -original -1 imips_dvc/key2_addr[0]
+vif_set_constant -original -1 imips_dvc/key1_addr[31]
+vif_set_constant -original -1 imips_dvc/key1_addr[30]
+vif_set_constant -original -1 imips_dvc/key1_addr[29]
+vif_set_constant -original -1 imips_dvc/key1_addr[28]
+vif_set_constant -original -1 imips_dvc/key1_addr[27]
+vif_set_constant -original -1 imips_dvc/key1_addr[26]
+vif_set_constant -original -1 imips_dvc/key1_addr[25]
+vif_set_constant -original -1 imips_dvc/key1_addr[24]
+vif_set_constant -original -1 imips_dvc/key1_addr[23]
+vif_set_constant -original -1 imips_dvc/key1_addr[22]
+vif_set_constant -original -1 imips_dvc/key1_addr[21]
+vif_set_constant -original -1 imips_dvc/key1_addr[20]
+vif_set_constant -original -1 imips_dvc/key1_addr[19]
+vif_set_constant -original -1 imips_dvc/key1_addr[18]
+vif_set_constant -original -1 imips_dvc/key1_addr[17]
+vif_set_constant -original -1 imips_dvc/key1_addr[16]
+vif_set_constant -original -1 imips_dvc/key1_addr[15]
+vif_set_constant -original -1 imips_dvc/key1_addr[14]
+vif_set_constant -original -1 imips_dvc/key1_addr[13]
+vif_set_constant -original -1 imips_dvc/key1_addr[12]
+vif_set_constant -original -1 imips_dvc/key1_addr[11]
+vif_set_constant -original -1 imips_dvc/key1_addr[10]
+vif_set_constant -original -1 imips_dvc/key1_addr[9]
+vif_set_constant -original -1 imips_dvc/key1_addr[8]
+vif_set_constant -original -1 imips_dvc/key1_addr[7]
+vif_set_constant -original -1 imips_dvc/key1_addr[6]
+vif_set_constant -original -1 imips_dvc/key1_addr[5]
+vif_set_constant -original -1 imips_dvc/key1_addr[4]
+vif_set_constant -original -1 imips_dvc/key1_addr[3]
+vif_set_constant -original -1 imips_dvc/key1_addr[2]
+vif_set_constant -original -1 imips_dvc/key1_addr[1]
+vif_set_constant -original -1 imips_dvc/key1_addr[0]
+vif_set_constant -original -1 imips_dvc/tmr_addr[31]
+vif_set_constant -original -1 imips_dvc/tmr_addr[30]
+vif_set_constant -original -1 imips_dvc/tmr_addr[29]
+vif_set_constant -original -1 imips_dvc/tmr_addr[28]
+vif_set_constant -original -1 imips_dvc/tmr_addr[27]
+vif_set_constant -original -1 imips_dvc/tmr_addr[26]
+vif_set_constant -original -1 imips_dvc/tmr_addr[25]
+vif_set_constant -original -1 imips_dvc/tmr_addr[24]
+vif_set_constant -original -1 imips_dvc/tmr_addr[23]
+vif_set_constant -original -1 imips_dvc/tmr_addr[22]
+vif_set_constant -original -1 imips_dvc/tmr_addr[21]
+vif_set_constant -original -1 imips_dvc/tmr_addr[20]
+vif_set_constant -original -1 imips_dvc/tmr_addr[19]
+vif_set_constant -original -1 imips_dvc/tmr_addr[18]
+vif_set_constant -original -1 imips_dvc/tmr_addr[17]
+vif_set_constant -original -1 imips_dvc/tmr_addr[16]
+vif_set_constant -original -1 imips_dvc/tmr_addr[15]
+vif_set_constant -original -1 imips_dvc/tmr_addr[14]
+vif_set_constant -original -1 imips_dvc/tmr_addr[13]
+vif_set_constant -original -1 imips_dvc/tmr_addr[12]
+vif_set_constant -original -1 imips_dvc/tmr_addr[11]
+vif_set_constant -original -1 imips_dvc/tmr_addr[10]
+vif_set_constant -original -1 imips_dvc/tmr_addr[9]
+vif_set_constant -original -1 imips_dvc/tmr_addr[8]
+vif_set_constant -original -1 imips_dvc/tmr_addr[7]
+vif_set_constant -original -1 imips_dvc/tmr_addr[6]
+vif_set_constant -original -1 imips_dvc/tmr_addr[5]
+vif_set_constant -original -1 imips_dvc/tmr_addr[4]
+vif_set_constant -original -1 imips_dvc/tmr_addr[3]
+vif_set_constant -original -1 imips_dvc/tmr_addr[2]
+vif_set_constant -original -1 imips_dvc/tmr_addr[1]
+vif_set_constant -original -1 imips_dvc/tmr_addr[0]
+
+# Retimed Registers
+
+# Altera MAC annotations
+
