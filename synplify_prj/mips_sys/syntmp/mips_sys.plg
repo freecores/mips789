@@ -1,0 +1,16 @@
+@P:  Part : EP1C6QC240-6
+@P:  Worst Slack : -2.014
+@P:  mips_sys|clk - Estimated Frequency : 74.5 MHz
+@P:  mips_sys|clk - Requested Frequency : 87.6 MHz
+@P:  mips_sys|clk - Estimated Period : 13.424
+@P:  mips_sys|clk - Requested Period : 11.411
+@P:  mips_sys|clk - Slack : -2.014
+@P:  System - Estimated Frequency : 541.6 MHz
+@P:  System - Requested Frequency : 770.5 MHz
+@P:  System - Estimated Period : 1.846
+@P:  System - Requested Period : 1.298
+@P:  System - Slack : -0.549
+@P: mips_sys Part : ep1c6qc240-6
+@P: mips_sys I/O ATOMs : 197
+@P: mips_sys Total LUTs: : 3412 of 5980 (57%)
+@P: mips_sys Logic resources : 3545 ATOMs of 5980 (59%)
