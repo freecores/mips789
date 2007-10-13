@@ -1,0 +1,19 @@
+
+BeginView r5_reg_cls NoName
+Inst: r5_o[4]   r5_o_4__Z stratix_lcell_ff 
+Inst: r5_o[3]   r5_o_3__Z stratix_lcell_ff 
+Inst: r5_o[2]   r5_o_2__Z stratix_lcell_ff 
+Inst: r5_o[1]   r5_o_1__Z stratix_lcell_ff 
+Inst: r5_o[0]   r5_o_0__Z stratix_lcell_ff 
+Inst: r5_i_in[4]   r5_i_in_4_ stratix_io 
+Inst: r5_i_in[3]   r5_i_in_3_ stratix_io 
+Inst: r5_i_in[2]   r5_i_in_2_ stratix_io 
+Inst: r5_i_in[1]   r5_i_in_1_ stratix_io 
+Inst: r5_i_in[0]   r5_i_in_0_ stratix_io 
+Inst: r5_o_out[4]   r5_o_out_4_ stratix_io 
+Inst: r5_o_out[3]   r5_o_out_3_ stratix_io 
+Inst: r5_o_out[2]   r5_o_out_2_ stratix_io 
+Inst: r5_o_out[1]   r5_o_out_1_ stratix_io 
+Inst: r5_o_out[0]   r5_o_out_0_ stratix_io 
+Inst: cls_c_i   cls_c_i_cZ inv 
+EndView r5_reg_cls NoName

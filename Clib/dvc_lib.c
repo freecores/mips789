@@ -15,6 +15,16 @@ void dly_us(unsigned int us)
     }
 }
 
+void dly_ms(unsigned int ms)
+{
+    int i ,us=1000*ms;
+    while(us--)
+    {
+        i=12;
+        while(i--);
+    }
+}
+
 void uart0_putc(unsigned char data)
 {
     while((STATUS&(1<<2))!=0);
@@ -138,7 +148,7 @@ void LCD_write_string(unsigned char X,unsigned char Y,unsigned char*s)
 void download()
 {
     unsigned char*addr=(void*)0 ;
-    uart0_putstr((char*)"This is MIPS789 Running.\n I am ready to rcv program...\n");
+    uart0_putstr((char*)"This is MIPS789 BOOTLOADER\n");
     dis_byte(0xcc);
     //attenions please'!'
     while(uart0_getc()!='!')uart0_putc((unsigned char)('O'));
@@ -179,10 +189,10 @@ unsigned int  read_tmr()
 
 unsigned char get_key1()
 {
-    return(STATUS&1)?1:0 ;
+    return(STATUS&1)?0:1 ;
 }
 
 unsigned char get_key2()
 {
-    return(STATUS&(1<<1))?1:0 ;
+    return(STATUS&(1<<1))?0:1 ;
 }

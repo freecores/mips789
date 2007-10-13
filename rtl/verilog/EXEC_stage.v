@@ -129,12 +129,6 @@ module exec_stage
 
 endmodule
 
-
-
-
-
-
-
 module big_alu(clk,rst,a,b,c,ctl);
     input  clk,rst ;
     input  [31:0] a,b ;
@@ -235,7 +229,6 @@ module alu (a,b,alu_out,alu_func);
     input [31:0] a,b;
     output reg [31:0] alu_out;
     input [4:0]	alu_func;
-    wire [31:0] c;
     reg [32:0] sum;
 
     always @(*)
@@ -387,8 +380,6 @@ module
             else 			 shift_out='d0;
     end
 endmodule
-
-`include "include.h"
 
 module muldiv(ready,rst,op1,op2,clk,dout,func);
     input         clk,rst;

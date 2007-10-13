@@ -1,0 +1,62 @@
+#### START OF AREA REPORT #####[
+
+Part:			EP1C3TC100-6 (Altera)
+
+--------------------------------------------------------------------------
+########   Utilization report for  Top level view:   r5_reg_cls   ########
+==========================================================================
+
+SEQUENTIAL ATOMS
+****************
+
+Name          Total elements     Utilization     Notes
+------------------------------------------------------
+REGISTERS     5                  100 %                
+======================================================
+Total SEQUENTIAL ATOMS in the block r5_reg_cls:	5 (26.32 % Utilization)
+
+
+COMBINATIONAL ATOMS
+*******************
+
+Name                Total elements     Utilization     Notes
+------------------------------------------------------------
+ATOMS               0                  0.0 %                
+ARITHMETIC MODE     0                  0.0 %                
+============================================================
+Total COMBINATIONAL ATOMS in the block r5_reg_cls:	0 (0.00 % Utilization)
+
+
+RAMS
+****
+
+Name          Total elements     Number of bits     Utilization     Notes
+-------------------------------------------------------------------------
+SYNC RAMS     0                  0                  0.0 %                
+LPMs          0                  0                  0.0 %                
+=========================================================================
+Total RAMS in the block r5_reg_cls:	0 (0.00 % Utilization)
+
+
+DSPs
+****
+
+Name     Total elements     Utilization     Notes
+-------------------------------------------------
+MACs     0                  0.0 %                
+=================================================
+Total DSPs in the block r5_reg_cls:	0 (0.00 % Utilization)
+
+
+Black Boxes
+***********
+
+Name            Total elements     Utilization     Notes
+--------------------------------------------------------
+BLACK BOXES     0                  0.0 %                
+========================================================
+Total Black Boxes in the block r5_reg_cls:	0 (0.00 % Utilization)
+
+
+##### END OF AREA REPORT #####]
+

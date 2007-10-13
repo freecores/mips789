@@ -1,0 +1,10 @@
+del *.bak 
+del *.map
+del *.o
+del *.obj
+del *.axf
+del *.txt
+del *.bin
+del sim_ram.v
+del *.mif
+del transcript

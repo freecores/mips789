@@ -101,7 +101,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
     assign write_busy=queue_full;//Apr.2.2005
 
     always @ (posedge clk) begin
-        if (sync_reset)	read_request_ff<=1'b0;
+        if (~sync_reset)	read_request_ff<=1'b0;
         else			read_request_ff<=read_request;
     end
 
@@ -136,7 +136,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
     // 7bit counter
     always @(posedge clk ) begin
-        if (sync_reset)
+        if (~sync_reset)
             clk_ctr <= 0;
         else if (clk_ctr_enable_state && clk_ctr_equ31)  clk_ctr<=0;
         else if (clk_ctr_enable_state)	                 clk_ctr <= clk_ctr + 1;
@@ -149,7 +149,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
     // 3bit counter
     always @(posedge clk) begin
-        if (sync_reset)
+        if (~sync_reset)
             bit_ctr <= 0;
         else if (bit_ctr_enable_state) begin
             if (clk_ctr_equ15)
@@ -166,7 +166,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
 
     always @(posedge clk ) begin
-        if (sync_reset) ua_state <= 3'b000;
+        if (~sync_reset) ua_state <= 3'b000;
         else begin
             case (ua_state)
                 3'b000:	if (queing)  ua_state <= 3'b001;	//wait write_request
@@ -187,7 +187,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
     // tx shift reg.
     always @(posedge clk ) begin
-        if (sync_reset) tx_sr<=0;
+        if (~sync_reset) tx_sr<=0;
         else if (read_request_ff) tx_sr <= queue_data[7:0]; //data_in[7:0]; // load
         else if (tx_state ) tx_sr <= {1'b0, tx_sr[7:1]};
     end
@@ -197,8 +197,8 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
     // tx
     always @(posedge clk ) begin
-        if (sync_reset) txd <=1'b1;
-        else if (sync_reset)			  txd<=1'b1;
+        if (~sync_reset) txd <=1'b1;
+        else if (~sync_reset)			  txd<=1'b1;
         else if (ua_state==3'h0)		  txd<=1'b1;
         else if (ua_state==3'h1 && clk_ctr_equ15) txd<=1'b0;	// start bit
         else if (ua_state==3'h2 && clk_ctr_equ15) txd<=tx_sr[0];
@@ -241,7 +241,7 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
 
     // 7bit counter
     always @(posedge clk ) begin
-        if (sync_reset)
+        if (~sync_reset)
             clk_ctr <= 0;
         else if (clk_ctr_enable_state && clk_ctr_equ31)  clk_ctr<=0;
         else if (clk_ctr_enable_state)	                 clk_ctr <= clk_ctr + 1;
@@ -254,7 +254,7 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
 
     // 3bit counter
     always @(posedge clk) begin
-        if (sync_reset)
+        if (~sync_reset)
             bit_ctr <= 0;
         else if (bit_ctr_enable_state) begin
             if (clk_ctr_equ15)
@@ -272,7 +272,7 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
 
     //
     always @(posedge clk ) begin
-        if (sync_reset) ua_state <= 3'h0;
+        if (~sync_reset) ua_state <= 3'h0;
         else begin
             case (ua_state)
                 3'h0:	if (rxq1==0) ua_state <= 3'h1;  // if rxd==0 then goto next state and enable clock						// start bit search
@@ -288,13 +288,13 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
 
     //reg_we
     always @(posedge clk ) begin
-        if (sync_reset) 			   buffer_reg<=8'h00;
+        if (~sync_reset) 			   buffer_reg<=8'h00;
         else if (ua_state==3'h3 && clk_ctr_equ0)  buffer_reg<=rx_sr;
     end
 
     //int_req
     always @(posedge clk ) begin
-        if (sync_reset) 			    int_req<=1'b0;
+        if (~sync_reset) 			    int_req<=1'b0;
         else if (ua_state==3'h4	)   int_req<=1'b1;	//
         else 					    int_req<=1'b0;
     end
@@ -302,7 +302,7 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
 
     // rx shift reg.
     always @(posedge clk ) begin
-        if (sync_reset) rx_sr <= 0;
+        if (~sync_reset) rx_sr <= 0;
         else if (clk_ctr_equ15) rx_sr <= {rxq1, rx_sr[7:1]};
     end
 

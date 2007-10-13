@@ -32,8 +32,7 @@ module compare (
         input [31:0] t,
         input [2:0]ctl,
         output reg res
-    );
-    reg [32:0]sum;
+    );			  
     always @ (*)
     case  (ctl)
         `CMP_BEQ:   res = (s==t);

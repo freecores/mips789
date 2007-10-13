@@ -1,4 +1,3 @@
-
 module mips_top (
  input clk,
  input rst,
@@ -23,18 +22,27 @@ wire [31:0] mem_Addr;
 wire [31:0] pc;
 wire [3:0] wr_en;  
 wire CLK;		   
+reg r_rst;	
+  
 
+//wire sys_rst=rst;	
+always @(posedge CLK) 
+if (rst) r_rst<=1'b1; else r_rst<=1'b0;
+//wire sys_rst = r_rst;  
+	 
+reg rr_rst;
+always @(posedge CLK) 
+rr_rst<=r_rst;
 
-reg r_rst;	  
-always @(posedge CLK) if (~rst) r_rst<=1'b1; else r_rst<=1'b0;	 
-	
-wire sys_rst = r_rst;  
+wire sys_rst = rr_rst;  
 
- mips_pll Ipll(
+//assign CLK = clk;
+
+ pll50 Ipll(
 	.inclk0(clk),
 	.c0(CLK)
 	);
-
+	
 mem_array ram_8k
 (
 	.clk(CLK),
@@ -47,7 +55,7 @@ mem_array ram_8k
 	.wren(wr_en)
 );	
 
- mips_sys isys
+mips_sys isys
 (		   
 
 	.zz_addr_o(mem_Addr),
@@ -79,4 +87,3 @@ mem_array ram_8k
 );
 
 endmodule 
-

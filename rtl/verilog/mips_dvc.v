@@ -91,17 +91,13 @@ module mips_dvc (
     wire  tmr_clr		=       cmd[7]	;
     wire  tmr_en		=		cmd[8]  ;
 
-    /*
-
-    */
-
     reg [7:0] seg7data;
     wire [7:0] uart_dout;
     wire w_txd_busy;
     wire w_rx_rdy;
 
     always@(posedge clk )
-        if (rst)
+        if (~rst)
         begin
             dout<=0;
         end
@@ -115,7 +111,7 @@ module mips_dvc (
         end
 
     always @(posedge clk)
-        if (rst)
+        if (~rst)
         begin
             cmd<=0;
             seg7data<=0;
@@ -125,19 +121,6 @@ module mips_dvc (
         end
         else
         begin
-            /*
-            casex({wr_uartdata,wr_cmd,wr_seg7,wr_lcddata,set_tmr_addr,set_key1_addr,set_key1_addr})	 //synthesis parallel_case
-                     7'b1xxxxxx:	  uart_data<=din[7:0];
-            7'bx1xxxxx:			   cmd<=din;
-            7'bxx1xxxx:						seg7data<=din[7:0];
-            7'bxxx1xxx:				 lcd_data<=din[7:0];
-            7'bxxxx1xx:		   tmr_addr<=din;
-            7'bxxxxx1x:			key1_addr<=din;
-            7'bxxxxxx1:			key2_addr<=din;
-            endcase			  		
-            */
-
-            //	if (wr_uartdata)  uart_data<=din[7:0];
             if (wr_cmd)   cmd<=din;
             if (wr_seg7) seg7data<=din[7:0];
             if (wr_lcddata)	   lcd_data<=din[7:0];

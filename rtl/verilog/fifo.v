@@ -45,7 +45,7 @@ module fifo
 
     always @(posedge clk_i /*or posedge rst_i*/)
     begin
-        if(rst_i)
+        if(~rst_i)
             cnt <=  0;
         else if(clear_i)
             cnt <=  {{(CNT_WIDTH-1){1'b0}},ren_i^wen_i};
@@ -60,7 +60,7 @@ module fifo
 
     always @(posedge clk_i/* or posedge rst_i*/)
     begin
-        if(rst_i)
+        if(~rst_i)
             read_pointer <= 0;
         else if(clear_i)
             read_pointer <= { {(CNT_WIDTH-2){1'b0}}, ren_i};
@@ -70,7 +70,7 @@ module fifo
 
     always @ (posedge clk_i /*or posedge rst_i*/)
     begin
-        if(rst_i)
+        if(~rst_i)
             write_pointer <= 0;
         else if(clear_i)
             write_pointer <= { {(CNT_WIDTH-2){1'b0}}, wen_i};
@@ -96,20 +96,3 @@ module fifo
 endmodule
 
 
-/*
-fifo txd_fifo
-  (
-  .clk_i(clk),
-  .rst_i(rst),
-  .clear_i(1'b0),
-  .data_i(data_in),
-  .wen_i(write_request),
-  .ren_i(read_request),
-  .data_o(queue_data),
-//  .almost_full_o,
-  .full_o(queue_full),
-//  .almost_empty_o,
-  .empty_o(empty)
- // .cnt_o()
-   ); 
-*/

@@ -8,12 +8,12 @@ module cal_cpi (		 	   //just use for calculate CPI(Cycle Per Instruction) for s
         output reg [100:0] clk_no);
 
     always @(posedge clk /*or negedge rst*/ )
-        if (rst )clk_no=0;
+        if (~rst )clk_no=0;
         else
             clk_no = 1+clk_no;
 
     always @(posedge clk /*or negedge rst*/)
-        if (rst )ins_no=0;
+        if (~rst )ins_no=0;
         else if (~is_nop)
             ins_no = 1+ins_no;
 endmodule
@@ -76,7 +76,6 @@ module rd_sel(
         default :
             rd_o=0;
     endcase
-
 endmodule
 
 //these modules below are genated automaticly by a software written in C language...

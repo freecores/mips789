@@ -4,7 +4,7 @@
 
 
 
-/*the two functions listed between are added by Liwei 2007-8-29*/
+/*Liwei 2007-8-29*/
  char HEX[]="0123456789ABCDEF" ;
  char hex[]="0123456789abcdef" ;
 
@@ -32,10 +32,7 @@ main(int argc,char*argv[])
     int cntr=0,base=0 ;
     
     char str1[100],str2[111];
-    /*
-        FILE*ff=fopen(file_name[1],"r");
-        FILE*ft=fopen(file_name[2],"w");
-        */
+    
     FILE*ff=fopen("code.txt","r");
     FILE*ft=fopen("sim_ram.v","w");
     
