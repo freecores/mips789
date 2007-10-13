@@ -1,12 +1,7 @@
-/*这份代码经源码格式软件格式化过
-     yang_hx@neusoft.com      */
 #include "stdio.h"
 #include "stdlib.h"
 #define DEFAULT_LEN  "2048"
-
-
-
-/*the two functions listed between are added by Liwei 2007-8-29*/
+/*Liwei 2007-8-29*/
 char HEX[]="0123456789ABCDEF" ;
 char hex[]="0123456789abcdef" ;
 unsigned char hex2byte(char hex_char)
@@ -56,7 +51,6 @@ void main(int argc,char*argv[])
         base=(NULL!=argv[1])?par2u32(argv[1]):0 ;
         base=base/4 ;
         fprintf(ft,"WIDTH=8;\n");
-        /*(NULL!=argv[2])?argv[2]:*/
         fprintf(ft,"DEPTH=%s;\n\n",DEFAULT_LEN);
         fprintf(ft,"ADDRESS_RADIX=HEX;\n");
         fprintf(ft,"DATA_RADIX=HEX;\n\n");

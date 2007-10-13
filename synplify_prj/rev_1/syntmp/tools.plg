@@ -1,6 +1,0 @@
-@P:  Part : EP1C6QC240-6
-@P:  Worst Slack : NA
-@P: r5_reg_cls Part : ep1c6qc240-6
-@P: r5_reg_cls I/O ATOMs : 12
-@P: r5_reg_cls Total LUTs: : 5 of 5980 ( 0%)
-@P: r5_reg_cls Logic resources : 5 ATOMs of 5980 ( 0%)

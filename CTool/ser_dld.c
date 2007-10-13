@@ -63,7 +63,7 @@ void OpenCom(unsigned int baudrate,char*comno)
     dcb.Parity=NOPARITY ;
     dcb.StopBits=2 ;
     if(!SetCommState(hCom,&dcb))exit(1);
-    
+
     /*  set the timeouts to 0 */
     ct.ReadIntervalTimeout=MAXDWORD ;
     ct.ReadTotalTimeoutMultiplier=0 ;
@@ -107,7 +107,7 @@ char ReadComChar()
     
     return nRec?c:0 ;
 }
-
+//ser_dld 19200 COM1 N
 void main(int argc,char*argv[])
 {
     char c,s[11];
@@ -120,13 +120,14 @@ void main(int argc,char*argv[])
     WriteComChar('?');
     Sleep(1);
     i=100 ;
-    while(i--)
+    while(i--);
     c=ReadComChar();
     WriteComChar('!');
     Sleep(10);
     c=ReadComChar();
     if((argv[3]!=NULL)&&(argv[3][0]=='N'))
     {
+    
     }
     else 
     {
@@ -143,12 +144,7 @@ void main(int argc,char*argv[])
         }
     }
     
-    /*
-        while(1){
-        Sleep(100);
-        WriteComChar(c++);
-        }*/
-    
+
     rewind(ff);
     while(fgets(s,10,ff))
     {
