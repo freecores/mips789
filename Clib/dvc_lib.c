@@ -47,8 +47,16 @@ unsigned char enqire_rxd(void)
 
 void uart0_putstr(char*str)
 {
-    while(1)if(*str=='\0')return ;
-    else uart0_putc(*str++);
+    while(1){
+    if(*str=='\0')return ;
+    else if(*str=='\n')
+    	{
+    		uart0_putc('\r');
+    		uart0_putc(*str++);
+    	}
+    	else 
+    		uart0_putc(*str++);
+		}
 }
 
 void __inline led1_on(void)
@@ -151,7 +159,8 @@ void download()
     uart0_putstr((char*)"This is MIPS789 BOOTLOADER\n");
     dis_byte(0xcc);
     //attenions please'!'
-    while(uart0_getc()!='!')uart0_putc((unsigned char)('O'));
+    while(uart0_getc()!='!');
+    uart0_putc((unsigned char)('O'));
     //'O'k .i am ready
     while(1)
     {
