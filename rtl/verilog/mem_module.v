@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"
 
 
@@ -155,7 +168,7 @@ module mem_dout_ctl(
              din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
              din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
              din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
-             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7]};
+             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7]}     ;
 
     always @(*)
     case (ctl)

@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"		   
 
 module rf_stage (
@@ -95,7 +108,7 @@ module rf_stage (
 
 
 
-    ctl_FSM MIAN_FSM
+    ctl_FSM MAIN_FSM
             (
                 .clk(clk),
                 .iack(iack_o),

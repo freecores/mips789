@@ -14,3 +14,4 @@ convert_sp
 gensim 
 genmif 
 #ser_dld 9600 COM1 N
+copy *.mif ..\..\quartus2\*.mif

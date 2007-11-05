@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h" 
 
 module tmr0 (
@@ -6,7 +19,7 @@ module tmr0 (
         input[31:0] din ,
         input ld,
         input tmr_en,
-        output tmr_req	  ,
+        output tmr_req,
         output [31:0] cntr_o
     );
 
@@ -36,7 +49,6 @@ module tmr0 (
               .d(w_irq),
               .q(tmr_req)
           );
-
 endmodule
 
 

@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"
 
 module mips_dvc (
@@ -121,6 +134,7 @@ module mips_dvc (
         end
         else
         begin
+
             if (wr_cmd)   cmd<=din;
             if (wr_seg7) seg7data<=din[7:0];
             if (wr_lcddata)	   lcd_data<=din[7:0];
@@ -157,7 +171,7 @@ module mips_dvc (
 
     tmr0 mips_tmr0(
              .clk(clk),
-             .clr( tmr_clr),
+             .clr(tmr_clr),
              .din(din) ,
              .ld(wr_tmr_data),
              .tmr_en(tmr_en),
@@ -178,7 +192,7 @@ module mips_dvc (
     assign irq_req_o = 0;//tmr_req_do;
 
     always @(*)
-        if 	 (tmr_req_do)         irq_addr_o = tmr_addr;else
+        if (tmr_req_do)         irq_addr_o = tmr_addr;else
     if (key1_req_do)     irq_addr_o = key1_addr;else
     if (key2_req_do)	  irq_addr_o = key2_addr ;
     else                      irq_addr_o = 0;

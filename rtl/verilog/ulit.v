@@ -1,6 +1,19 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"
 
-module cal_cpi (		 	   //just use for calculate CPI(Cycle Per Instruction) for stimulation
+module cal_cpi (		 	   //just used for calculate CPI(Cycle Per Instruction) for stimulation
         input clk,
         input rst,
         input is_nop,

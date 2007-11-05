@@ -1,3 +1,16 @@
+/****************************************************************** 
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 /* This source code is baseed on a 16bit CPU Aquarius in opencores.org */
 /* Thanks the author. */
 /* modified by Liwei 2007-10-13 */

@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"  
 
 
@@ -75,12 +88,6 @@ module mips_sys (
     wire [31:0] cop_addr;
     wire [3:0] cop_mem_ctl;
     wire [31:0] data2cop;
-    wire [31:0] data2core;
-    wire [31:0] data2mem;
-    wire [31:0] ins2core;
-    wire [31:0] mem_Addr;
-    wire [31:0] pc;
-    wire [3:0] wr_en;
     wire [31:0]cop_data;
     wire clk_sys;
     wire [31:0]irq_addr;

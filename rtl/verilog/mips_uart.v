@@ -1,3 +1,16 @@
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 `include "include.h"
 
 module rxd_d(input clr,input clk,input d,output reg q );
@@ -34,8 +47,7 @@ module uart0 (
     wire [7:0] dout;
 
     wire clk_uart=clk;
-    wire w_rxd_rdy;
-    wire w_rxd_clr;
+    wire w_rxd_rdy;     wire w_rxd_clr;
 
     uart_read uart_rd_tak(
                   .sync_reset(rst),
@@ -66,6 +78,8 @@ module uart0 (
 
 endmodule
 
+//These modules below are modified slight by Liwei based on YACC,an CPU core in opencores.
+//Thank you TAK
 
 module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,write_busy);
     input sync_reset,clk;
@@ -87,11 +101,10 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
     //With 512Bytes FIFO.
     //No error handling is supported.
 
-    reg		[15:0] clk_ctr;
+    reg		[15:0] clk_ctr;//liwei
     reg		[2:0] bit_ctr;
     reg		[2:0] ua_state;
-    reg		[7:0] tx_sr;
-    reg		write_done_n;
+    reg		[7:0] tx_sr;	        reg		write_done_n;
     reg		txd;
 
     wire	 clk_ctr_equ15, clk_ctr_equ31,  bit_ctr_equ7,
@@ -135,6 +148,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
 
 
     // 7bit counter
+    // I set the regerster lenth as 16 .Sufficent but not waste.Liwei
     always @(posedge clk ) begin
         if (~sync_reset)
             clk_ctr <= 0;
@@ -174,7 +188,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
                 3'b010:	if (bit_ctr_equ7 & clk_ctr_equ15) ua_state <= 3'b011;		// start bit, bit0-7 data  send
                 3'b011:	if (clk_ctr_equ15) ua_state <= 3'b100;					// bit7 data send
                 3'b100:	if (clk_ctr_equ15) ua_state <= 3'b101;	// stop bit				// stop bit send
-                3'b101:	if (clk_ctr_equ15) ua_state <= 3'b110;	//LIWEI // stop bit				// stop bit send
+                3'b101:	if (clk_ctr_equ15) ua_state <= 3'b110;	//LIWEI				// stop bit send
                 3'b110:	if (clk_ctr_equ15) ua_state <= 3'b111;		  //LIWEI
                 3'b111:	 ua_state <= 3'h0;	// TAK					// byte read cycle end
                 default: ua_state <= 3'h0;
@@ -270,7 +284,6 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
     assign	clk_ctr_enable_state =  ua_state !=3'b000  && ua_state<=3'b011;
     assign	bit_ctr_enable_state = ua_state==3'h2;
 
-    //
     always @(posedge clk ) begin
         if (~sync_reset) ua_state <= 3'h0;
         else begin
@@ -295,7 +308,7 @@ module	uart_read( sync_reset, clk, rxd,buffer_reg, int_req);
     //int_req
     always @(posedge clk ) begin
         if (~sync_reset) 			    int_req<=1'b0;
-        else if (ua_state==3'h4	)   int_req<=1'b1;	//
+        else if (ua_state==3'h4	)   int_req<=1'b1;	
         else 					    int_req<=1'b0;
     end
 
