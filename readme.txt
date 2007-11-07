@@ -1,5 +1,5 @@
 Please run REMOVEDIR.BAT and then enter 'Y' in 
-windows system to remove these empty folders below.
+windows system to remove these empty folders listed below.
 
 dbe 
 verilog
