@@ -110,7 +110,7 @@ module decoder(
                         alu_we = `IGN;
                         dmem_ctl = `IGN;
                         wb_we =  `IGN;
-                        wb_mux = `IGN;
+                        wb_mux = 1'bx;//`IGN;
                         //end of `SLLV ;
                     end
                     'd6://SRLV rd,rt,rs
@@ -598,10 +598,38 @@ module decoder(
                     'd17://BGEZAL rs,offset(signed)
                     begin
                         //replaceID  = `BGEZAL ;
+                        //replaceID  = `INVALID ;
+                        ext_ctl = `IGN;
+                        rd_sel = `IGN;
+                        cmp_ctl = `IGN;
+                        pc_gen_ctl = `IGN;
+                        fsm_dly = `IGN;
+                        muxa_ctl = `IGN;
+                        muxb_ctl = `IGN;
+                        alu_func = `IGN;
+                        alu_we = `IGN;
+                        dmem_ctl = `IGN;
+                        wb_we =  `IGN;
+                        wb_mux = `IGN;
+                        //end of `INVALID ;
                     end
                     default:
                     begin
                         //replaceID   = `INVALID ;
+                        //replaceID  = `INVALID ;
+                        ext_ctl = `IGN;
+                        rd_sel = `IGN;
+                        cmp_ctl = `IGN;
+                        pc_gen_ctl = `IGN;
+                        fsm_dly = `IGN;
+                        muxa_ctl = `IGN;
+                        muxb_ctl = `IGN;
+                        alu_func = `IGN;
+                        alu_we = `IGN;
+                        dmem_ctl = `IGN;
+                        wb_we =  `IGN;
+                        wb_mux = `IGN;
+                        //end of `INVALID ;
                     end
                 endcase
             end
@@ -882,7 +910,20 @@ module decoder(
                     end
                     default:
                     begin
-
+                        //replaceID  = `INVALID ;
+                        ext_ctl = `IGN;
+                        rd_sel = `IGN;
+                        cmp_ctl = `IGN;
+                        pc_gen_ctl = `IGN;
+                        fsm_dly = `IGN;
+                        muxa_ctl = `IGN;
+                        muxb_ctl = `IGN;
+                        alu_func = `IGN;
+                        alu_we = `IGN;
+                        dmem_ctl = `IGN;
+                        wb_we =  `IGN;
+                        wb_mux = `IGN;
+                        //end of `INVALID ;
                     end
                 endcase
             end
@@ -1092,7 +1133,20 @@ module decoder(
             end
             default:
             begin
-                //replaceID   = `INVALID ;
+                //replaceID  = `INVALID ;
+                ext_ctl = `IGN;
+                rd_sel = `IGN;
+                cmp_ctl = `IGN;
+                pc_gen_ctl = `IGN;
+                fsm_dly = `IGN;
+                muxa_ctl = `IGN;
+                muxb_ctl = `IGN;
+                alu_func = `IGN;
+                alu_we = `IGN;
+                dmem_ctl = `IGN;
+                wb_we =  `IGN;
+                wb_mux = `IGN;
+                //end of `INVALID ;  //replaceID   = `INVALID ;
             end
         endcase
     end
