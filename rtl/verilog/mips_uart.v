@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
 module rxd_d(input clr,input clk,input d,output reg q );
 
@@ -47,7 +47,7 @@ module uart0 (
     wire [7:0] dout;
 
     wire clk_uart=clk;
-    wire w_rxd_rdy;     wire w_rxd_clr;
+    wire w_rxd_rdy;    
 
     uart_read uart_rd_tak(
                   .sync_reset(rst),
@@ -104,7 +104,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
     reg		[15:0] clk_ctr;//liwei
     reg		[2:0] bit_ctr;
     reg		[2:0] ua_state;
-    reg		[7:0] tx_sr;	        reg		write_done_n;
+    reg		[7:0] tx_sr;	       
     reg		txd;
 
     wire	 clk_ctr_equ15, clk_ctr_equ31,  bit_ctr_equ7,
@@ -124,7 +124,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
     assign write_done=ua_state==3'b101;
 
 `ifdef ALTERA
-    fifo512_cyclone  fifo(
+    fifo512_cyclone  alt_fifo(
                          .data(data_in),
                          .wrreq(write_request),
                          .rdreq(read_request),
@@ -132,17 +132,17 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
                          .q(queue_data),
                          .full(queue_full),
                          .empty(empty));
-`else//XILINX coregen
+`else//debug model in simulations
 
-    fifo	 fifo(
-              .clk(clk),
-              .sinit(sync_reset),
-              .din(data_in),
-              .wr_en(write_request),
-              .rd_en(read_request),
-              .dout(queue_data),
-              .full(queue_full),
-              .empty(empty));
+    sim_fifo512_cyclone  sim_fifo(
+                         .data(data_in),
+                         .wrreq(write_request),
+                         .rdreq(read_request),
+                         .clock(clk),
+                         .q(queue_data),
+                         .full(queue_full),
+                         .empty(empty),
+						 .rst(sync_reset)); 
 `endif
 
 

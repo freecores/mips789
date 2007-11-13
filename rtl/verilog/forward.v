@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
 
 module fw_latch5(input clk,input[4:0]d,output reg  [4:0]q);

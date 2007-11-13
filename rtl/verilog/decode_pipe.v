@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 module decoder(
         input [31:0]ins_i,
         output reg [`EXT_CTL_LEN-1:0] ext_ctl,

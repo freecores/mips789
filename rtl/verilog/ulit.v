@@ -11,9 +11,9 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
-module cal_cpi (		 	   //just used for calculate CPI(Cycle Per Instruction) for stimulation
+module cal_cpi (		 	   //just used to calculate CPI(Cycles Per Instruction) for stimulation
         input clk,
         input rst,
         input is_nop,

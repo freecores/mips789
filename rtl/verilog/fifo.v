@@ -11,9 +11,47 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"		
+`include "mips789_defs.v"		
 
-module fifo
+module sim_fifo512_cyclone ( //just uesd for simulation in EDA tools
+	data,
+	wrreq,
+	rdreq,
+	clock,
+	q,
+	full,
+	empty,
+	rst);
+
+	input	[7:0]  data;
+	input	  rst;
+	input     wrreq;
+	input	  rdreq;
+	input	  clock;
+	output	[7:0]  q;
+	output	  full;
+	output	  empty;
+
+ fifo fifo_ff
+    (
+        .clk_i(clock),
+        .rst_i(rst),
+        .clear_i(1'b0),
+        .data_i(data),
+        .wen_i(wrreq),
+        .ren_i(rdreq),
+        .data_o(q),
+        .almost_full_o(),
+        .full_o(full),
+        .almost_empty_o(),
+        .empty_o(empty),
+        .cnt_o()
+    );
+
+endmodule 	
+
+module fifo//created by zhangfeifei
+
     (
         clk_i,
         rst_i,
@@ -42,7 +80,7 @@ module fifo
     input  [DATA_WIDTH-1:0] data_i;
 
     input  ren_i;
-    output [DATA_WIDTH-1:0] data_o;
+    output reg[DATA_WIDTH-1:0] data_o;
     output almost_full_o;
     output full_o;
     output almost_empty_o;
@@ -55,8 +93,13 @@ module fifo
     reg    [CNT_WIDTH-2:0] read_pointer;
     reg    [CNT_WIDTH-2:0] write_pointer;
     assign cnt_o = cnt;
-
-    always @(posedge clk_i /*or posedge rst_i*/)
+integer i;
+initial
+begin 
+for(i=0;i<DEPTH;i=i+1)
+mem[i] =0;
+end
+    always @(posedge clk_i)
     begin
         if(~rst_i)
             cnt <=  0;
@@ -71,7 +114,7 @@ module fifo
         end
     end
 
-    always @(posedge clk_i/* or posedge rst_i*/)
+    always @(posedge clk_i)
     begin
         if(~rst_i)
             read_pointer <= 0;
@@ -81,7 +124,7 @@ module fifo
             read_pointer <= read_pointer + 1'b1;
     end
 
-    always @ (posedge clk_i /*or posedge rst_i*/)
+    always @ (posedge clk_i )
     begin
         if(~rst_i)
             write_pointer <= 0;
@@ -103,8 +146,9 @@ module fifo
         else if(wen_i & ~full_o)
             mem[write_pointer] <= data_i;
     end
-
-    assign data_o = clear_i ? mem[0] : mem[read_pointer];
+    
+    always @ (posedge clk_i)
+     data_o <= clear_i ? mem[0] : mem[read_pointer];
 
 endmodule
 

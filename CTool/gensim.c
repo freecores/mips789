@@ -14,7 +14,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-
+#define MAX_LEN (1024*2)
 
 /*Liwei 2007-8-29*/
  char HEX[]="0123456789ABCDEF" ;
@@ -116,11 +116,7 @@ main(int argc,char*argv[])
     
     if(NULL!=argv[1])
     base=par2u32(argv[1])/4;
-   
-   
-        print_module(ft);
-
-    
+    print_module(ft);
     for(j=0;j<4;++j)
     {
         cntr=-10 ;
@@ -216,11 +212,9 @@ main(int argc,char*argv[])
         fprintf(ft,"        r_rdaddress_b<=rdaddress_b;\n");
         fprintf(ft,"        r_wren<=wren;\n");
         fprintf(ft,"    end\n");
-        fprintf(ft,"    assign qa =mem_bank[r_rdaddress_a];\n");
-        fprintf(ft,"    assign qb =mem_bank[r_rdaddress_b];\n");
+        fprintf(ft,"    assign qa =(r_rdaddress_a<%d)?mem_bank[r_rdaddress_a]:0;\n",base+i);
+        fprintf(ft,"    assign qb =(r_rdaddress_b<%d)?mem_bank[r_rdaddress_b]:0;\n",base+i);
         fprintf(ft,"endmodule\n\n\n\n");
-        
-
     }fclose(ft);
 
 }

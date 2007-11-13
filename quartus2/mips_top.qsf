@@ -32,34 +32,68 @@
 # Project-Wide Assignments
 # ========================
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 4.2
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "10:12:58  NOVEMBER 03, 2008"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:48:42  NOVEMBER 13, 2008"
 set_global_assignment -name LAST_QUARTUS_VERSION 4.2
 set_global_assignment -name VQM_FILE ../synplify_prj/rev_1/mips_sys.vqm
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/mips_top.v
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/pll25.v
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/pll40.v
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/pll45.v
 set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/pll50.v
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/pll75.v
 set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/ram2048x8_0.v
 set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/ram2048x8_1.v
 set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/ram2048x8_2.v
 set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/ram2048x8_3.v
-set_global_assignment -name VERILOG_FILE ../rtl/verilog/altera/ram_module.v
+set_global_assignment -name VERILOG_FILE ../rtl/verilog/mips_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/verilog/ram_module.v
+
+# Pin & Location Assignments
+# ==========================
+set_location_assignment PIN_28 -to clk
+set_location_assignment PIN_159 -to rst
+set_location_assignment PIN_156 -to key1
+set_location_assignment PIN_158 -to key2
+set_location_assignment PIN_1 -to led1
+set_location_assignment PIN_2 -to led2
+set_location_assignment PIN_177 -to ser_rxd
+set_location_assignment PIN_176 -to ser_txd
+set_location_assignment PIN_135 -to lcd_en
+set_location_assignment PIN_133 -to lcd_rs
+set_location_assignment PIN_134 -to lcd_rw
+set_location_assignment PIN_136 -to lcd_data[0]
+set_location_assignment PIN_137 -to lcd_data[1]
+set_location_assignment PIN_138 -to lcd_data[2]
+set_location_assignment PIN_139 -to lcd_data[3]
+set_location_assignment PIN_140 -to lcd_data[4]
+set_location_assignment PIN_141 -to lcd_data[5]
+set_location_assignment PIN_143 -to lcd_data[6]
+set_location_assignment PIN_144 -to lcd_data[7]
+set_location_assignment PIN_169 -to seg7led1[0]
+set_location_assignment PIN_166 -to seg7led1[1]
+set_location_assignment PIN_161 -to seg7led1[2]
+set_location_assignment PIN_160 -to seg7led1[3]
+set_location_assignment PIN_164 -to seg7led1[4]
+set_location_assignment PIN_168 -to seg7led1[5]
+set_location_assignment PIN_167 -to seg7led1[6]
+set_location_assignment PIN_175 -to seg7led2[0]
+set_location_assignment PIN_170 -to seg7led2[1]
+set_location_assignment PIN_163 -to seg7led2[2]
+set_location_assignment PIN_165 -to seg7led2[3]
+set_location_assignment PIN_162 -to seg7led2[4]
+set_location_assignment PIN_174 -to seg7led2[5]
+set_location_assignment PIN_173 -to seg7led2[6]
 
 # Analysis & Synthesis Assignments
 # ================================
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 240
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
 set_global_assignment -name FAMILY Cyclone
 set_global_assignment -name TOP_LEVEL_ENTITY mips_top
 
 # Fitter Assignments
 # ==================
 set_global_assignment -name DEVICE EP1C6Q240C6
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
 
 # Simulator Assignments
 # =====================
-set_global_assignment -name GLITCH_INTERVAL "1 "
+set_global_assignment -name GLITCH_INTERVAL 1
 
 # LogicLock Region Assignments
 # ============================

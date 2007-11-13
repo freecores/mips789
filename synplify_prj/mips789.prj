@@ -1,7 +1,7 @@
 #-- Synplicity, Inc.
 #-- Version Synplify Pro 8.1
-#-- Project file E:\mips789\mips789\synplify_prj\mips789.prj
-#-- Written on Mon Nov 03 10:10:18 2008
+#-- Project file E:\mips789\synplify_prj\mips789.prj
+#-- Written on Thu Nov 13 18:11:19 2008
 
 
 #add_file options
@@ -11,17 +11,15 @@ add_file -verilog "../rtl/verilog/RF_stage.v"
 add_file -verilog "../rtl/verilog/ctl_fsm.v"
 add_file -verilog "../rtl/verilog/decode_pipe.v"
 add_file -verilog "../rtl/verilog/dvc.v"
-add_file -verilog "../rtl/verilog/fifo.v"
 add_file -verilog "../rtl/verilog/forward.v"
 add_file -verilog "../rtl/verilog/mem_module.v"
 add_file -verilog "../rtl/verilog/mips_core.v"
 add_file -verilog "../rtl/verilog/mips_dvc.v"
 add_file -verilog "../rtl/verilog/mips_sys.v"
 add_file -verilog "../rtl/verilog/mips_uart.v"
-add_file -verilog "../rtl/verilog/ram_module.v"
-add_file -verilog "../rtl/verilog/sim_ram.v"
 add_file -verilog "../rtl/verilog/ulit.v"
 add_file -verilog "../rtl/verilog/altera/fifo512_cyclone.v"
+add_file -verilog "../rtl/verilog/mips789_defs.v"
 
 
 #implementation: "rev_1"
@@ -41,7 +39,7 @@ set_option -use_fsm_explorer 1
 set_option -top_module "mips_sys"
 
 #map options
-set_option -frequency 50.000
+set_option -frequency auto
 set_option -run_prop_extract 0
 set_option -fanout_limit 30
 set_option -disable_io_insertion 0

@@ -14,4 +14,5 @@ convert_sp
 gensim 
 genmif 
 copy *.mif ..\..\quartus2\*.mif
+#copy *.v ..\..\rtl\verilog\*.v
 #ser_dld 9600 COM1 N

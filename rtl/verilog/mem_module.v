@@ -11,12 +11,15 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
 
 module mem_module  (
         clk,din,dmem_addr_i,dmem_ctl,
-        zZ_din,Zz_addr,Zz_dout,Zz_wr_en,dout) ;
+        
+        zZ_din,Zz_addr,Zz_dout,Zz_wr_en,dout
+        
+        ) ;
 
     input clk;
     wire clk;
@@ -120,6 +123,7 @@ module mem_addr_ctl(
                 1:wr_en = 4'b0100;
                 2:wr_en = 4'b0010;
                 3:wr_en = 4'b0001;
+				default :wr_en = 4'b000;
             endcase
         end
         `DMEM_SH  :
@@ -127,6 +131,7 @@ module mem_addr_ctl(
             case(addr_i[1:0])
                 'd0:wr_en=4'b1100;
                 'd2:wr_en=4'b0011;
+				default :wr_en = 4'b0000;
             endcase
         end
         `DMEM_SW :
@@ -195,17 +200,18 @@ module mem_dout_ctl(
         case (byte_addr)
             'd0:dout={16'b0,din[31:24],din[23:16]};
             'd2:dout={16'b0,din[15:8],din[7 :0]};
+			default:dout=0;
         endcase
         `DMEM_LHS :
         case (byte_addr)
             'd0 :dout={w31[15:0],din[31:24],din[23:16]};
             'd2 :dout={w15[15:0],din[15:8],din[7 :0]};
-            //   default:dout=0;
+             default:dout=0;
         endcase
         `DMEM_LW  :
             dout=din;
         default :
-            dout=32'b0;
+            dout=0;
     endcase
 endmodule
 

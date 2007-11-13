@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h" 
+`include "mips789_defs.v" 
 
 module tmr0 (
         input clk,

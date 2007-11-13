@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 module ext(
         input [31:0] ins_i ,
         output reg [31:0] res ,
@@ -127,6 +127,12 @@ module reg_array(
     output	[31:0]  qa;
     output	[31:0]  qb;
     reg [31:0]reg_bank[0:31];
+      integer i;
+    initial
+    begin
+     for(i=0;i<32;i=i+1)
+      reg_bank[i]=0;
+    end
 
     assign qa=(r_rdaddress_a==0)?0:
            ((r_wraddress==r_rdaddress_a)&&(1==r_wren))?r_data:

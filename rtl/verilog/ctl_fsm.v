@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 module ctl_FSM (
         clk, iack, id2ra_ctl_clr, id2ra_ctl_cls,
         id2ra_ins_clr, id2ra_ins_cls, id_cmd, irq,
@@ -68,7 +68,7 @@ module ctl_FSM (
 
     always @ (*)
     begin : Sreg0_NextState
-        case (CurrState_Sreg0) // synopsys parallel_case full_case
+        case (CurrState_Sreg0) 								
             `IDLE:
             begin
                 id2ra_ins_clr=ZERO;

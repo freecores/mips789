@@ -10,19 +10,19 @@
  *    Email:mcupro@opencores.org  or mcupro@163.com               * 
  *                                                                * 
  ******************************************************************/
+ 
 
-`include "include.h"  
+`include "mips789_defs.v"  
 
 
 module mips_sys (
-	`ifdef ALTERA	  
+  
         zz_addr_o,
         zz_din,
         zz_dout,
         zz_ins_i,
         zz_pc_o,
         zz_wr_en_o 		 ,
-	`endif	  				
 
         clk,
         rst,
@@ -67,7 +67,7 @@ module mips_sys (
     output led1;
     output led2;
 
-`ifdef	ALTERA
+
     input [31:0] zz_din;
     wire [31:0] zz_din;
     input [31:0] zz_ins_i;
@@ -80,7 +80,6 @@ module mips_sys (
     wire [31:0] zz_pc_o;
     output [3:0] zz_wr_en_o;
     wire [3:0] zz_wr_en_o;
-`endif
 
     input ser_rxd;
     output ser_txd;
@@ -89,29 +88,11 @@ module mips_sys (
     wire [3:0] cop_mem_ctl;
     wire [31:0] data2cop;
     wire [31:0]cop_data;
-    wire clk_sys;
+    wire clk_sys=clk;
     wire [31:0]irq_addr;
     wire w_irq;
 
-    `ifndef ALTERA
-            mem_array ram_4k
-            (
-                .clk(clk_sys),
-                .din(data2mem),
-                .dout(data2core),
-                .ins_o(ins2core),
-                .pc_i(pc),
-                .rd_addr_i(mem_Addr),
-                .wr_addr_i(mem_Addr),
-                .wren(wr_en)
-            );
-    assign clk_sys=clk;
-`else 
-    assign clk_sys=clk;
-`endif
-
-
-    mips_core mips_core
+    mips_core i_mips_core
               (
                   .clk(clk_sys),
                   .cop_addr_o(cop_addr),
@@ -122,21 +103,14 @@ module mips_sys (
                   .irq_i(w_irq),
                   .rst(rst),
 
-`ifdef 	ALTERA
+
                   .zz_addr_o(zz_addr_o),
                   .zz_din(zz_din),
                   .zz_dout(zz_dout),
                   .zz_ins_i(zz_ins_i),
                   .zz_pc_o(zz_pc_o),
                   .zz_wr_en_o(zz_wr_en_o)
-`else		  	   
-                  .zz_addr_o(mem_Addr),
-                  .zz_din(data2core),
-                  .zz_dout(data2mem),
-                  .zz_ins_i(ins2core),
-                  .zz_pc_o(pc),
-                  .zz_wr_en_o(wr_en)
-`endif
+
               );
 
     mips_dvc imips_dvc(
@@ -169,4 +143,5 @@ module mips_sys (
              );
 
 endmodule
+
 

@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
 module mips_core (
         clk,irq_i,rst,cop_dout,irq_addr,

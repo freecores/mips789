@@ -11,7 +11,7 @@
  *                                                                * 
  ******************************************************************/
 
-`include "include.h"
+`include "mips789_defs.v"
 
 module mips_dvc (
 
@@ -60,7 +60,10 @@ module mips_dvc (
         rr_key2<=r_key2;
     end
 
-
+initial
+begin
+        lcd_data<=0; 
+end
     wire sv_byte = (mem_ctl==`DMEM_SB);
     wire ld_byte = mem_ctl==`DMEM_LBS||mem_ctl==`DMEM_LBU;
 
@@ -127,8 +130,8 @@ module mips_dvc (
         if (~rst)
         begin
             cmd<=0;
-            seg7data<=0;
-            tmr_addr<=32'BX	 ;
+            seg7data<=0;   
+            tmr_addr<=32'bX;
             key1_addr<=32'BX;
             key2_addr<=32'BX;
         end
