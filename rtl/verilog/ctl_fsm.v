@@ -1,4 +1,17 @@
-`include "include.h"
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v"
 module ctl_FSM (
         clk, iack, id2ra_ctl_clr, id2ra_ctl_cls,
         id2ra_ins_clr, id2ra_ins_cls, id_cmd, irq,
@@ -48,14 +61,12 @@ module ctl_FSM (
 
     reg  [5:0]delay_counter_Sreg0, next_delay_counter_Sreg0;
 
-
     reg [3:0] CurrState_Sreg0;
     reg [3:0] NextState_Sreg0;
 
-
     always @ (*)
     begin : Sreg0_NextState
-        case (CurrState_Sreg0) // synopsys parallel_case full_case
+        case (CurrState_Sreg0)
             `IDLE:
             begin
                 id2ra_ins_clr=ZERO;
@@ -64,29 +75,29 @@ module ctl_FSM (
                 id2ra_ctl_cls=ZERO;
                 ra2exec_ctl_clr =ZERO;
                 pc_prectl=PC_IGN;
-                iack = riack; 
-				if (~rst)
-                NextState_Sreg0 = `RST;
-				else
-                if ((irq)&&(~iack))
-                    NextState_Sreg0 = `IRQ;
+                iack = riack;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                    if (id_cmd ==ID_NOI)
-                        NextState_Sreg0 = `NOI;
+                    if ((irq)&&(~iack))
+                        NextState_Sreg0 = `IRQ;
                     else
-                        if (id_cmd==ID_CUR)
-                            NextState_Sreg0 = `CUR;
+                        if (id_cmd ==ID_NOI)
+                            NextState_Sreg0 = `NOI;
                         else
-                            if (id_cmd==ID_MUL)
-                                NextState_Sreg0 = `MUL;
+                            if (id_cmd==ID_CUR)
+                                NextState_Sreg0 = `CUR;
                             else
-                                if (id_cmd==ID_LD)
-                                    NextState_Sreg0 = `LD;
+                                if (id_cmd==ID_MUL)
+                                    NextState_Sreg0 = `MUL;
                                 else
-                                    if (id_cmd==ID_RET)
-                                        NextState_Sreg0 = `RET;
+                                    if (id_cmd==ID_LD)
+                                        NextState_Sreg0 = `LD;
                                     else
-                                        NextState_Sreg0 = `IDLE;
+                                        if (id_cmd==ID_RET)
+                                            NextState_Sreg0 = `RET;
+                                        else
+                                            NextState_Sreg0 = `IDLE;
             end
             `MUL:
             begin
@@ -97,10 +108,10 @@ module ctl_FSM (
                 ra2exec_ctl_clr=ZERO;
                 pc_prectl =PC_KEP;
                 iack = riack;
-				       if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                NextState_Sreg0 = `D2_MUL_DLY;
+                    NextState_Sreg0 = `D2_MUL_DLY;
                 next_delay_counter_Sreg0 = 34;
                 zz_is_nop =0;
             end
@@ -113,10 +124,10 @@ module ctl_FSM (
                 ra2exec_ctl_clr=ONE;
                 pc_prectl =PC_KEP;
                 iack = riack;
-                       if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-			    NextState_Sreg0 = `NOI;
+                    NextState_Sreg0 = `NOI;
                 zz_is_nop = 1;
             end
             `RET:
@@ -130,9 +141,9 @@ module ctl_FSM (
                 iack =ZERO;
                 riack =ZERO;
                 if (~rst)
-                NextState_Sreg0 = `RST;
+                    NextState_Sreg0 = `RST;
                 else
-				NextState_Sreg0 = `IDLE;
+                    NextState_Sreg0 = `IDLE;
                 zz_is_nop = ZERO;
             end
             `IRQ:
@@ -145,10 +156,10 @@ module ctl_FSM (
                 pc_prectl =PC_IRQ;
                 iack =ONE;
                 riack=ONE;
-       			if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                NextState_Sreg0 = `IDLE;
+                    NextState_Sreg0 = `IDLE;
                 zz_is_nop = ZERO;
             end
             `RST:
@@ -159,14 +170,13 @@ module ctl_FSM (
                 id2ra_ctl_cls=ZERO;
                 ra2exec_ctl_clr=ONE;
                 pc_prectl=PC_RST;
-                iack=ZERO; 
+                iack=ZERO;
                 zz_is_nop = ONE;
                 riack=ZERO;
                 if (~rst)
-                NextState_Sreg0 = `RST;
+                    NextState_Sreg0 = `RST;
                 else
-                NextState_Sreg0 = `IDLE;
-               
+                    NextState_Sreg0 = `IDLE;
             end
             `LD:
             begin
@@ -177,10 +187,10 @@ module ctl_FSM (
                 ra2exec_ctl_clr=ZERO;
                 pc_prectl =PC_KEP;
                 iack=riack;
-				if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                NextState_Sreg0 = `IDLE;
+                    NextState_Sreg0 = `IDLE;
                 zz_is_nop = ZERO;
             end
             `NOI:
@@ -193,21 +203,21 @@ module ctl_FSM (
                 iack=riack;
                 pc_prectl=PC_IGN;
                 zz_is_nop = ZERO;
-				       if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                if (id_cmd ==ID_NOI)
-                    NextState_Sreg0 = `NOI;
-                else if (id_cmd==ID_CUR)
-                    NextState_Sreg0 = `CUR;
-                else if (id_cmd==ID_MUL)
-                    NextState_Sreg0 = `MUL;
-                else if (id_cmd==ID_LD)
-                    NextState_Sreg0 = `LD;
-                else if (id_cmd==ID_RET)
-                    NextState_Sreg0 = `RET;
-                else
-                    NextState_Sreg0 = `IDLE;
+                    if (id_cmd ==ID_NOI)
+                        NextState_Sreg0 = `NOI;
+                    else if (id_cmd==ID_CUR)
+                        NextState_Sreg0 = `CUR;
+                    else if (id_cmd==ID_MUL)
+                        NextState_Sreg0 = `MUL;
+                    else if (id_cmd==ID_LD)
+                        NextState_Sreg0 = `LD;
+                    else if (id_cmd==ID_RET)
+                        NextState_Sreg0 = `RET;
+                    else
+                        NextState_Sreg0 = `IDLE;
             end
             `D2_MUL_DLY:
             begin
@@ -219,17 +229,17 @@ module ctl_FSM (
                 pc_prectl =PC_KEP;
                 iack=riack;
                 zz_is_nop = ONE;
-       if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                if (delay_counter_Sreg0 == 0)
-                    NextState_Sreg0 = `IDLE;
-                else
-                begin
-                    NextState_Sreg0 = `D2_MUL_DLY;
-                    if (delay_counter_Sreg0 != 0)
-                        next_delay_counter_Sreg0 = delay_counter_Sreg0 - 1;
-                end
+                    if (delay_counter_Sreg0 == 0)
+                        NextState_Sreg0 = `IDLE;
+                    else
+                    begin
+                        NextState_Sreg0 = `D2_MUL_DLY;
+                      //  if (delay_counter_Sreg0 != 0)
+                            next_delay_counter_Sreg0 = delay_counter_Sreg0 - 1;
+                    end
             end
 
             default :	  //the same as RST
@@ -243,16 +253,16 @@ module ctl_FSM (
                 iack=ZERO;
                 riack=ZERO;
                 zz_is_nop = ONE;
-       if (~rst)
-                NextState_Sreg0 = `RST;
+                if (~rst)
+                    NextState_Sreg0 = `RST;
                 else
-                NextState_Sreg0 =`IDLE;
+                    NextState_Sreg0 =`IDLE;
             end
 
         endcase
     end
 
-    always @ (posedge clk/* or negedge rst*/)
+    always @ (posedge clk)
     begin : Sreg0_CurrentState
         if (~rst)
             CurrState_Sreg0 <= `RST;
@@ -260,16 +270,16 @@ module ctl_FSM (
             CurrState_Sreg0 <= NextState_Sreg0;
     end
 
-    always @ (posedge clk /*or negedge rst*/)
+    always @ (posedge clk )
     begin : Sreg0_RegOutput
         if (~rst)
         begin
-            delay_counter_Sreg0 <= 40	;	// Initialization in the reset state or default value required!!
+            delay_counter_Sreg0 <=40;	// Initialization in the reset state or default value required!!
         end
         else
         begin
             delay_counter_Sreg0 <= next_delay_counter_Sreg0;
         end
-    end  
+    end
 endmodule
 

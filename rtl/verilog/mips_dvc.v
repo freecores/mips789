@@ -1,4 +1,17 @@
-`include "include.h"
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v"
 
 module mips_dvc (
 
@@ -26,7 +39,7 @@ module mips_dvc (
         input key2 ,
 
         output reg[31:0]irq_addr_o,  //not registed
-        output irq_req_o
+        output reg irq_req_o
     );
 
     reg r_key1;
@@ -47,7 +60,10 @@ module mips_dvc (
         rr_key2<=r_key2;
     end
 
-
+    initial
+    begin
+        lcd_data<=0;
+    end
     wire sv_byte = (mem_ctl==`DMEM_SB);
     wire ld_byte = mem_ctl==`DMEM_LBS||mem_ctl==`DMEM_LBU;
 
@@ -78,7 +94,7 @@ module mips_dvc (
 
     reg [31:0] cmd ;
 
-    // wire w_txd_ld		=		cmd[0]	;
+    wire global_mask	=		cmd[0]	;
     wire w_rxd_ft		=		cmd[1]	;
 
     assign lcd_rs 		= 		cmd[2]	;
@@ -115,12 +131,13 @@ module mips_dvc (
         begin
             cmd<=0;
             seg7data<=0;
-            tmr_addr<=32'BX	 ;
+            tmr_addr<=32'bX;
             key1_addr<=32'BX;
             key2_addr<=32'BX;
         end
         else
         begin
+
             if (wr_cmd)   cmd<=din;
             if (wr_seg7) seg7data<=din[7:0];
             if (wr_lcddata)	   lcd_data<=din[7:0];
@@ -157,7 +174,7 @@ module mips_dvc (
 
     tmr0 mips_tmr0(
              .clk(clk),
-             .clr( tmr_clr),
+             .clr(tmr_clr),
              .din(din) ,
              .ld(wr_tmr_data),
              .tmr_en(tmr_en),
@@ -175,12 +192,15 @@ module mips_dvc (
     wire key1_req_do = rr_key1 & key1_irq_bit;
     wire key2_req_do = rr_key2 & key2_irq_bit;
 
-    assign irq_req_o = 0;//tmr_req_do;
+    wire irq_req = tmr_req_do | key1_req_do | key2_req_do ;
 
-    always @(*)
-        if 	 (tmr_req_do)         irq_addr_o = tmr_addr;else
+    always @(posedge clk)
+        irq_req_o = global_mask & irq_req;
+
+    always @(posedge clk)
+        if (tmr_req_do)         irq_addr_o = tmr_addr;else
     if (key1_req_do)     irq_addr_o = key1_addr;else
     if (key2_req_do)	  irq_addr_o = key2_addr ;
-    else                      irq_addr_o = 0;
+    else                      irq_addr_o =32'bx;
 
 endmodule

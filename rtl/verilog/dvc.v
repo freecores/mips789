@@ -1,4 +1,17 @@
-`include "include.h" 
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v" 
 
 module tmr0 (
         input clk,
@@ -6,7 +19,7 @@ module tmr0 (
         input[31:0] din ,
         input ld,
         input tmr_en,
-        output tmr_req	  ,
+        output tmr_req,
         output [31:0] cntr_o
     );
 
@@ -36,13 +49,12 @@ module tmr0 (
               .d(w_irq),
               .q(tmr_req)
           );
-
 endmodule
 
 
 module tmr_d(input clr,input clk,input d,output reg q );
 
-    always @(posedge clk or posedge clr)
+    always @(posedge clk)
 
         if      (clr) q<=0;
         else          q<=d|q;
@@ -81,7 +93,7 @@ module seg7led_cv(
                 13: seg = 7'b1011110;
                 14: seg = 7'b1111001;
                 15: seg = 7'b1110001;
-                default: seg = {7{1'b1}};
+				default  seg = 7'bx;
             endcase
         end
     endfunction

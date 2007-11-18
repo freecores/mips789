@@ -14,3 +14,4 @@ convert_sp 0x2000 128
 gensim 0x1500 
 genmif 0x1500
 copy *.mif ..\..\quartus2\*.mif
+#copy *.v ..\MODELSIM\*.v

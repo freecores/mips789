@@ -52,13 +52,7 @@ void sort(DATA_TYPE*a,int num)
 DATA_TYPE array[16]={123,234,122,111,222,122,332,111,11,99,11,12,43,23,43,45};
 
 
-    /*
-void initial_array(DATA_TYPE*a,int num)
-{
-    int i ;
-    for(i=0;i<num;++i)
-    array[i]=DATA_MAX-array[i];
-} */
+
 char str[100];
 void main2()
 {

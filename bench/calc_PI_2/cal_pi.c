@@ -1,3 +1,16 @@
+/****************************************************************** 
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
 /* This source code is baseed on a 16bit CPU Aquarius in opencores.org */
 /* Thanks the author. */
 /* modified by Liwei 2007-10-13 */
@@ -23,7 +36,7 @@ void          calc_pi(void);
 void          disp_oct4(unsigned short x);
 void          disp_pi(void);
 
-#define  MAXFIGURE ((1024/4)+2) /* should be (N*8)+2 to display correctly */
+#define  MAXFIGURE ((1100*2/4)+2) /* should be (N*8)+2 to display correctly */
 
 unsigned short PI[MAXFIGURE];
 unsigned short T1[MAXFIGURE];
@@ -35,9 +48,8 @@ unsigned short T3[MAXFIGURE];
 /* ============= */
 void main_sh(void)
 {
-    unsigned char mes[] = "Calculating.....\n";
 
-    uart0_putstr(mes);
+    uart0_putstr("Calculating.....   ");
     calc_pi();
     disp_pi();
 }
@@ -206,8 +218,8 @@ int longdiv(unsigned short *a, unsigned short b, unsigned short *c)
 void disp_pi(void)
 {
     int i, j;
-    uart0_putstr("Calculating DONE\n");
-    uart0_putstr("Constant Pi = 3.");
+    uart0_putstr("Calculating DONE  ");
+    uart0_putstr("Pi = 3.");
   /*  while(1)*/
     {
         for (i = 0; i < (MAXFIGURE - 2) / 8; i++)
@@ -241,35 +253,6 @@ void disp_oct4(unsigned short x)
     uart0_putc((char)(d+0x30));
     uart0_putc((char)(x+0x30));    
 }
-/*
-void print_num(unsigned long num)
-{
-    unsigned long digit,offset ;
-    for(offset=1000;offset;offset/=10)
-    {
-        digit=num/offset ;
-        uart0_putc('0'+digit);
-        num-=digit*offset ;
-    }
-}
-
-long a=10000,b=0,c=56,d=0,e=0,f[57]={0},g=0 ;
-
-void cal_PI(void)
-{
-    uart0_putstr("\nPI = ");
-    a=10000 ;
-    b=0 ;
-    c=56 ;
-    d=0 ;
-    e=0 ;
-    g=0 ;
-    for(;b-c;)f[b++]=a/5 ;
-    for(;d=0,g=c*2;c-=14,print_num(e+d/a),e=d%a)
-    for(b=c;d+=f[b]*a,f[b]=d%--g,d/=g--,--b;d*=b);
-    uart0_putc('\n');
-}
-*/
 
 #ifdef MIPS
 main2()
@@ -282,13 +265,11 @@ main()
 
 unsigned char i=0;
 
-   uart0_putstr("Hello CPU World ,this is  MIPS789...");
-   uart0_putstr("Calculating.....\n");
-
-
 
 for(;;)
-{    calc_pi();
+{
+ uart0_putstr("Hello CPU World ,this is  MIPS789...\n");
+calc_pi();
     disp_pi();
 #ifdef MIPS
 dis_byte(i++);

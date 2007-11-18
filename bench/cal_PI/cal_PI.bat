@@ -14,4 +14,5 @@ convert_sp
 gensim 
 genmif 
 copy *.mif ..\..\quartus2\*.mif
+#copy *.v ..\MODELSIM\*.v
 #ser_dld 9600 COM1 N

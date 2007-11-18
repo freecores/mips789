@@ -1,18 +1,31 @@
-`include "include.h"
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
 
-module cal_cpi (		 	   //just use for calculate CPI(Cycle Per Instruction) for stimulation
+`include "mips789_defs.v"
+
+module cal_cpi (		 	   //just used to calculate CPI(Cycles Per Instruction) for stimulation
         input clk,
         input rst,
         input is_nop,
         output reg [100:0] ins_no,
         output reg [100:0] clk_no);
 
-    always @(posedge clk /*or negedge rst*/ )
+    always @(posedge clk  )
         if (~rst )clk_no=0;
         else
             clk_no = 1+clk_no;
 
-    always @(posedge clk /*or negedge rst*/)
+    always @(posedge clk )
         if (~rst )ins_no=0;
         else if (~is_nop)
             ins_no = 1+ins_no;

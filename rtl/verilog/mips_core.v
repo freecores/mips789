@@ -1,4 +1,17 @@
-`include "include.h"
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v"
 
 module mips_core (
         clk,irq_i,rst,cop_dout,irq_addr,

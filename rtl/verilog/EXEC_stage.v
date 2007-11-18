@@ -1,4 +1,17 @@
-`include "include.h"
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v"
 
 module exec_stage
     (
@@ -61,8 +74,6 @@ module exec_stage
                 .ctl(alu_func),
                 .rst(rst)
             );
-
-
 
     add32 add4
           (
@@ -419,14 +430,20 @@ module muldiv(ready,rst,op1,op2,clk,dout,func);
     assign  divider = op2;
     assign sign = ((func==`ALU_MULT)||(func==`ALU_DIV));
 
-
+    initial
+    begin
+        hi=0;
+        lo=0;
+    end
     always @( posedge clk /*or negedge rst */)
         if (~rst)
         begin
             mul_bit=0;
             div_bit=0;
-            hi = 0;
-            lo = 0;
+            /*
+            hi=0;
+            lo=0;
+            */
             negative_output = 0;
         end
         else
@@ -508,7 +525,7 @@ module muldiv(ready,rst,op1,op2,clk,dout,func);
 endmodule
 
 //creatied by Zhangfeifei
-//modified ny Liwei
+//modified by Liwei
 module muldiv_ff
     (
         clk_i,rst_i,
@@ -559,6 +576,7 @@ module muldiv_ff
     reg           add1;  //if the quotient will add 1 at the end of the divide operation
     reg           addop2; //if the remainder will add op2 at the end of the divide operation
     reg           addnop2;//if the remainder will add ~op2+1 at the end of the divide operation
+
 
     always @( posedge clk_i  /*or negedge rst_i*/)
     begin

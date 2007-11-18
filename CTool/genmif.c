@@ -1,3 +1,16 @@
+/****************************************************************** 
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+ 
 #include "stdio.h"
 #include "stdlib.h"
 #define DEFAULT_LEN  "2048"
@@ -18,13 +31,13 @@ unsigned int par2u32(char*par)
     if((0==strncmp(par,"0x",2))||(0==strncmp(par,"0X",2)))
     for(i=2;;++i)
     {
-        if(par[i]=='\0')return ret ;
+        if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ;
         ret=ret*16+hex2byte(par[i]);
     }
     else 
     for(i=0;;++i)
     {
-        if(par[i]=='\0')return ret ;
+        if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ;
         ret=ret*10+hex2byte(par[i]);
     }
     return 0 ;

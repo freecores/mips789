@@ -1,3 +1,17 @@
+/****************************************************************** 
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+ 
+ 
 #include "dvc_lib.h"
 void __inline dis_byte(unsigned char data)
 {
@@ -47,8 +61,16 @@ unsigned char enqire_rxd(void)
 
 void uart0_putstr(char*str)
 {
-    while(1)if(*str=='\0')return ;
-    else uart0_putc(*str++);
+    while(1){
+    if(*str=='\0')return ;
+    else if(*str=='\n')
+    	{
+    		uart0_putc('\r');
+    		uart0_putc(*str++);
+    	}
+    	else 
+    		uart0_putc(*str++);
+		}
 }
 
 void __inline led1_on(void)
@@ -151,7 +173,8 @@ void download()
     uart0_putstr((char*)"This is MIPS789 BOOTLOADER\n");
     dis_byte(0xcc);
     //attenions please'!'
-    while(uart0_getc()!='!')uart0_putc((unsigned char)('O'));
+    while(uart0_getc()!='!');
+    uart0_putc((unsigned char)('O'));
     //'O'k .i am ready
     while(1)
     {

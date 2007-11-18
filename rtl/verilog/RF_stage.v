@@ -1,4 +1,17 @@
-`include "include.h"		   
+/******************************************************************
+ *                                                                * 
+ *    Author: Liwei                                               * 
+ *                                                                * 
+ *    This file is part of the "mips789" project.                 * 
+ *    Downloaded from:                                            * 
+ *    http://www.opencores.org/pdownloads.cgi/list/mips789        * 
+ *                                                                * 
+ *    If you encountered any problem, please contact me via       * 
+ *    Email:mcupro@opencores.org  or mcupro@163.com               * 
+ *                                                                * 
+ ******************************************************************/
+
+`include "mips789_defs.v"		   
 
 module rf_stage (
         clk,irq_i,rst_i,wb_we_i,cmp_ctl_i,
@@ -75,6 +88,7 @@ module rf_stage (
     wire NET6658;
     wire NET7774;
     wire NET904;
+
     wire [3:0] BUS1013;
     wire [31:0] BUS2085;
     wire [4:0] BUS3236;
@@ -83,6 +97,8 @@ module rf_stage (
     wire [31:0] BUS6061;
     wire [31:0] BUS6095;
 
+    wire [100:0] CLK_NO;
+    wire [100:0] INS_NO;
 
     cal_cpi CAL_CPI
             (
@@ -95,7 +111,7 @@ module rf_stage (
 
 
 
-    ctl_FSM MIAN_FSM
+    ctl_FSM MAIN_FSM
             (
                 .clk(clk),
                 .iack(iack_o),
