@@ -1,1 +1,0 @@
-copy *.* c:\windows\*.*
