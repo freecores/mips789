@@ -37,60 +37,38 @@ module mips_top (
     wire [31:0] pc;
     wire [3:0] wr_en;
     wire CLK;
-    reg r_rst;
+    reg r_rst,rr_rst;
 
-
-    //wire sys_rst=rst;
     always @(posedge CLK)
-            if (rst) r_rst<=1'b1; else r_rst<=1'b0;
-    //wire sys_rst = r_rst;
-
-    reg rr_rst;
+ 	 r_rst<=rst;
+  
     always @(posedge CLK)
-        rr_rst<=r_rst;
+     rr_rst<=r_rst;
 
     wire sys_rst = rr_rst;
 
-    //assign CLK = clk;
-`ifdef ALTERA	  
-
+`ifdef ALTERA
     pll50 Ipll(
               .inclk0(clk),
               .c0(CLK)
-          );
-`else 
-    assign CLK = clk;
-`endif
-
-`ifdef ALTERA	  
-
-    mem_array ram_8k
-              (
-                  .clk(CLK),
-                  .din(data2mem),
-                  .dout(data2core),
-                  .ins_o(ins2core),
-                  .pc_i(pc),
-                  .data_addr_i(mem_Addr),
-                  .wren(wr_en)
-              );
-
+          );//clock for FPGA	  
+    mem_array ram_8k//FPGA RAM
 `else 	 
-
-    sim_mem_array sim_array (
-                      .clk(CLK),
+	assign CLK = clk;//clock for simultation
+    sim_mem_array sim_array//memory for simultion 
+`endif
+                      (
+					  .clk(CLK),
                       .pc_i(pc),
                       .ins_o(ins2core),
                       .wren(wr_en),
                       .din(data2mem),
                       .data_addr_i(mem_Addr),
                       .dout(data2core)
-                  );
-`endif
+                      );
 
     mips_sys isys
              (
-
                  .zz_addr_o(mem_Addr),
                  .zz_din(data2core),
                  .zz_dout(data2mem),
@@ -118,5 +96,4 @@ module mips_top (
                  .key1(key1),
                  .key2(key2)
              );
-
 endmodule

@@ -180,7 +180,7 @@
  `define   COUNTER_VALUE3         (`COUNTER_VALUE1+3)  
 
 
-//this DEBUG model
+//this is DEBUG model
 
 //`define   ALTERA               
 

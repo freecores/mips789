@@ -150,7 +150,7 @@ module big_alu(clk,rst,a,b,c,ctl);
     wire [31:0] alu_c;
     wire [31:0] shift_c;
 
-    assign c =mul_div_c | alu_c | shift_c ;//save the pc to register
+    assign c = mul_div_c | alu_c | shift_c ;
 
     muldiv_ff muldiv_ff(
                   .clk_i(clk),
@@ -162,8 +162,8 @@ module big_alu(clk,rst,a,b,c,ctl);
                   .res(mul_div_c)
               );
 
-    /*
-    muldiv mips_muldiv(
+/*
+	muldiv mips_muldiv(
                .ready(busy),
                .rst(rst),
                .op1(a),
@@ -172,21 +172,21 @@ module big_alu(clk,rst,a,b,c,ctl);
                .dout(mul_div_c),
                .func(ctl)
            );
-    */
-    alu mips_alu(
-            .a(a),
-            .b(b),
-            .alu_out(alu_c),
-            .alu_func(ctl)
-
-        );
-
+*/
     shifter_tak mips_shifter(
                     .a(b),
                     .shift_out(shift_c),
                     .shift_func(ctl),
                     .shift_amount(a)
                 );
+
+
+    alu mips_alu(
+            .a(a),
+            .b(b),
+            .alu_out(alu_c),
+            .alu_func(ctl)
+        );
 
 endmodule
 
@@ -261,10 +261,38 @@ module alu (a,b,alu_out,alu_func);
                 sum={a[31],a}+~{b[31],b}+33'h0_0000_0001;
                 alu_out={31'h0000_0000,sum[32]};
             end
-            default : alu_out=32'h0;
+
+/*
+			`ALU_SLL:	alu_out = a<<b[4:0];
+        	`ALU_SRL:   alu_out = a>>b[4:0];
+			`ALU_SRA:	alu_out=~(~a>>b[4:0]);
+			//the three operations is done in shifter_tak or shift_ff
+*/
+            
+			default : alu_out=32'h0;
         endcase
     end
 endmodule
+
+
+module shifter_ff(
+          input [31:0] a,
+            output reg [31:0] shift_out,
+            input [4:0] shift_func,//connect to alu_func_ctl
+            input [31:0] shift_amount//connect to b
+        );
+
+    always @ (*)
+    begin
+        case( shift_func )
+		`ALU_SLL:	shift_out = a<<shift_amount;
+        `ALU_SRL:   shift_out = a>>shift_amount;
+		`ALU_SRA:	shift_out=~(~a>> shift_amount);
+        default		shift_out='d0;
+		endcase
+    end
+endmodule
+
 
 module
     shifter_tak(
@@ -275,8 +303,8 @@ module
         );
 
     always @ (*)
-    begin
-        if( shift_func == `ALU_SLL  )
+        case( shift_func )
+		`ALU_SLL: 
         begin
             case ( shift_amount[4:0] )
                 5'b00000: shift_out=a;
@@ -311,9 +339,11 @@ module
                 5'b11101: shift_out={a[2:0],29'b0};
                 5'b11110: shift_out={a[1:0],30'b0};
                 5'b11111: shift_out={a[0],31'b0};
-                default shift_out ='d0;
+                default shift_out =32'bx;//never in this case
             endcase
-        end else if (shift_func== `ALU_SRL) begin
+        end
+		`ALU_SRL :
+		begin
             case (shift_amount[4:0])
                 5'b00000: shift_out=a;
                 5'b00001: shift_out={1'b0,a[31:1]};
@@ -347,10 +377,10 @@ module
                 5'b11101: shift_out={29'b0,a[31:29]};
                 5'b11110: shift_out={30'b0,a[31:30]};
                 5'b11111: shift_out={31'b0,a[31:31]};
-                default : shift_out = 0;
+                default : shift_out = 32'bx;//never in this case
             endcase
-        end else
-            if (shift_func==`ALU_SRA)
+        end 
+	    `ALU_SRA:
             begin// SHIFT_RIGHT_SIGNED
                 case ( shift_amount[4:0])
                     5'b00000: shift_out=a;
@@ -385,12 +415,12 @@ module
                     5'b11101: shift_out={{29{a[31]}},a[31:29]};
                     5'b11110: shift_out={{30{a[31]}},a[31:30]};
                     5'b11111: shift_out={{31{a[31]}},a[31:31]};
-                    default shift_out='d0;
+                    default shift_out=32'bx;//never in this case
                 endcase
             end
-            else 			 shift_out='d0;
-    end
-endmodule
+           default			shift_out='d0;
+   endcase
+   endmodule
 
 module muldiv(ready,rst,op1,op2,clk,dout,func);
     input         clk,rst;
@@ -528,9 +558,13 @@ endmodule
 //modified by Liwei
 module muldiv_ff
     (
-        clk_i,rst_i,
-        op_type,op1,op2,
-        rdy,res
+    input         clk_i,
+    input         rst_i,
+    input  [4:0]  op_type,
+    input  [31:0] op1,
+    input  [31:0] op2,
+    output [31:0] res,
+    output        rdy
     );
 
     parameter  OP_MULT  = `ALU_MULT;
@@ -539,22 +573,10 @@ module muldiv_ff
     parameter  OP_DIVU  = `ALU_DIVU;
     parameter  OP_MFHI  = `ALU_MFHI;
     parameter  OP_MFLO  = `ALU_MFLO;
-
     parameter  OP_MTHI  = `ALU_MTHI;
     parameter  OP_MTLO  = `ALU_MTLO;
-
     parameter  OP_NONE  = `ALU_NOP;
-
-    input         clk_i;
-    input         rst_i;
-    input  [4:0]  op_type;
-    input  [31:0] op1;
-    input  [31:0] op2;
-    output [31:0] res;
-    output        rdy;
-
     reg           rdy;
-
     reg    [64:0] hilo;
     reg    [32:0] op2_reged;
     reg    [5:0]  count;
@@ -592,7 +614,6 @@ module muldiv_ff
             start          = 1'bx;
             sign           = 1'bx;
             mul            = 1'bx;
-
             finish         = 1'bx;
             add1           = 1'bx;
             addop2         = 1'bx;
