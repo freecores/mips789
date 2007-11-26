@@ -14,19 +14,29 @@
  
 
 #include "..\..\clib\dvc_lib.h"
-
+void cnop(void){
+return;}
 void main2()
 {
-    unsigned char i=0 ;
-    
-    while(1)
-    { 
-        dis_byte(i++);
-    //   dly_us(100000);
-        if (i%2)led1_on();else led1_off();
-        if (i%2)led2_on();else led2_off();
-    //uart0_putc('!');
-
-    }
+	unsigned int addr=0x5c;
+		TMR_IRQ_ADDR  = addr;
+ KEY1_IRQ_ADDR  = addr;
+  KEY2_IRQ_ADDR = addr;
+    led1_off(); 
+   set_bit(CMD,0);
+   set_bit(CMD,31);
+   set_bit(CMD,29);
+   set_bit(CMD,30);
+		while(1){
+      led2_on();    led2_off();
+      }
 }
-void ISR(void){}
+void ISR(void){
+unsigned int mask=0;
+int i=100;
+while(i--){
+	led1_on();
+led1_off();
+}
+CMD=0;
+}

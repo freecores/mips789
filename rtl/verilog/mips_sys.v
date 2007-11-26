@@ -102,15 +102,12 @@ module mips_sys (
                   .irq_addr(irq_addr),
                   .irq_i(w_irq),
                   .rst(rst),
-
-
                   .zz_addr_o(zz_addr_o),
                   .zz_din(zz_din),
                   .zz_dout(zz_dout),
                   .zz_ins_i(zz_ins_i),
                   .zz_pc_o(zz_pc_o),
                   .zz_wr_en_o(zz_wr_en_o)
-
               );
 
     mips_dvc imips_dvc(

@@ -12,15 +12,21 @@
 */
 
 #define FRQ 50*1000*1000
-#define LCDDATA   		   *(volatile unsigned char*)0X80000024 
-#define SEG7LED  		   *(volatile unsigned char*)0X8000001C 		 
-#define UART0_DATA         *(volatile unsigned char*)0x80000028
-#define CMD         	   *(volatile unsigned int* )0x80000014
-#define STATUS             *(volatile unsigned int* )0x80000018	
-#define TMR_DATA           *(volatile unsigned int* )0x80000034	
+#define LCDDATA   	      	   *(volatile unsigned char*)0X80000024 
+#define SEG7LED  		           *(volatile unsigned char*)0X8000001C 		 
+#define UART0_DATA             *(volatile unsigned char*)0x80000028
+#define CMD               	   *(volatile unsigned int* )0x80000014
+#define STATUS                 *(volatile unsigned int* )0x80000018	
+#define TMR_DATA               *(volatile unsigned int* )0x80000034
+
+#define TMR_IRQ_ADDR         	 *(volatile unsigned int* )0x80000028
+#define KEY1_IRQ_ADDR          *(volatile unsigned int* )0x8000002c	
+#define KEY2_IRQ_ADDR          *(volatile unsigned int* )0x80000030	
+
 
 #define set_bit(a,b)		a=a|(1<<b)
 #define clr_bit(a,b)		a=a&(~(1<<b))
+#define chk_bit(a,b)       (a&(1<<b))
 
 #define  LINE1     0
 #define  LINE2     1
@@ -64,4 +70,5 @@ unsigned char get_key2();
 void tmr_en(unsigned int cntr);
 void tmr_disen(void);
 void tmr_clr(void);
+//void set_irq_mask(unsigned int mask,unsigned int addr);
 

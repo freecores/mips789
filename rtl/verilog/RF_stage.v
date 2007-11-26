@@ -197,7 +197,15 @@ module rf_stage (
                .rd_i(BUS5421),
                .rd_o(rd_index_o),
                .rt_i(rt_n_o)
-           );
+           );/*
+    wire bank_sel;
+    dly3clk bank_sel_dly
+            (
+                .r1_i(iack_o),
+                .r1_o(bank_sel),
+                .clk(clk),
+                .rst(rst_i)
+            );*/
 
     reg_array reg_bank
               (
@@ -209,7 +217,8 @@ module rf_stage (
                   .rdaddress_a(BUS3237),
                   .rdaddress_b(BUS3236),
                   .wraddress(wb_addr_i),
-                  .wren(wb_we_i)
+                  .wren(wb_we_i)/*,
+                  .bank_sel(1'b0)*/
               );
 
     fwd_mux rf_fwd_rt

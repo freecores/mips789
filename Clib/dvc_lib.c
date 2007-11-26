@@ -219,3 +219,47 @@ unsigned char get_key2()
 {
     return(STATUS&(1<<1))?0:1 ;
 }
+
+
+/*
+    //interrupt control
+    wire tmr_irq_bit  =       cmd[31] ;
+    wire key1_irq_bit =       cmd[30] ;
+    wire key2_irq_bit =       cmd[29] ;
+
+*/
+/*
+void set_irq_mask(unsigned int mask,unsigned int addr)
+{
+	unsigned int temp = mask;
+	
+	
+
+
+	if (chk_bit(mask,0))
+		set_bit(CMD,0);
+		else 
+    clr_bit(CMD,0); 
+    
+	if (chk_bit(mask,31))
+		set_bit(CMD,31);
+		else 
+    clr_bit(CMD,31); 
+    
+   	if (chk_bit(mask,30))
+		set_bit(CMD,30);
+		else 
+    clr_bit(CMD,30); 
+    
+   	if (chk_bit(mask,29))
+		set_bit(CMD,29);
+		else 
+    clr_bit(CMD,29); 
+
+      
+	TMR_IRQ_ADDR  = addr;
+ KEY1_IRQ_ADDR  = addr;
+  KEY2_IRQ_ADDR = addr;
+}
+	
+*/

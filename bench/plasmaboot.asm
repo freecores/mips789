@@ -32,11 +32,36 @@ $BSS_CLEAR:
    slt   $3,$4,$5
    bnez  $3,$BSS_CLEAR
    addiu $4,$4,4
-
+nop
+nop
    jal   main2
    nop
 $L1:
+		nop
    j $L1
-
+		nop
+		nop
+		nop
+		nop
+# som NOP make sure the results had write back
    .set reorder
 	.end	entry
+
+
+
+###################################################
+   #address 0x44
+   .global interrupt_service_routine
+   .ent interrupt_service_routine
+interrupt_service_routine:
+   .set noreorder
+   .set noat
+	nop  #do not save registers for this is just fpr simulation
+  jal   ISR
+	nop
+   mtc0  $0,$0  #return from interrupt
+	nop
+nop
+   .end interrupt_service_routine
+   .set at
+###################################################

@@ -653,6 +653,7 @@ module decoder(
             'd3://JAL imm26({pc[31:28],imm26,00})
             begin
                 //replaceID  = `JAL ;
+
                 ext_ctl = `EXT_J;
                 rd_sel = `RD_R31;
                 cmp_ctl = `CMP_NOP;
@@ -894,6 +895,7 @@ module decoder(
 
                     'd4://mtc0 rt,rd // CPR[rd] = GPR[rt] //follow the mips32 definition
                     begin	 //return from interrupt
+                        $display("mtco");
                         //replaceID  = `MTC0;
                         ext_ctl = `EXT_NOP;
                         rd_sel = `RD_NOP;

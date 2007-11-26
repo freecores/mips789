@@ -104,18 +104,21 @@
  `define   ALU_NOP                0                   
  `define   ALU_MTLO               30                  
  `define   ALU_MTHI               31                  
- `define   ALU_MULTU              8                   
+ `define   ALU_MULTU              8  
+
  `define   PC_IGN                 1                   
  `define   PC_KEP                 2                   
  `define   PC_IRQ                 4                   
- `define   PC_RST                 8                   
+ `define   PC_RST                 8    
+
  `define   PC_J                   1                   
  `define   PC_JR                  2                   
  `define   PC_BC                  4                   
  `define   PC_NEXT                5                   
  `define   PC_NOP                 0                   
  `define   PC_RET                 6                   
- `define   PC_SPC                 6                   
+ `define   PC_SPC                 6  
+
  `define   RF                     13                  
  `define   EXEC                   10                  
  `define   DMEM                   4                   

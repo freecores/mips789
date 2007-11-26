@@ -162,17 +162,17 @@ module big_alu(clk,rst,a,b,c,ctl);
                   .res(mul_div_c)
               );
 
-/*
-	muldiv mips_muldiv(
-               .ready(busy),
-               .rst(rst),
-               .op1(a),
-               .op2(b),
-               .clk(clk),
-               .dout(mul_div_c),
-               .func(ctl)
-           );
-*/
+    /*
+    	muldiv mips_muldiv(
+                   .ready(busy),
+                   .rst(rst),
+                   .op1(a),
+                   .op2(b),
+                   .clk(clk),
+                   .dout(mul_div_c),
+                   .func(ctl)
+               );
+    */
     shifter_tak mips_shifter(
                     .a(b),
                     .shift_out(shift_c),
@@ -262,34 +262,34 @@ module alu (a,b,alu_out,alu_func);
                 alu_out={31'h0000_0000,sum[32]};
             end
 
-/*
-			`ALU_SLL:	alu_out = a<<b[4:0];
-        	`ALU_SRL:   alu_out = a>>b[4:0];
-			`ALU_SRA:	alu_out=~(~a>>b[4:0]);
-			//the three operations is done in shifter_tak or shift_ff
-*/
-            
-			default : alu_out=32'h0;
+            /*
+            			`ALU_SLL:	alu_out = a<<b[4:0];
+                    	`ALU_SRL:   alu_out = a>>b[4:0];
+            			`ALU_SRA:	alu_out=~(~a>>b[4:0]);
+            			//the three operations is done in shifter_tak or shift_ff
+            */
+
+            default : alu_out=32'h0;
         endcase
     end
 endmodule
 
 
 module shifter_ff(
-          input [31:0] a,
-            output reg [31:0] shift_out,
-            input [4:0] shift_func,//connect to alu_func_ctl
-            input [31:0] shift_amount//connect to b
-        );
+        input [31:0] a,
+        output reg [31:0] shift_out,
+        input [4:0] shift_func,//connect to alu_func_ctl
+        input [31:0] shift_amount//connect to b
+    );
 
     always @ (*)
     begin
         case( shift_func )
-		`ALU_SLL:	shift_out = a<<shift_amount;
-        `ALU_SRL:   shift_out = a>>shift_amount;
-		`ALU_SRA:	shift_out=~(~a>> shift_amount);
-        default		shift_out='d0;
-		endcase
+            `ALU_SLL:	shift_out = a<<shift_amount;
+            `ALU_SRL:   shift_out = a>>shift_amount;
+            `ALU_SRA:	shift_out=~(~a>> shift_amount);
+            default		shift_out='d0;
+        endcase
     end
 endmodule
 
@@ -303,8 +303,8 @@ module
         );
 
     always @ (*)
-        case( shift_func )
-		`ALU_SLL: 
+    case( shift_func )
+        `ALU_SLL:
         begin
             case ( shift_amount[4:0] )
                 5'b00000: shift_out=a;
@@ -342,8 +342,8 @@ module
                 default shift_out =32'bx;//never in this case
             endcase
         end
-		`ALU_SRL :
-		begin
+        `ALU_SRL :
+        begin
             case (shift_amount[4:0])
                 5'b00000: shift_out=a;
                 5'b00001: shift_out={1'b0,a[31:1]};
@@ -379,48 +379,48 @@ module
                 5'b11111: shift_out={31'b0,a[31:31]};
                 default : shift_out = 32'bx;//never in this case
             endcase
-        end 
-	    `ALU_SRA:
-            begin// SHIFT_RIGHT_SIGNED
-                case ( shift_amount[4:0])
-                    5'b00000: shift_out=a;
-                    5'b00001: shift_out={a[31],a[31:1]};
-                    5'b00010: shift_out={{2{a[31]}},a[31:2]};
-                    5'b00011: shift_out={{3{a[31]}},a[31:3]};
-                    5'b00100: shift_out={{4{a[31]}},a[31:4]};
-                    5'b00101: shift_out={{5{a[31]}},a[31:5]};
-                    5'b00110: shift_out={{6{a[31]}},a[31:6]};
-                    5'b00111: shift_out={{7{a[31]}},a[31:7]};
-                    5'b01000: shift_out={{8{a[31]}},a[31:8]};
-                    5'b01001: shift_out={{9{a[31]}},a[31:9]};
-                    5'b01010: shift_out={{10{a[31]}},a[31:10]};
-                    5'b01011: shift_out={{11{a[31]}},a[31:11]};
-                    5'b01100: shift_out={{12{a[31]}},a[31:12]};
-                    5'b01101: shift_out={{13{a[31]}},a[31:13]};
-                    5'b01110: shift_out={{14{a[31]}},a[31:14]};
-                    5'b01111: shift_out={{15{a[31]}},a[31:15]};
-                    5'b10000: shift_out={{16{a[31]}},a[31:16]};
-                    5'b10001: shift_out={{17{a[31]}},a[31:17]};
-                    5'b10010: shift_out={{18{a[31]}},a[31:18]};
-                    5'b10011: shift_out={{19{a[31]}},a[31:19]};
-                    5'b10100: shift_out={{20{a[31]}},a[31:20]};
-                    5'b10101: shift_out={{21{a[31]}},a[31:21]};
-                    5'b10110: shift_out={{22{a[31]}},a[31:22]};
-                    5'b10111: shift_out={{23{a[31]}},a[31:23]};
-                    5'b11000: shift_out={{24{a[31]}},a[31:24]};
-                    5'b11001: shift_out={{25{a[31]}},a[31:25]};
-                    5'b11010: shift_out={{26{a[31]}},a[31:26]};
-                    5'b11011: shift_out={{27{a[31]}},a[31:27]};
-                    5'b11100: shift_out={{28{a[31]}},a[31:28]};
-                    5'b11101: shift_out={{29{a[31]}},a[31:29]};
-                    5'b11110: shift_out={{30{a[31]}},a[31:30]};
-                    5'b11111: shift_out={{31{a[31]}},a[31:31]};
-                    default shift_out=32'bx;//never in this case
-                endcase
-            end
-           default			shift_out='d0;
-   endcase
-   endmodule
+        end
+        `ALU_SRA:
+        begin// SHIFT_RIGHT_SIGNED
+            case ( shift_amount[4:0])
+                5'b00000: shift_out=a;
+                5'b00001: shift_out={a[31],a[31:1]};
+                5'b00010: shift_out={{2{a[31]}},a[31:2]};
+                5'b00011: shift_out={{3{a[31]}},a[31:3]};
+                5'b00100: shift_out={{4{a[31]}},a[31:4]};
+                5'b00101: shift_out={{5{a[31]}},a[31:5]};
+                5'b00110: shift_out={{6{a[31]}},a[31:6]};
+                5'b00111: shift_out={{7{a[31]}},a[31:7]};
+                5'b01000: shift_out={{8{a[31]}},a[31:8]};
+                5'b01001: shift_out={{9{a[31]}},a[31:9]};
+                5'b01010: shift_out={{10{a[31]}},a[31:10]};
+                5'b01011: shift_out={{11{a[31]}},a[31:11]};
+                5'b01100: shift_out={{12{a[31]}},a[31:12]};
+                5'b01101: shift_out={{13{a[31]}},a[31:13]};
+                5'b01110: shift_out={{14{a[31]}},a[31:14]};
+                5'b01111: shift_out={{15{a[31]}},a[31:15]};
+                5'b10000: shift_out={{16{a[31]}},a[31:16]};
+                5'b10001: shift_out={{17{a[31]}},a[31:17]};
+                5'b10010: shift_out={{18{a[31]}},a[31:18]};
+                5'b10011: shift_out={{19{a[31]}},a[31:19]};
+                5'b10100: shift_out={{20{a[31]}},a[31:20]};
+                5'b10101: shift_out={{21{a[31]}},a[31:21]};
+                5'b10110: shift_out={{22{a[31]}},a[31:22]};
+                5'b10111: shift_out={{23{a[31]}},a[31:23]};
+                5'b11000: shift_out={{24{a[31]}},a[31:24]};
+                5'b11001: shift_out={{25{a[31]}},a[31:25]};
+                5'b11010: shift_out={{26{a[31]}},a[31:26]};
+                5'b11011: shift_out={{27{a[31]}},a[31:27]};
+                5'b11100: shift_out={{28{a[31]}},a[31:28]};
+                5'b11101: shift_out={{29{a[31]}},a[31:29]};
+                5'b11110: shift_out={{30{a[31]}},a[31:30]};
+                5'b11111: shift_out={{31{a[31]}},a[31:31]};
+                default shift_out=32'bx;//never in this case
+            endcase
+        end
+        default			shift_out='d0;
+    endcase
+endmodule
 
 module muldiv(ready,rst,op1,op2,clk,dout,func);
     input         clk,rst;
@@ -557,14 +557,10 @@ endmodule
 //creatied by Zhangfeifei
 //modified by Liwei
 module muldiv_ff
-    (
-    input         clk_i,
-    input         rst_i,
-    input  [4:0]  op_type,
-    input  [31:0] op1,
-    input  [31:0] op2,
-    output [31:0] res,
-    output        rdy
+    (        clk_i,rst_i,
+             op_type,op1,op2,
+             rdy,res
+
     );
 
     parameter  OP_MULT  = `ALU_MULT;
@@ -576,6 +572,15 @@ module muldiv_ff
     parameter  OP_MTHI  = `ALU_MTHI;
     parameter  OP_MTLO  = `ALU_MTLO;
     parameter  OP_NONE  = `ALU_NOP;
+
+    input         clk_i;
+    input         rst_i;
+    input  [4:0]  op_type;
+    input  [31:0] op1;
+    input  [31:0] op2;
+    output [31:0] res;
+    output        rdy;
+
     reg           rdy;
     reg    [64:0] hilo;
     reg    [32:0] op2_reged;

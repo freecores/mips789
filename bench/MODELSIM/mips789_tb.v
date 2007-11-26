@@ -44,12 +44,13 @@ initial
 	begin
 clk = 0; 
 rst = 1;
-key1= 1;
-key2= 1;
+key1= 0;
+key2= 0;
 ser_rxd = 1;
 #10 rst = 0;
 #10 rst = 1;
-
+#100000 key1=1;
+#10000 key1=0;
 
 end
 

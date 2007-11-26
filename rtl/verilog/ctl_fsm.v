@@ -237,8 +237,8 @@ module ctl_FSM (
                     else
                     begin
                         NextState_Sreg0 = `D2_MUL_DLY;
-                      //  if (delay_counter_Sreg0 != 0)
-                            next_delay_counter_Sreg0 = delay_counter_Sreg0 - 1;
+                        //  if (delay_counter_Sreg0 != 0)
+                        next_delay_counter_Sreg0 = delay_counter_Sreg0 - 1;
                     end
             end
 

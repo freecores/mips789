@@ -72,3 +72,4 @@ void main2()
 }
 
 
+void ISR(void){}

@@ -1,7 +1,7 @@
 #-- Synplicity, Inc.
 #-- Version Synplify Pro 8.1
-#-- Project file G:\mips789\synplify_prj\mips789.prj
-#-- Written on Thu Nov 20 08:57:16 2008
+#-- Project file F:\mips789\synplify_prj\mips789.prj
+#-- Written on Tue Nov 25 18:51:24 2008
 
 
 #add_file options
@@ -20,6 +20,13 @@ add_file -verilog "../rtl/verilog/mips_uart.v"
 add_file -verilog "../rtl/verilog/ulit.v"
 add_file -verilog "../rtl/verilog/altera/fifo512_cyclone.v"
 add_file -verilog "../rtl/verilog/mips789_defs.v"
+add_file -verilog "../rtl/verilog/mips_top.v"
+add_file -verilog "../rtl/verilog/ram_module.v"
+add_file -verilog "../rtl/verilog/altera/pll50.v"
+add_file -verilog "../rtl/verilog/altera/ram2048x8_0.v"
+add_file -verilog "../rtl/verilog/altera/ram2048x8_1.v"
+add_file -verilog "../rtl/verilog/altera/ram2048x8_2.v"
+add_file -verilog "../rtl/verilog/altera/ram2048x8_3.v"
 
 
 #implementation: "rev_1"
@@ -35,8 +42,8 @@ set_option -speed_grade -6
 set_option -default_enum_encoding onehot
 set_option -symbolic_fsm_compiler 1
 set_option -resource_sharing 0
-set_option -use_fsm_explorer 1
-set_option -top_module "mips_sys"
+set_option -use_fsm_explorer 0
+set_option -top_module "mips_top"
 
 #map options
 set_option -frequency auto
@@ -44,7 +51,7 @@ set_option -run_prop_extract 0
 set_option -fanout_limit 30
 set_option -disable_io_insertion 0
 set_option -verification_mode 0
-set_option -pipe 0
+set_option -pipe 1
 set_option -update_models_cp 0
 set_option -retiming 0
 set_option -fixgatedclocks 0
@@ -61,7 +68,7 @@ set_option -write_vif 1
 set_option -write_apr_constraint 1
 
 #set result format/file last
-project -result_file "rev_1/mips_sys.vqm"
+project -result_file "rev_1/mips_top.vqm"
 
 #
 #implementation attributes

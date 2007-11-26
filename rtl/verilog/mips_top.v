@@ -40,10 +40,10 @@ module mips_top (
     reg r_rst,rr_rst;
 
     always @(posedge CLK)
- 	 r_rst<=rst;
-  
+        r_rst<=rst;
+
     always @(posedge CLK)
-     rr_rst<=r_rst;
+        rr_rst<=r_rst;
 
     wire sys_rst = rr_rst;
 
@@ -51,21 +51,21 @@ module mips_top (
     pll50 Ipll(
               .inclk0(clk),
               .c0(CLK)
-          );//clock for FPGA	  
+          );//clock for FPGA
     mem_array ram_8k//FPGA RAM
 `else 	 
-	assign CLK = clk;//clock for simultation
-    sim_mem_array sim_array//memory for simultion 
+    assign CLK = clk;//clock for simultation
+    sim_mem_array sim_array//memory for simultion
 `endif
-                      (
-					  .clk(CLK),
-                      .pc_i(pc),
-                      .ins_o(ins2core),
-                      .wren(wr_en),
-                      .din(data2mem),
-                      .data_addr_i(mem_Addr),
-                      .dout(data2core)
-                      );
+              (
+                  .clk(CLK),
+                  .pc_i(pc),
+                  .ins_o(ins2core),
+                  .wren(wr_en),
+                  .din(data2mem),
+                  .data_addr_i(mem_Addr),
+                  .dout(data2core)
+              );
 
     mips_sys isys
              (

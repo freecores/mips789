@@ -90,6 +90,29 @@ module rd_sel(
             rd_o=0;
     endcase
 endmodule
+/*
+
+module dly3clk(
+input r1_i,
+output reg r1_o,
+input clk,
+input rst
+);
+reg r1_r,r1_rr;
+
+always@(posedge clk)
+if(rst)r1_r<=0;
+else r1_r<=r1_i;
+
+always@(posedge clk)
+if(rst)r1_rr<=0;
+else r1_rr<=r1_r;
+
+always@(posedge clk)
+if(rst)r1_o<=0;
+else r1_o<=r1_rr;
+
+endmodule        */
 
 //these modules below are genated automaticly by a software written in C language...
 
@@ -183,3 +206,5 @@ module r3_reg_cls(input[`R3_LEN-1:0] r3_i,output reg[`R3_LEN-1:0] r3_o,input clk
 module r4_reg_cls(input[`R4_LEN-1:0] r4_i,output reg[`R4_LEN-1:0] r4_o,input clk,input cls);always@(posedge clk)if(cls) r4_o<=r4_o;else r4_o<=r4_i;endmodule
 module r5_reg_cls(input[`R5_LEN-1:0] r5_i,output reg[`R5_LEN-1:0] r5_o,input clk,input cls);always@(posedge clk)if(cls) r5_o<=r5_o;else r5_o<=r5_i;endmodule
 module r32_reg_cls(input[`R32_LEN-1:0] r32_i,output reg[`R32_LEN-1:0] r32_o,input clk,input cls);always@(posedge clk)if(cls) r32_o<=r32_o;else r32_o<=r32_i;endmodule
+
+

@@ -72,7 +72,20 @@ module pc_gen(
     );
 
     wire [32:0] br_addr = pc + imm ;
-
+    /*
+        pc_gen i_pc_gen
+               (
+                   .check(NET904),
+                   .ctl(pc_gen_ctl),
+                   .imm(ext_o),
+                   .irq(irq_addr_i),
+                   .pc(pc_i),
+                   .pc_next(pc_next),
+                   .pc_prectl(BUS1013),
+                   .s(rs_o),
+                   .zz_spc(zz_spc_i)
+               );
+    */
     always @ (*)
         if(pc_prectl == `PC_IGN )
         begin
@@ -108,20 +121,23 @@ module reg_array(
         clock,
         qa,
         qb,
-        rd_clk_cls
+        rd_clk_cls,
+    //    bank_sel
     );
 
     input	[31:0]  data;
     input	[4:0]  wraddress;
     input	[4:0]  rdaddress_a;
     input	[4:0]  rdaddress_b;
+   // input bank_sel;
+    input rd_clk_cls;
+    input	wren;
 
     reg	[31:0]  r_data;
     reg	[4:0]  r_wraddress;
     reg	[4:0]  r_rdaddress_a;
     reg	[4:0]  r_rdaddress_b;
-    input rd_clk_cls;
-    input	wren;
+
     reg r_wren;
     input	clock;
     output	[31:0]  qa;
@@ -134,11 +150,11 @@ module reg_array(
             reg_bank[i]=0;
     end
 
-    assign qa=(r_rdaddress_a==0)?0:
+    assign qa=(r_rdaddress_a[4:0]==0)?0:
            ((r_wraddress==r_rdaddress_a)&&(1==r_wren))?r_data:
            reg_bank[r_rdaddress_a];
 
-    assign qb=(r_rdaddress_b==0)?0:
+    assign qb=(r_rdaddress_b[4:0]==0)?0:
            ((r_wraddress==r_rdaddress_b)&&(1==r_wren))?r_data:
            reg_bank[r_rdaddress_b];
 
@@ -146,7 +162,7 @@ module reg_array(
         if (~rd_clk_cls)
         begin
             r_rdaddress_a <=rdaddress_a;
-            r_rdaddress_b<=rdaddress_b;
+            r_rdaddress_b <=rdaddress_b;
         end
 
     always@(posedge clock)

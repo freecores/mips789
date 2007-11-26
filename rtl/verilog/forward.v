@@ -51,8 +51,11 @@ module fwd_mux(
     endcase
 endmodule
 
-module forward  (alu_we,clk,mem_We,fw_alu_rn,fw_mem_rn,rns_i,rnt_i,alu_rs_fw,alu_rt_fw,cmp_rs_fw,
-                     cmp_rt_fw,dmem_fw) ;
+module forward  (
+alu_we,clk,mem_We,fw_alu_rn,
+fw_mem_rn,rns_i,rnt_i,alu_rs_fw,
+alu_rt_fw,cmp_rs_fw,cmp_rt_fw,dmem_fw
+) ;
 
     input alu_we;
     wire alu_we;

@@ -93,7 +93,7 @@ module seg7led_cv(
                 13: seg = 7'b1011110;
                 14: seg = 7'b1111001;
                 15: seg = 7'b1110001;
-				default  seg = 7'bx;
+                default  seg = 7'bx;
             endcase
         end
     endfunction
