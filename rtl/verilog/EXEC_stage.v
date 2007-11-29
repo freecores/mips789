@@ -65,7 +65,7 @@ module exec_stage
     wire [31:0] BUS476;
 
 
-    big_alu MIPS_alu
+    mips_alu MIPS_alu
             (
                 .a(BUS476),
                 .b(BUS468),
@@ -140,7 +140,7 @@ module exec_stage
 
 endmodule
 
-module big_alu(clk,rst,a,b,c,ctl);
+module mips_alu(clk,rst,a,b,c,ctl);
     input  clk,rst ;
     input  [31:0] a,b ;
     output [31:0] c ;
@@ -235,11 +235,13 @@ endmodule
 
 //This file is based on YACC ->alu.v and  UCORE ->alu.v
 
-module alu (a,b,alu_out,alu_func);
+module alu (
+    input [31:0] a,
+	input [31:0]b,
+    output reg [31:0] alu_out,
+    input [4:0]	alu_func
+	);
 
-    input [31:0] a,b;
-    output reg [31:0] alu_out;
-    input [4:0]	alu_func;
     reg [32:0] sum;
 
     always @(*)
@@ -294,8 +296,7 @@ module shifter_ff(
 endmodule
 
 
-module
-    shifter_tak(
+module  shifter_tak(
             input [31:0] a,
             output reg [31:0] shift_out,
             input [4:0] shift_func,//connect to alu_func_ctl

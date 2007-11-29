@@ -10,15 +10,15 @@
  *    Email:mcupro@opencores.org  or mcupro@163.com               * 
  *                                                                * 
  ******************************************************************/
-
 `ifndef INCLUDE_H
 `define INCLUDE_H
 
 
 `timescale 10ns / 1ns
 
- `define   FRQ                    50000000  
- `define   SER_RATE               19200
+`define   FRQ                    50000000  
+`define   SER_RATE               192000 //specialy for simulate in order to make it faster
+ 
 
  `define   FW_ALU                 3'b001              
  `define   FW_MEM                 3'b010              
@@ -180,9 +180,9 @@
  `define   COUNTER_VALUE3         (`COUNTER_VALUE1+3)  
 
 
-//this is DEBUG model
 
-//`define   ALTERA               
+
+//`define   ALTERA      //this is DEBUG model ,        
 
 `else 
 

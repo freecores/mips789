@@ -48,6 +48,20 @@ module uart0 (
 
     wire clk_uart=clk;
     wire w_rxd_rdy;
+ integer uart_send;
+initial begin 
+ 
+
+
+    uart_send = $fopen("uart_send.txt");
+
+  
+end
+
+always @ (txd_ld)
+begin
+	 if (txd_ld) $fwrite(  uart_send,"%c",din[7:0]);
+end
 
     uart_read uart_rd_tak(
                   .sync_reset(rst),

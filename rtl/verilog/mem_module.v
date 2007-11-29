@@ -99,6 +99,7 @@ module infile_dmem_ctl_reg(
 
     wire   [1:0]byte_addr_i;
     assign byte_addr_i = dmem_addr_i[1:0] ;
+
     always @(posedge clk)
     begin
         ctl_o<=(dmem_addr_i[31]==0)?ctl_i:0;
@@ -142,7 +143,6 @@ module mem_addr_ctl(
 endmodule
 
 
-
 module mem_dout_ctl(
         input [1:0]byte_addr,
         input [3:0]ctl,
@@ -150,41 +150,19 @@ module mem_dout_ctl(
         output reg [31:0] dout
     );
 
-    wire [31:0] w31 = {
-             din[31],din[31],din[31],din[31],din[31],din[31],din[31],din[31],
-             din[31],din[31],din[31],din[31],din[31],din[31],din[31],din[31],
-             din[31],din[31],din[31],din[31],din[31],din[31],din[31],din[31],
-             din[31],din[31],din[31],din[31],din[31],din[31],din[31],din[31]} ;
-
-    wire [31:0] w23 = {
-             din[23],din[23],din[23],din[23],din[23],din[23],din[23],din[23],
-             din[23],din[23],din[23],din[23],din[23],din[23],din[23],din[23],
-             din[23],din[23],din[23],din[23],din[23],din[23],din[23],din[23],
-             din[23],din[23],din[23],din[23],din[23],din[23],din[23],din[23]}  ;
-
-    wire [31:0] w15 = {
-             din[15],din[15],din[15],din[15],din[15],din[15],din[15],din[15],
-             din[15],din[15],din[15],din[15],din[15],din[15],din[15],din[15],
-             din[15],din[15],din[15],din[15],din[15],din[15],din[15],din[15],
-             din[15],din[15],din[15],din[15],din[15],din[15],din[15],din[15]}   ;
-    wire [31:0] w7 = {
-             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
-             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
-             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7],
-             din[7],din[7],din[7],din[7],din[7],din[7],din[7],din[7]}     ;
-
     always @(*)
     case (ctl)
 
         `DMEM_LBS :
         case (byte_addr)
-            'd0:dout={w31[23:0],din[31:24]};
-            'd1:dout={w23[23:0],din[23:16]};
-            'd2:dout={w15[23:0],din[15:8]};
-            'd3:dout={w7[23:0],din[7:0] };
+
+			'd0:dout={{24{din[31]}},din[31:24]};
+            'd1:dout={{24{din[23]}},din[23:16]};
+            'd2:dout={{24{din[15]}},din[15:8]};
+            'd3:dout={{24{din[7]}},din[7:0] };
             default :
-                dout=32'b0;
-        endcase//checked
+                dout=32'bX;
+        endcase 
         `DMEM_LBU :
         case (byte_addr)
             'd3:dout={24'b0,din[7:0]};
@@ -192,19 +170,19 @@ module mem_dout_ctl(
             'd1:dout={24'b0,din[23:16]};
             'd0:dout={24'b0,din[31:24]};
             default :
-                dout=32'b0;
+                dout=32'bX;
         endcase
         `DMEM_LHU :
         case (byte_addr)
             'd0:dout={16'b0,din[31:24],din[23:16]};
             'd2:dout={16'b0,din[15:8],din[7 :0]};
-            default:dout=0;
+            default:dout=32'bX;
         endcase
         `DMEM_LHS :
         case (byte_addr)
-            'd0 :dout={w31[15:0],din[31:24],din[23:16]};
-            'd2 :dout={w15[15:0],din[15:8],din[7 :0]};
-            default:dout=0;
+   			'd0 :dout={{16{din[31]}},din[31:24],din[23:16]};
+            'd2 :dout={{16{din[15]}},din[15:8],din[7 :0]};
+            default:dout=32'bX;
         endcase
         `DMEM_LW  :
             dout=din;
@@ -228,7 +206,7 @@ module mem_din_ctl(
             dout = {din[15:0],din[15:0]};
         `DMEM_SW   :
             dout =din;
-        default dout=din;
+        default dout=32'bX;
     endcase
 
 endmodule

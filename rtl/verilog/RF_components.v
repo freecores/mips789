@@ -21,21 +21,17 @@ module ext(
     wire [25:0] instr25_0;
     assign instr25_0 = ins_i[25:0] ;
 
-    wire[15:0] sign = {
-            instr25_0[15],instr25_0[15],instr25_0[15],instr25_0[15],
-            instr25_0[15],instr25_0[15],instr25_0[15],instr25_0[15],
-            instr25_0[15],instr25_0[15],instr25_0[15],instr25_0[15],
-            instr25_0[15],instr25_0[15],instr25_0[15],instr25_0[15]};
+    wire[15:0] sign = {16{instr25_0[15]}};
 
     always @ (*)
     case (ctl)
         `EXT_SIGN    :res ={sign,instr25_0[15:0]};//sign
         `EXT_UNSIGN  :res ={16'b0,instr25_0[15:0]};//zeroext
         `EXT_J       :res ={4'b0,instr25_0[25:0],2'b0};//jmp
-        `EXT_B       :res ={sign[13:0],instr25_0[15:0],2'B0};//brach
+        `EXT_B       :res ={sign[13:0],instr25_0[15:0],2'B0};//branch
         `EXT_SA      :res ={27'b0,instr25_0[10:6]} ;//sll,srl
         `EXT_S2H     :res ={instr25_0[15:0],16'B0};//shift to high
-        default: res=0;
+        default: res=32'bx;
     endcase
 endmodule
 
@@ -54,7 +50,7 @@ module compare (
         `CMP_BGTZ:  res = ~s[31] && (|s[30:0]);
         `CMP_BLEZ:  res = s[31] |(~|s);
         `CMP_BGEZ:  res = ~s[31];
-        default res=1'B0;
+        default res=1'Bx;
     endcase
 endmodule
 
@@ -72,20 +68,6 @@ module pc_gen(
     );
 
     wire [32:0] br_addr = pc + imm ;
-    /*
-        pc_gen i_pc_gen
-               (
-                   .check(NET904),
-                   .ctl(pc_gen_ctl),
-                   .imm(ext_o),
-                   .irq(irq_addr_i),
-                   .pc(pc_i),
-                   .pc_next(pc_next),
-                   .pc_prectl(BUS1013),
-                   .s(rs_o),
-                   .zz_spc(zz_spc_i)
-               );
-    */
     always @ (*)
         if(pc_prectl == `PC_IGN )
         begin
@@ -94,8 +76,8 @@ module pc_gen(
                 `PC_J		:	pc_next ={pc[31:28],imm[27:0]};
                 `PC_JR		: 	pc_next = s;
                 `PC_BC		: 	pc_next = (check)?({br_addr[31:0]}):(pc+4);
-                `PC_NEXT	:	pc_next = pc+ 4 ;
-                default 		pc_next = pc + 4;
+             default   
+			 /* `PC_NEXT	:*/	pc_next = pc + 4 ;              	
             endcase
         end
         else
@@ -103,8 +85,9 @@ module pc_gen(
             case (pc_prectl)
                 `PC_KEP 	: pc_next=pc;
                 `PC_IRQ 	: pc_next=irq;
-                `PC_RST 	: pc_next='d0;
-                default		  pc_next =0;
+             default	    
+			 /* `PC_RST 	: pc_next='d0;*/
+               	  pc_next =0;
             endcase
         end
 
@@ -143,12 +126,31 @@ module reg_array(
     output	[31:0]  qa;
     output	[31:0]  qb;
     reg [31:0]reg_bank[0:31];
+
     integer i;
     initial
     begin
         for(i=0;i<32;i=i+1)
             reg_bank[i]=0;
     end
+
+    always@(posedge clock)
+    begin
+        r_data <=data;
+        r_wraddress<=wraddress;
+        r_wren<=wren;
+    end
+
+	    always@(posedge clock)
+        if (~rd_clk_cls)
+        begin
+            r_rdaddress_a <=rdaddress_a;
+            r_rdaddress_b <=rdaddress_b;
+        end
+
+    always@(posedge clock)
+        if (r_wren)
+            reg_bank[r_wraddress] <= r_data ;
 
     assign qa=(r_rdaddress_a[4:0]==0)?0:
            ((r_wraddress==r_rdaddress_a)&&(1==r_wren))?r_data:
@@ -158,20 +160,4 @@ module reg_array(
            ((r_wraddress==r_rdaddress_b)&&(1==r_wren))?r_data:
            reg_bank[r_rdaddress_b];
 
-    always@(posedge clock)
-        if (~rd_clk_cls)
-        begin
-            r_rdaddress_a <=rdaddress_a;
-            r_rdaddress_b <=rdaddress_b;
-        end
-
-    always@(posedge clock)
-    begin
-        r_data <=data;
-        r_wraddress<=wraddress;
-        r_wren<=wren;
-    end
-    always@(posedge clock)
-        if (r_wren)
-            reg_bank[r_wraddress] <= r_data ;
 endmodule

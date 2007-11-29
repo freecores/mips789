@@ -14,6 +14,10 @@ convert_sp
 gensim 
 genmif 
 copy *.mif ..\..\quartus2\*.mif
-#copy *.v ..\MODELSIM\*.v
+
+copy *.v ..\MODELSIM\*.v
+copy list.txt ..\MODELSIM\list.txt
+del ..\MODELSIM\*.c
+copy *.c ..\MODELSIM\*.c
 
 //ser_dld 9600 COM1 N

@@ -108,14 +108,12 @@ unsigned int par2u32(char*par)
     for(i=2;;++i)
     {
         if(par[i]=='\0')return ret ;
-        if(par[i]==' ')return ret ;
         ret=ret*16+hex2byte(par[i]);
     }
     else 
     for(i=0;;++i)
     {
         if(par[i]=='\0')return ret ;
-        if(par[i]==' ')return ret ;
         ret=ret*10+hex2byte(par[i]);
     }
     return 0 ;

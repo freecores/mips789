@@ -31,13 +31,13 @@ unsigned int par2u32(char*par)
     if((0==strncmp(par,"0x",2))||(0==strncmp(par,"0X",2)))
     for(i=2;;++i)
     {
-        if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ;
+        if(par[i]=='\0')return ret ;
         ret=ret*16+hex2byte(par[i]);
     }
     else 
     for(i=0;;++i)
     {
-        if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ;
+        if(par[i]=='\0')return ret ;
         ret=ret*10+hex2byte(par[i]);
     }
     return 0 ;
@@ -108,4 +108,3 @@ void main(int argc,char*argv[])
         fprintf(ft,"END;");
     }
 }
-

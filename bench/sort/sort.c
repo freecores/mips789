@@ -64,12 +64,11 @@ void main2()
         sort(array,16);
         for(i=0;i<16;++i)
         {
-            sprintf(str,"  %x",array[i]);
+            sprintf(str," %x",(DATA_TYPE )array[i]);
             uart0_putstr(str);
         }
         uart0_putstr(" \n");
     }
 }
+void ISR(){}
 
-
-void ISR(void){}

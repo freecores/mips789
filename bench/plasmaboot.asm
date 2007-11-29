@@ -56,7 +56,8 @@ $L1:
 interrupt_service_routine:
    .set noreorder
    .set noat
-	nop  #do not save registers for this is just fpr simulation
+	nop  
+#do not save registers for this is just for simulation in this version
   jal   ISR
 	nop
    mtc0  $0,$0  #return from interrupt

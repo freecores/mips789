@@ -16,6 +16,11 @@
 
 #define MAX_LEN (1024*2)
 
+/*Liwei 2007-8-29*/
+ char HEX[]="0123456789ABCDEF" ;
+ char hex[]="0123456789abcdef" ;
+
+
 int print_module(FILE * ft){
     if (ft==NULL)return 0;
 fprintf(ft,"//This file is only used for simulation.\nmodule sim_mem_array \n");
@@ -81,10 +86,6 @@ fprintf(ft,"                 ); \n");
 fprintf(ft,"endmodule \n\n\n");
 return 1;
     }
-
-/*Liwei 2007-8-29*/
- char HEX[]="0123456789ABCDEF" ;
- char hex[]="0123456789abcdef" ;
 unsigned char hex2byte( char hex_char)
 {
     unsigned char i ;
@@ -97,9 +98,9 @@ unsigned int par2u32(char*par)
     unsigned int i,ret=0 ;
     if(par==NULL)return ;
     if((0==strncmp(par,"0x",2))||(0==strncmp(par,"0X",2))) 
-    for(i=2;;++i)    {if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ; ret=ret*16+hex2byte(par[i]);}
+    for(i=2;;++i)    {if(par[i]=='\0')return ret ; ret=ret*16+hex2byte(par[i]);}
     else 
-    for(i=0;;++i)    {if(par[i]=='\0')return ret ;if(par[i]==' ')return ret ; ret=ret*10+hex2byte(par[i]);}
+    for(i=0;;++i)    {if(par[i]=='\0')return ret ; ret=ret*10+hex2byte(par[i]);}
     return 0 ;
 }
 
@@ -121,9 +122,9 @@ main(int argc,char*argv[])
         cntr=-10 ;
         fprintf(ft,"module sim_syn_ram%d(\n",j);
         fprintf(ft,"    input   [7:0]  data,\n");
-        fprintf(ft,"    input   [10:0]  wraddress,\n");
-        fprintf(ft,"    input   [10:0]  rdaddress_a,\n");
-        fprintf(ft,"    input   [10:0]  rdaddress_b,\n");
+        fprintf(ft,"    input   [29:0]  wraddress,\n");
+        fprintf(ft,"    input   [29:0]  rdaddress_a,\n");
+        fprintf(ft,"    input   [29:0]  rdaddress_b,\n");
         fprintf(ft,"    input     wren,\n");
         fprintf(ft,"    input     clock,\n");
         fprintf(ft,"    output  [7:0]  qa,\n");
@@ -131,12 +132,12 @@ main(int argc,char*argv[])
         fprintf(ft,"    );\n\n");
 
         fprintf(ft,"    reg [7:0]  r_data;\n");
-        fprintf(ft,"    reg [10:0]  r_wraddress;\n");
-        fprintf(ft,"    reg [10:0]  r_rdaddress_a;\n");
-        fprintf(ft,"    reg [10:0]  r_rdaddress_b;\n");
+        fprintf(ft,"    reg [29:0]  r_wraddress;\n");
+        fprintf(ft,"    reg [29:0]  r_rdaddress_a;\n");
+        fprintf(ft,"    reg [29:0]  r_rdaddress_b;\n");
         fprintf(ft,"    reg   r_wren;\n");
 
-        fprintf(ft,"    reg [7:0] mem_bank  [0:2047]  ;\n");
+        fprintf(ft,"    reg [7:0] mem_bank  [0:12345]  ;\n");
         if(base!=0)
         fprintf(ft,"    \ninteger i;\n    initial begin\n        for(i=0;i<%d;i=1+i)\n         mem_bank[i] = 'h00;\n       ",base);
         else
@@ -211,8 +212,11 @@ main(int argc,char*argv[])
         fprintf(ft,"        r_rdaddress_b<=rdaddress_b;\n");
         fprintf(ft,"        r_wren<=wren;\n");
         fprintf(ft,"    end\n");
-        fprintf(ft,"    assign qa =(r_rdaddress_a>%d)?0:mem_bank[r_rdaddress_a];\n",base+i);
-        fprintf(ft,"    assign qb =(r_rdaddress_b>%d)?0:mem_bank[r_rdaddress_b];\n",base+i);
+        fprintf(ft,"    assign qa =mem_bank[r_rdaddress_a];\n",base+i);
+        fprintf(ft,"    assign qb =mem_bank[r_rdaddress_b];\n",base+i);
+      //   fprintf(ft," //   assign qa =(r_rdaddress_a<%d)?mem_bank[r_rdaddress_a]:0;\n",base+i);
+      //  fprintf(ft,"  //  assign qb =(r_rdaddress_b<%d)?mem_bank[r_rdaddress_b]:0;\n",base+i);
         fprintf(ft,"endmodule\n\n\n\n");
     }fclose(ft);
+
 }

@@ -46,8 +46,9 @@ module fwd_mux(
     case (fw_ctl)
         `FW_ALU :dout=fw_alu;
         `FW_MEM :dout=fw_dmem;
-        `FW_NOP :dout=din;
-        default dout=din;
+         default
+	    /*`FW_NOP :dout=din;*/
+         dout=din;
     endcase
 endmodule
 

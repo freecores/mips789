@@ -179,6 +179,8 @@
  `define   COUNTER_VALUE2         (`COUNTER_VALUE1*2+1)
  `define   COUNTER_VALUE3         (`COUNTER_VALUE1+3)  
 
+ `define DEFAULT_IRQ_ADDR 		  'H00_00_00_5C
+
    `define ALTERA
 
 `else 

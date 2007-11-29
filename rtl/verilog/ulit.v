@@ -115,6 +115,7 @@ else r1_o<=r1_rr;
 endmodule        */
 
 //these modules below are genated automaticly by a software written in C language...
+//Some of these may not be used
 
 module ext_ctl_reg_clr_cls(input[`EXT_CTL_LEN-1:0] ext_ctl_i,output reg[`EXT_CTL_LEN-1:0] ext_ctl_o,input clk,input clr,input cls);always@(posedge clk)if(clr) ext_ctl_o<=0;else if(cls)ext_ctl_o<=ext_ctl_o;else ext_ctl_o<=ext_ctl_i;endmodule
 module rd_sel_reg_clr_cls(input[`RD_SEL_LEN-1:0] rd_sel_i,output reg[`RD_SEL_LEN-1:0] rd_sel_o,input clk,input clr,input cls);always@(posedge clk)if(clr) rd_sel_o<=0;else if(cls)rd_sel_o<=rd_sel_o;else rd_sel_o<=rd_sel_i;endmodule

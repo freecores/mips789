@@ -1,7 +1,7 @@
 #-- Synplicity, Inc.
 #-- Version Synplify Pro 8.1
-#-- Project file F:\mips789\synplify_prj\mips789.prj
-#-- Written on Tue Nov 25 18:51:24 2008
+#-- Project file F:\MIPS_bak\11_28_update\synplify_prj\mips789.prj
+#-- Written on Sat Nov 29 00:16:15 2008
 
 
 #add_file options
@@ -41,8 +41,8 @@ set_option -speed_grade -6
 #compilation/mapping options
 set_option -default_enum_encoding onehot
 set_option -symbolic_fsm_compiler 1
-set_option -resource_sharing 0
-set_option -use_fsm_explorer 0
+set_option -resource_sharing 1
+set_option -use_fsm_explorer 1
 set_option -top_module "mips_top"
 
 #map options
@@ -53,7 +53,7 @@ set_option -disable_io_insertion 0
 set_option -verification_mode 0
 set_option -pipe 1
 set_option -update_models_cp 0
-set_option -retiming 0
+set_option -retiming 1
 set_option -fixgatedclocks 0
 set_option -no_sequential_opt 0
 
