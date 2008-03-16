@@ -966,18 +966,19 @@ module decoder(
             'd34://LWL rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `LWL ;
-                ext_ctl = `IGN;
-                rd_sel = `IGN;
-                cmp_ctl = `IGN;
-                pc_gen_ctl = `IGN;
-                fsm_dly = `IGN;
-                muxa_ctl = `IGN;
-                muxb_ctl = `IGN;
-                alu_func = `IGN;
-                alu_we = `IGN;
-                dmem_ctl = `IGN;
-                wb_we =  `IGN;
-                wb_mux = `IGN;
+            //replaceID  = `LW ;
+                ext_ctl = `EXT_SIGN;
+                rd_sel = `RD_RT;
+                cmp_ctl = `CMP_NOP;
+                pc_gen_ctl = `PC_NEXT;
+                fsm_dly = `FSM_NOP;
+                muxa_ctl = `MUXA_RS;
+                muxb_ctl = `MUXB_EXT;
+                alu_func = `ALU_ADD;
+                alu_we = `DIS;
+                dmem_ctl = `DMEM_LWL;
+                wb_we =  `EN;
+                wb_mux = `WB_MEM;
                 //end of `LWL ;
             end
             'd35://LW rt,offset(base) (offset:signed;base:rs)
@@ -1034,18 +1035,18 @@ module decoder(
             'd38://LWR rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `LWR ;
-                ext_ctl = `IGN;
-                rd_sel = `IGN;
-                cmp_ctl = `IGN;
-                pc_gen_ctl = `IGN;
-                fsm_dly = `IGN;
-                muxa_ctl = `IGN;
-                muxb_ctl = `IGN;
-                alu_func = `IGN;
-                alu_we = `IGN;
-                dmem_ctl = `IGN;
-                wb_we =  `IGN;
-                wb_mux = `IGN;
+                ext_ctl = `EXT_SIGN;
+                rd_sel = `RD_RT;
+                cmp_ctl = `CMP_NOP;
+                pc_gen_ctl = `PC_NEXT;
+                fsm_dly = `FSM_NOP;
+                muxa_ctl = `MUXA_RS;
+                muxb_ctl = `MUXB_EXT;
+                alu_func = `ALU_ADD;
+                alu_we = `DIS;
+                dmem_ctl = `DMEM_LWR;
+                wb_we =  `EN;
+                wb_mux = `WB_MEM;
                 //end of `LWR ;
             end
             'd40://SB rt,offset(base) (offset:signed;base:rs)
@@ -1085,18 +1086,18 @@ module decoder(
             'd42://SWL rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `SWL ;
-                ext_ctl = `IGN;
-                rd_sel = `IGN;
-                cmp_ctl = `IGN;
-                pc_gen_ctl = `IGN;
-                fsm_dly = `IGN;
-                muxa_ctl = `IGN;
-                muxb_ctl = `IGN;
-                alu_func = `IGN;
-                alu_we = `IGN;
-                dmem_ctl = `IGN;
-                wb_we =  `IGN;
-                wb_mux = `IGN;
+                  ext_ctl = `EXT_SIGN;
+                rd_sel = `RD_NOP;
+                cmp_ctl = `CMP_NOP;
+                pc_gen_ctl = `PC_NEXT;
+                fsm_dly = `FSM_NOP;
+                muxa_ctl = `MUXA_RS;
+                muxb_ctl = `MUXB_EXT;
+                alu_func = `ALU_ADD;
+                alu_we = `DIS;
+                dmem_ctl = `DMEM_SWL;
+                wb_we =  `DIS;
+                wb_mux = `WB_NOP;
                 //end of `SWL ;
             end
             'd43://SW rt,offset(base) (offset:signed;base:rs)
@@ -1119,18 +1120,18 @@ module decoder(
             'd46://SWR rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `SWR ;
-                ext_ctl = `IGN;
-                rd_sel = `IGN;
-                cmp_ctl = `IGN;
-                pc_gen_ctl = `IGN;
-                fsm_dly = `IGN;
-                muxa_ctl = `IGN;
-                muxb_ctl = `IGN;
-                alu_func = `IGN;
-                alu_we = `IGN;
-                dmem_ctl = `IGN;
-                wb_we =  `IGN;
-                wb_mux = `IGN;
+                ext_ctl = `EXT_SIGN;
+                rd_sel = `RD_NOP;
+                cmp_ctl = `CMP_NOP;
+                pc_gen_ctl = `PC_NEXT;
+                fsm_dly = `FSM_NOP;
+                muxa_ctl = `MUXA_RS;
+                muxb_ctl = `MUXB_EXT;
+                alu_func = `ALU_ADD;
+                alu_we = `DIS;
+                dmem_ctl = `DMEM_SWR;
+                wb_we =  `DIS;
+                wb_mux = `WB_NOP;
                 //end of `SWR ;
             end
             default:

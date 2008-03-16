@@ -80,7 +80,8 @@ module mips_core (
 
     mem_module MEM_CTL
 	(		
-	.pause(0),
+	.pause(0),	   
+//	.rt_i(BUS9884),
                    .Zz_addr(zz_addr_o),
                    .Zz_dout(zz_dout),
                    .Zz_wr_en(zz_wr_en_o),
@@ -240,6 +241,7 @@ module mips_core (
 
     forward iforward
             (
+			.pause(0),
                 .alu_rs_fw(BUS1158),
                 .alu_rt_fw(BUS1196),
                 .alu_we(NET767),

@@ -14,7 +14,8 @@
 `include "mips789_defs.v"
 
 
-module mem_module  (	 
+module mem_module  (
+	//input [31:0] rt_i,
 	input pause,
     input clk,
     input [31:0] din,
@@ -27,12 +28,28 @@ module mem_module  (
     output [31:0] dout 
     ) ;
 
-
+	/*module r32_reg_clr_cls(
+	input[`R32_LEN-1:0] r32_i,
+	output reg[`R32_LEN-1:0] r32_o,
+	input clk,input clr,input cls
+	);always@(posedge clk)if(clr) r32_o<=0;else if(cls)r32_o<=r32_o;else r32_o<=r32_i;endmodule
+	
+		*/
 
     wire [3:0] BUS512;
     wire [1:0] BUS629;
     wire [31:0] BUS650;
+	
 
+	wire [31:0]rt_r;
+	
+	r32_reg_clr_cls rt_latch(
+	.r32_i(din),
+	.r32_o(rt_r),
+	.clk(clk),
+	.cls(pause),
+	.clr(0)
+	);
 
     infile_dmem_ctl_reg dmem_ctl_post
                         (	 .pause(pause),
@@ -63,8 +80,10 @@ module mem_module  (
 
 
 
-    mem_dout_ctl i_mem_dout_ctl
-                 (
+    mem_dout_ctl i_mem_dout_ctl	
+	
+	(	
+	.rt_r(rt_r),
                      .byte_addr(BUS629),
                      .ctl(BUS512),
                      .din(zZ_din),
@@ -114,8 +133,7 @@ module mem_addr_ctl(
                 0:wr_en = 4'b1000;
                 1:wr_en = 4'b0100;
                 2:wr_en = 4'b0010;
-                3:wr_en = 4'b0001;
-                default :wr_en = 4'b000;
+                3:wr_en = 4'b0001;		   
             endcase
         end
         `DMEM_SH  :
@@ -124,6 +142,26 @@ module mem_addr_ctl(
                 'd0:wr_en=4'b1100;
                 'd2:wr_en=4'b0011;
                 default :wr_en = 4'b0000;
+            endcase
+        end			 
+		
+		`DMEM_SWL :
+        begin
+                case(addr_i[1:0])
+                0:wr_en = 4'b0001;
+                1:wr_en = 4'b0011;
+                2:wr_en = 4'b0111;
+                3:wr_en = 4'b1111;			 
+            endcase
+        end	   
+		
+		`DMEM_SWR :
+        begin
+                case(addr_i[1:0])
+                0:wr_en = 4'b1000;
+                1:wr_en = 4'b1100;
+                2:wr_en = 4'b1110;
+                3:wr_en = 4'b1111;		   
             endcase
         end
         `DMEM_SW :
@@ -136,7 +174,8 @@ module mem_addr_ctl(
 endmodule
 
 
-module mem_dout_ctl(
+module mem_dout_ctl(   
+	  input [31:0] rt_r,  
         input [1:0]byte_addr,
         input [3:0]ctl,
         input [31:0] din,
@@ -153,8 +192,6 @@ module mem_dout_ctl(
             'd1:dout={{24{din[23]}},din[23:16]};
             'd2:dout={{24{din[15]}},din[15:8]};
             'd3:dout={{24{din[7]}},din[7:0] };
-            default :
-                dout=32'bX;
         endcase 
         `DMEM_LBU :
         case (byte_addr)
@@ -162,8 +199,6 @@ module mem_dout_ctl(
             'd2:dout={24'b0,din[15:8]};
             'd1:dout={24'b0,din[23:16]};
             'd0:dout={24'b0,din[31:24]};
-            default :
-                dout=32'bX;
         endcase
         `DMEM_LHU :
         case (byte_addr)
@@ -176,17 +211,40 @@ module mem_dout_ctl(
    			'd0 :dout={{16{din[31]}},din[31:24],din[23:16]};
             'd2 :dout={{16{din[15]}},din[15:8],din[7 :0]};
             default:dout=32'bX;
-        endcase
+        endcase		
+		
+		`DMEM_LWL  :begin 
+		        case (byte_addr)
+
+			'd0:dout={din[31:24],rt_r[23:0]};
+            'd1:dout={din[31:16],rt_r[15:0]};
+            'd2:dout={din[31:8],rt_r[7:0]};		   
+            default :
+                dout=din;
+        endcase 
+		end				
+		`DMEM_LWR  : begin 
+			          case (byte_addr)										   									
+			'd1:dout={rt_r[31:24],din[23:0]};
+            'd2:dout={rt_r[31:16],din[15:0]};
+            'd3:dout={rt_r[31:8],din[7:0]};
+            default :
+                dout=din;
+        endcase 
+		end
+		
+		
         `DMEM_LW  :
             dout=din;
         default :
-            dout=0;
-    endcase
+            dout=32'b0;
+    endcase	   
+	
 endmodule
 
 module mem_din_ctl(
         input [3:0]ctl,
-        input [31:0]din,
+        input [31:0]din,	  
         output reg [31:0]dout
     );
 
@@ -197,7 +255,26 @@ module mem_din_ctl(
             dout={din[7:0],din[7:0],din[7:0],din[7:0]};
         `DMEM_SH   :
             dout = {din[15:0],din[15:0]};
-        `DMEM_SW   :
+        `DMEM_SWL ,/*:
+        begin
+                case(addr_i[1:0])
+                0:dout = 4'b0001;
+                1:dout = 4'b0011;
+                2:dout = 4'b0111;
+                3:dout = 4'b1111;			 
+            endcase
+        end	   
+				   */
+		`DMEM_SWR ,/* :
+        begin
+                case(addr_i[1:0])
+                0:dout = 4'b1000;
+                1:dout = 4'b1100;
+                2:dout = 4'b1110;
+                3:dout = 4'b1111;		   
+            endcase
+        end 	 */
+		`DMEM_SW :
             dout =din;
         default dout=32'bX;
     endcase

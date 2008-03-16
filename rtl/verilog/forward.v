@@ -13,14 +13,15 @@
 
 `include "mips789_defs.v"
 
-
-module fw_latch5(input clk,input[4:0]d,output reg  [4:0]q);
-    always @ (posedge clk) q<=d;
+/*
+module fw_latch5(input clk,input[4:0]d,output reg  [4:0]q,input cls);
+    always @ (posedge clk)if (cls==0) q<=d;
 endmodule
 
-module fw_latch1(input clk,input d,output reg q);
-    always @ (posedge clk) q<=d;
+module fw_latch1(input clk,input d,output reg q,input cls);
+    always @ (posedge clk)if (cls==0) q<=d;
 endmodule
+*/
 
 module forward_node (
         input [4:0]rn,
@@ -53,35 +54,22 @@ module fwd_mux(
 endmodule
 
 module forward  (
-alu_we,clk,mem_We,fw_alu_rn,
-fw_mem_rn,rns_i,rnt_i,alu_rs_fw,
-alu_rt_fw,cmp_rs_fw,cmp_rt_fw,dmem_fw
+input pause,
+    input alu_we,
+    input clk,
+    input mem_We,
+    input [4:0] fw_alu_rn,
+    input [4:0] fw_mem_rn,
+    input [4:0] rns_i,
+    input [4:0] rnt_i,
+    output [2:0] alu_rs_fw,
+    output [2:0] alu_rt_fw,
+    output [2:0] cmp_rs_fw,
+    output [2:0] cmp_rt_fw,
+    output [2:0] dmem_fw 
 ) ;
 
-    input alu_we;
-    wire alu_we;
-    input clk;
-    wire clk;
-    input mem_We;
-    wire mem_We;
-    input [4:0] fw_alu_rn;
-    wire [4:0] fw_alu_rn;
-    input [4:0] fw_mem_rn;
-    wire [4:0] fw_mem_rn;
-    input [4:0] rns_i;
-    wire [4:0] rns_i;
-    input [4:0] rnt_i;
-    wire [4:0] rnt_i;
-    output [2:0] alu_rs_fw;
-    wire [2:0] alu_rs_fw;
-    output [2:0] alu_rt_fw;
-    wire [2:0] alu_rt_fw;
-    output [2:0] cmp_rs_fw;
-    wire [2:0] cmp_rs_fw;
-    output [2:0] cmp_rt_fw;
-    wire [2:0] cmp_rt_fw;
-    output [2:0] dmem_fw;
-    wire [2:0] dmem_fw;
+
 
     wire [2:0] BUS1345;
     wire [4:0] BUS82;
@@ -135,20 +123,21 @@ alu_rt_fw,cmp_rs_fw,cmp_rt_fw,dmem_fw
 
 
 
-    fw_latch5 fw_reg_rns
+    r5_reg_clr_cls fw_reg_rns
               (
-                  .clk(clk),
-                  .d(rns_i),
-                  .q(BUS82)
+                  .clk(clk),.cls(pause),.clr(0),
+                  .r5_i(rns_i),
+                  .r5_o(BUS82)
               );
 
 
 
-    fw_latch5 fw_reg_rnt
+   r1_reg_clr_cls fw_reg_rnt
               (
-                  .clk(clk),
-                  .d(rnt_i),
-                  .q(BUS937)
+.cls(pause),.clr(0),
+              .clk(clk),
+                  .r1_i(rnt_i),
+                  .r1_o(BUS937)
               );
 
 

@@ -145,9 +145,9 @@ module exec_stage
 
 
 
-    r32_reg_cls spc
+    r32_reg_clr_cls spc
                 (
-                    .clk(clk),
+                    .clk(clk),.clr(0),
                     .cls(spc_cls_i|pause),
                     .r32_i(pc_i),
                     .r32_o(zz_spc_o)
@@ -485,15 +485,16 @@ module muldiv(ready,rst,op1,op2,clk,dout,func);
         hi=0;
         lo=0;
     end
+
     always @( posedge clk /*or negedge rst */)
         if (~rst)
         begin
             mul_bit=0;
             div_bit=0;
-            /*
-            hi=0;
-            lo=0;
-            */
+            
+            hi=32'bx;
+            lo=32'bx;
+            
             negative_output = 0;
         end
         else

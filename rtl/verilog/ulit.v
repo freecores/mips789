@@ -27,7 +27,7 @@ module cal_cpi (		 	   //just used to calculate CPI(Cycles Per Instruction) for 
 
     always @(posedge clk )
         if (~rst )ins_no=0;
-        else if (0==is_nop)
+        else if (0 == is_nop)
             ins_no = 1+ins_no;
 endmodule
 

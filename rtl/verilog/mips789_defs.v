@@ -41,8 +41,15 @@
  `define   DMEM_SH                7                   
  `define   DMEM_LHS               8                   
  `define   DMEM_LH                9                   
- `define   DMEM_LHU               10                  
- `define   DMEM_NOP               0 
+ `define   DMEM_LHU               10 
+								 
+ `define   DMEM_LWL               11                  
+ `define   DMEM_LWR               12                   
+ `define   DMEM_SWL               13                  
+ `define   DMEM_SWR               14 
+ 
+ `define   DMEM_NOP               0    
+ 
 
  `define   ALU_SRL                1                   
  `define   ALU_SLL                2                   
@@ -182,7 +189,8 @@
 
 
 
-//`define   ALTERA      //this is DEBUG model ,        
+`define   ALTERA     
+//this is DEBUG model ,        
 
 `else 
 
