@@ -1,6 +1,6 @@
 
 `timescale 10ns / 1ns
-module mips_top_tb;
+module AA_mips_top_tb;
 
 
 //Internal signals declarations:

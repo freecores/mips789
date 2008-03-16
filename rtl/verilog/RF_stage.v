@@ -14,74 +14,40 @@
 `include "mips789_defs.v"		   
 
 module rf_stage (
-        clk,irq_i,rst_i,wb_we_i,cmp_ctl_i,
-        ext_ctl_i,fw_alu_i,fw_cmp_rs,fw_cmp_rt,
-        fw_mem_i,id_cmd,ins_i,irq_addr_i,pc_gen_ctl,
-        pc_i,rd_sel_i,wb_addr_i,wb_din_i,zz_spc_i,iack_o,
-        id2ra_ctl_clr_o,id2ra_ctl_cls_o,ra2ex_ctl_clr_o,ext_o,
-        pc_next,rd_index_o,rs_n_o,rs_o,rt_n_o,rt_o
+	input pause,
+    input clk,	 
+	       input irq_i,
+    input rst_i,   
+    input wb_we_i,	
+    input [2:0] cmp_ctl_i,	
+    input [2:0] ext_ctl_i,	
+    input [31:0] fw_alu_i,	
+    input [2:0] fw_cmp_rs,	
+    input [2:0] fw_cmp_rt, 
+    input [31:0] fw_mem_i, 
+    input [2:0] id_cmd,	  
+    input [31:0] ins_i,	 
+    input [31:0] irq_addr_i,   
+    input [2:0] pc_gen_ctl,	  
+    input [31:0] pc_i,		
+    input [1:0] rd_sel_i,	
+    input [4:0] wb_addr_i,	
+    input [31:0] wb_din_i, 
+    input [31:0] zz_spc_i,	
+    output iack_o,		   
+    output id2ra_ctl_clr_o,	
+    output id2ra_ctl_cls_o,	
+    output ra2ex_ctl_clr_o,	
+    output [31:0] ext_o,   
+    output [31:0] pc_next, 
+    output [4:0] rd_index_o, 
+    output [4:0] rs_n_o, 
+    output [31:0] rs_o,		
+    output [4:0] rt_n_o, 
+    output [31:0] rt_o	  
     ) ;
+	
 
-    input clk;
-    wire clk;
-    input irq_i;
-    wire irq_i;
-    input rst_i;
-    wire rst_i;
-    input wb_we_i;
-    wire wb_we_i;
-    input [2:0] cmp_ctl_i;
-    wire [2:0] cmp_ctl_i;
-    input [2:0] ext_ctl_i;
-    wire [2:0] ext_ctl_i;
-    input [31:0] fw_alu_i;
-    wire [31:0] fw_alu_i;
-    input [2:0] fw_cmp_rs;
-    wire [2:0] fw_cmp_rs;
-    input [2:0] fw_cmp_rt;
-    wire [2:0] fw_cmp_rt;
-    input [31:0] fw_mem_i;
-    wire [31:0] fw_mem_i;
-    input [2:0] id_cmd;
-    wire [2:0] id_cmd;
-    input [31:0] ins_i;
-    wire [31:0] ins_i;
-    input [31:0] irq_addr_i;
-    wire [31:0] irq_addr_i;
-    input [2:0] pc_gen_ctl;
-    wire [2:0] pc_gen_ctl;
-    input [31:0] pc_i;
-    wire [31:0] pc_i;
-    input [1:0] rd_sel_i;
-    wire [1:0] rd_sel_i;
-    input [4:0] wb_addr_i;
-    wire [4:0] wb_addr_i;
-    input [31:0] wb_din_i;
-    wire [31:0] wb_din_i;
-    input [31:0] zz_spc_i;
-    wire [31:0] zz_spc_i;
-    output iack_o;
-    wire iack_o;
-    output id2ra_ctl_clr_o;
-    wire id2ra_ctl_clr_o;
-    output id2ra_ctl_cls_o;
-    wire id2ra_ctl_cls_o;
-    output ra2ex_ctl_clr_o;
-    wire ra2ex_ctl_clr_o;
-    output [31:0] ext_o;
-    wire [31:0] ext_o;
-    output [31:0] pc_next;
-    wire [31:0] pc_next;
-    output [4:0] rd_index_o;
-    wire [4:0] rd_index_o;
-    output [4:0] rs_n_o;
-    wire [4:0] rs_n_o;
-    output [31:0] rs_o;
-    wire [31:0] rs_o;
-    output [4:0] rt_n_o;
-    wire [4:0] rt_n_o;
-    output [31:0] rt_o;
-    wire [31:0] rt_o;
 
 
     wire NET6609;
@@ -112,7 +78,8 @@ module rf_stage (
 
 
     ctl_FSM MAIN_FSM
-            (
+	(	 
+				.pause(pause),
                 .clk(clk),
                 .iack(iack_o),
                 .id2ra_ctl_clr(id2ra_ctl_clr_o),
@@ -167,7 +134,7 @@ module rf_stage (
                     (
                         .clk(clk),
                         .clr(NET6609),
-                        .cls(NET6658),
+                        .cls(NET6658|pause),
                         .r32_i(ins_i),
                         .r32_o(BUS2085)
                     );
@@ -208,7 +175,7 @@ module rf_stage (
             );*/
 
     reg_array reg_bank
-              (
+              (	//	.pause(pause),
                   .clock(clk),
                   .data(wb_din_i),
                   .qa(BUS6061),

@@ -10,12 +10,15 @@
  *    Email:mcupro@opencores.org  or mcupro@163.com               * 
  *                                                                * 
  ******************************************************************/
-
 `ifndef INCLUDE_H
 `define INCLUDE_H
 
- `define   FRQ                    50000000  
- `define   SER_RATE               19200
+
+`timescale 10ns / 1ns
+
+`define   FRQ                    50000000  
+`define   SER_RATE               192000 //specialy for simulate in order to make it faster
+ 
 
  `define   FW_ALU                 3'b001              
  `define   FW_MEM                 3'b010              
@@ -104,21 +107,18 @@
  `define   ALU_NOP                0                   
  `define   ALU_MTLO               30                  
  `define   ALU_MTHI               31                  
- `define   ALU_MULTU              8  
-
+ `define   ALU_MULTU              8                   
  `define   PC_IGN                 1                   
  `define   PC_KEP                 2                   
  `define   PC_IRQ                 4                   
- `define   PC_RST                 8    
-
+ `define   PC_RST                 8                   
  `define   PC_J                   1                   
  `define   PC_JR                  2                   
  `define   PC_BC                  4                   
  `define   PC_NEXT                5                   
  `define   PC_NOP                 0                   
  `define   PC_RET                 6                   
- `define   PC_SPC                 6  
-
+ `define   PC_SPC                 6                   
  `define   RF                     13                  
  `define   EXEC                   10                  
  `define   DMEM                   4                   
@@ -179,9 +179,10 @@
  `define   COUNTER_VALUE2         (`COUNTER_VALUE1*2+1)
  `define   COUNTER_VALUE3         (`COUNTER_VALUE1+3)  
 
- `define DEFAULT_IRQ_ADDR 		  'H00_00_00_5C
 
-   `define ALTERA
+
+
+//`define   ALTERA      //this is DEBUG model ,        
 
 `else 
 

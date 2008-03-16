@@ -23,31 +23,26 @@ module rxd_d(input clr,input clk,input d,output reg q );
 endmodule
 
 module uart0 (
-        clk,rst,rxd_ft,ser_rxd,txd_ld,
-        din,rxd_rdy,ser_txd,txd_busy,dout) ;
-    input clk;
-    wire clk;
-    input rst;
-    wire rst;
-    input rxd_ft;
-    wire rxd_ft;
-    input ser_rxd;
-    wire ser_rxd;
-    input txd_ld;
-    wire txd_ld;
-    input [7:0] din;
-    wire [7:0] din;
-    output rxd_rdy;
-    wire rxd_rdy;
-    output ser_txd;
-    wire ser_txd;
-    output txd_busy;
-    wire txd_busy;
-    output [7:0] dout;
-    wire [7:0] dout;
+	    input clk,
+    input rst,
+    input rxd_ft,
+    input ser_rxd,
+    input txd_ld,
+    input [7:0] din,
+    output rxd_rdy,
+    output ser_txd,
+    output txd_busy,
+    output [7:0] dout
+	
+ );
 
+	
+	
+	
     wire clk_uart=clk;
-    wire w_rxd_rdy;
+    wire w_rxd_rdy;	 
+	
+	
  integer uart_send;
 initial begin 
  
@@ -60,7 +55,11 @@ end
 
 always @ (txd_ld)
 begin
-	 if (txd_ld) $fwrite(  uart_send,"%c",din[7:0]);
+	if (txd_ld) 
+		begin 
+			$fwrite(  uart_send,"%c",din[7:0]);
+			$display("UART0 =>%c<",din[7:0]); 
+		end
 end
 
     uart_read uart_rd_tak(
@@ -156,7 +155,7 @@ module	uart_write( sync_reset, clk, txd, data_in , write_request,write_done,writ
                              .q(queue_data),
                              .full(queue_full),
                              .empty(empty),
-                             .rst(sync_reset));
+                       .rst(sync_reset));
 `endif
 
 

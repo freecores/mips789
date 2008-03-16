@@ -14,29 +14,20 @@
 `include "mips789_defs.v"
 
 
-module mem_module  (
-        clk,din,dmem_addr_i,dmem_ctl,
-        zZ_din,Zz_addr,Zz_dout,Zz_wr_en,dout
+module mem_module  (	 
+	input pause,
+    input clk,
+    input [31:0] din,
+    input [31:0] dmem_addr_i,
+    input [3:0] dmem_ctl,
+    input [31:0] zZ_din,
+    output [31:0] Zz_addr,
+    output [31:0] Zz_dout,
+    output [3:0] Zz_wr_en,
+    output [31:0] dout 
     ) ;
 
-    input clk;
-    wire clk;
-    input [31:0] din;
-    wire [31:0] din;
-    input [31:0] dmem_addr_i;
-    wire [31:0] dmem_addr_i;
-    input [3:0] dmem_ctl;
-    wire [3:0] dmem_ctl;
-    input [31:0] zZ_din;
-    wire [31:0] zZ_din;
-    output [31:0] Zz_addr;
-    wire [31:0] Zz_addr;
-    output [31:0] Zz_dout;
-    wire [31:0] Zz_dout;
-    output [3:0] Zz_wr_en;
-    wire [3:0] Zz_wr_en;
-    output [31:0] dout;
-    wire [31:0] dout;
+
 
     wire [3:0] BUS512;
     wire [1:0] BUS629;
@@ -44,7 +35,7 @@ module mem_module  (
 
 
     infile_dmem_ctl_reg dmem_ctl_post
-                        (
+                        (	 .pause(pause),
                             .byte_addr_o(BUS629),
                             .clk(clk),
                             .ctl_i(dmem_ctl),
@@ -89,7 +80,8 @@ module mem_module  (
 endmodule
 
 
-module infile_dmem_ctl_reg(
+module infile_dmem_ctl_reg(	 
+	input pause,
         input clk,
         input [3:0]ctl_i,
         input [31:0]dmem_addr_i,
@@ -101,6 +93,7 @@ module infile_dmem_ctl_reg(
     assign byte_addr_i = dmem_addr_i[1:0] ;
 
     always @(posedge clk)
+		if(0==pause)
     begin
         ctl_o<=(dmem_addr_i[31]==0)?ctl_i:0;
         byte_addr_o<=byte_addr_i;

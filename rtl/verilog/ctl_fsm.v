@@ -12,7 +12,8 @@
  ******************************************************************/
 
 `include "mips789_defs.v"
-module ctl_FSM (
+module ctl_FSM ( 
+	input pause,
     input   clk,
     input   [2:0] id_cmd,
     input   irq,
@@ -63,7 +64,10 @@ module ctl_FSM (
 //    Finite State Machine 
 //
   /*Finite State Machine part1*/
-    always @ (posedge clk) if (~rst) CurrState  <= `RST; else CurrState  <= NextState ;
+  always @ (posedge clk)
+  if (~rst) CurrState  <= `RST;
+  else if (~pause) 
+	  CurrState  <= NextState ;
 
     always @ (*)/*Finite State Machine part2*/
     begin

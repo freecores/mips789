@@ -27,7 +27,7 @@ module cal_cpi (		 	   //just used to calculate CPI(Cycles Per Instruction) for 
 
     always @(posedge clk )
         if (~rst )ins_no=0;
-        else if (~is_nop)
+        else if (0==is_nop)
             ins_no = 1+ins_no;
 endmodule
 
@@ -138,7 +138,9 @@ module r3_reg_clr_cls(input[`R3_LEN-1:0] r3_i,output reg[`R3_LEN-1:0] r3_o,input
 module r4_reg_clr_cls(input[`R4_LEN-1:0] r4_i,output reg[`R4_LEN-1:0] r4_o,input clk,input clr,input cls);always@(posedge clk)if(clr) r4_o<=0;else if(cls)r4_o<=r4_o;else r4_o<=r4_i;endmodule
 module r5_reg_clr_cls(input[`R5_LEN-1:0] r5_i,output reg[`R5_LEN-1:0] r5_o,input clk,input clr,input cls);always@(posedge clk)if(clr) r5_o<=0;else if(cls)r5_o<=r5_o;else r5_o<=r5_i;endmodule
 module r32_reg_clr_cls(input[`R32_LEN-1:0] r32_i,output reg[`R32_LEN-1:0] r32_o,input clk,input clr,input cls);always@(posedge clk)if(clr) r32_o<=0;else if(cls)r32_o<=r32_o;else r32_o<=r32_i;endmodule
-
+	
+	
+	/*
 
 module ext_ctl_reg_clr(input[`EXT_CTL_LEN-1:0] ext_ctl_i,output reg[`EXT_CTL_LEN-1:0] ext_ctl_o,input clk,input clr);always@(posedge clk)if(clr)ext_ctl_o<=0;else ext_ctl_o<=ext_ctl_i;endmodule
 module rd_sel_reg_clr(input[`RD_SEL_LEN-1:0] rd_sel_i,output reg[`RD_SEL_LEN-1:0] rd_sel_o,input clk,input clr);always@(posedge clk)if(clr)rd_sel_o<=0;else rd_sel_o<=rd_sel_i;endmodule
@@ -209,3 +211,4 @@ module r5_reg_cls(input[`R5_LEN-1:0] r5_i,output reg[`R5_LEN-1:0] r5_o,input clk
 module r32_reg_cls(input[`R32_LEN-1:0] r32_i,output reg[`R32_LEN-1:0] r32_o,input clk,input cls);always@(posedge clk)if(cls) r32_o<=r32_o;else r32_o<=r32_i;endmodule
 
 
+		 */

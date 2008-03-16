@@ -14,14 +14,14 @@
 `include "mips789_defs.v"
 
 module exec_stage
-    (
+    (		 pause,
         clk,rst,spc_cls_i,alu_func,
         dmem_fw_ctl,ext_i,fw_alu,fw_dmem,
         muxa_ctl_i,muxa_fw_ctl,muxb_ctl_i,
         muxb_fw_ctl,pc_i,rs_i,rt_i,alu_ur_o,
         dmem_data_ur_o,zz_spc_o
     );
-
+	input pause;
     input clk;
     wire clk;
     input rst;
@@ -90,6 +90,29 @@ module exec_stage
                 .fw_dmem(fw_dmem),
                 .din(rt_i)
             );
+			
+		/*	    alu_muxb1 i_alu_muxb
+             (
+                 .b_o(BUS468),
+                 .ctl(muxb_ctl_i),
+                 .ext(ext_i),
+                 .fw_alu(fw_alu),
+                 .fw_ctl(muxb_fw_ctl),
+                 .fw_mem(fw_dmem),
+                 .rt(rt_i)
+             );
+		  */
+		  			
+			    alu_muxb i_alu_muxb
+             (
+                 .b_o(BUS468),
+                 .ctl(muxb_ctl_i),
+                 .ext(ext_i),
+               //  .fw_alu(fw_alu),
+              //   .fw_ctl(muxb_fw_ctl),
+              //   .fw_mem(fw_dmem),
+                 .rt(dmem_data_ur_o)
+             );
 
 
 
@@ -108,24 +131,16 @@ module exec_stage
 
 
 
-    alu_muxb i_alu_muxb
-             (
-                 .b_o(BUS468),
-                 .ctl(muxb_ctl_i),
-                 .ext(ext_i),
-                 .fw_alu(fw_alu),
-                 .fw_ctl(muxb_fw_ctl),
-                 .fw_mem(fw_dmem),
-                 .rt(rt_i)
-             );
 
 
 
-    r32_reg pc_nxt
-            (
+    r32_reg_clr_cls  pc_nxt
+	(			 
+	.cls(pause),
+	.clr(0),
                 .clk(clk),
                 .r32_i(BUS2446),
-                .r32_o(BUS2332)
+                .r32_o(BUS2332)	
             );
 
 
@@ -133,7 +148,7 @@ module exec_stage
     r32_reg_cls spc
                 (
                     .clk(clk),
-                    .cls(spc_cls_i),
+                    .cls(spc_cls_i|pause),
                     .r32_i(pc_i),
                     .r32_o(zz_spc_o)
                 );
@@ -173,12 +188,19 @@ module mips_alu(clk,rst,a,b,c,ctl);
                    .func(ctl)
                );
     */
-    shifter_tak mips_shifter(
+   /* shifter_ff mips_shifter(
+                    .a(b),
+                    .shift_out(shift_c),
+                    .shift_func(ctl),
+                    .shift_amount(a)
+                ); 
+*/				    shifter_tak mips_shifter(
                     .a(b),
                     .shift_out(shift_c),
                     .shift_func(ctl),
                     .shift_amount(a)
                 );
+ /* */
 
 
     alu mips_alu(
@@ -215,17 +237,14 @@ module alu_muxa(
 endmodule
 
 module alu_muxb(
-        input [31:0] rt,
-        input [31:0]fw_alu,
-        input [31:0]fw_mem,
+        input [31:0] rt,	
         input [31:0]ext ,
-        input [1:0]ctl ,
-        input [2:0]fw_ctl ,
+        input [1:0]ctl ,	 
         output reg [31:0] b_o
     );
     always@(*)
     case (ctl)
-        `MUXB_RT :b_o = (fw_ctl ==`FW_ALU )?fw_alu:(fw_ctl==`FW_MEM)?fw_mem:rt;
+      //  `MUXB_RT :b_o =rt; //(fw_ctl ==`FW_ALU )?fw_alu:(fw_ctl==`FW_MEM)?fw_mem:rt;
         `MUXB_EXT :	b_o=ext;
         default b_o=rt;
     endcase

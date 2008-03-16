@@ -104,10 +104,11 @@ module reg_array(
         clock,
         qa,
         qb,
-        rd_clk_cls,
+        rd_clk_cls 
+//		pause
     //    bank_sel
     );
-
+	// input pause;
     input	[31:0]  data;
     input	[4:0]  wraddress;
     input	[4:0]  rdaddress_a;
@@ -134,15 +135,16 @@ module reg_array(
             reg_bank[i]=0;
     end
 
-    always@(posedge clock)
+    always@(posedge clock)	   
+	//	if( ~pause )
     begin
         r_data <=data;
         r_wraddress<=wraddress;
         r_wren<=wren;
     end
 
-	    always@(posedge clock)
-        if (~rd_clk_cls)
+	    always@(posedge clock)		//	||( 0==pause )
+        if(( 0==rd_clk_cls ))
         begin
             r_rdaddress_a <=rdaddress_a;
             r_rdaddress_b <=rdaddress_b;
