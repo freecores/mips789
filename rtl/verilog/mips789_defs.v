@@ -18,7 +18,7 @@
 
 `define   FRQ                    50000000  
 `define   SER_RATE               192000 //specialy for simulate in order to make it faster
- 
+
 
  `define   FW_ALU                 3'b001              
  `define   FW_MEM                 3'b010              
@@ -42,14 +42,14 @@
  `define   DMEM_LHS               8                   
  `define   DMEM_LH                9                   
  `define   DMEM_LHU               10 
-								 
+
  `define   DMEM_LWL               11                  
  `define   DMEM_LWR               12                   
  `define   DMEM_SWL               13                  
  `define   DMEM_SWR               14 
- 
+
  `define   DMEM_NOP               0    
- 
+
 
  `define   ALU_SRL                1                   
  `define   ALU_SLL                2                   
@@ -114,18 +114,24 @@
  `define   ALU_NOP                0                   
  `define   ALU_MTLO               30                  
  `define   ALU_MTHI               31                  
- `define   ALU_MULTU              8                   
- `define   PC_IGN                 1                   
+ `define   ALU_MULTU              8     
+
+
+ `define   PC_IGN  5        
  `define   PC_KEP                 2                   
  `define   PC_IRQ                 4                   
- `define   PC_RST                 8                   
+ `define   PC_RST                 8  
+ 
+ 
  `define   PC_J                   1                   
  `define   PC_JR                  2                   
  `define   PC_BC                  4                   
  `define   PC_NEXT                5                   
  `define   PC_NOP                 0                   
  `define   PC_RET                 6                   
- `define   PC_SPC                 6                   
+ `define   PC_SPC                 6   
+ 
+ 
  `define   RF                     13                  
  `define   EXEC                   10                  
  `define   DMEM                   4                   
@@ -180,7 +186,8 @@
  `define   TMR_IRQ_ADDR           'H80_00_00_28       
  `define   TMR_DATA_ADDR          'H80_00_00_34       
  `define   KEY1_IRQ_ADDR          'H80_00_00_2C       
- `define   KEY2_IRQ_ADDR          'H80_00_00_30       
+ `define   KEY2_IRQ_ADDR          'H80_00_00_30  
+ `define   DIS_DATA_ADDR		  'H80_00_00_34  
 
  `define   COUNTER_VALUE1         (`FRQ/`SER_RATE/2-1)
  `define   COUNTER_VALUE2         (`COUNTER_VALUE1*2+1)
@@ -188,9 +195,8 @@
 
 
 
-
-`define   ALTERA     
-//this is DEBUG model ,        
+`define   ALTERA
+        //this is DEBUG model ,
 
 `else 
 

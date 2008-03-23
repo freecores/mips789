@@ -16,84 +16,47 @@
 
 
 module mips_sys (
+    input pause,
+    input key1,
+    input key2,
 
-        zz_addr_o,
-        zz_din,
-        zz_dout,
-        zz_ins_i,
-        zz_pc_o,
-        zz_wr_en_o 		 ,
+    input clk,	
+    input rst,	 
+  
+	output [6:0] seg7led1, 
+    output [6:0] seg7led2,	
 
-        clk,
-        rst,
+    output [7:0]lcd_data,
+    output lcd_rs,
+    output 	lcd_rw ,
+    output 	lcd_en	,
+    output led1,
+    output led2,
 
-        ser_rxd,
-        ser_txd,
+    input [31:0] zz_din,	 
+    input [31:0] zz_ins_i,	
+    output [31:0] zz_addr_o, 
+    output [31:0] zz_dout,	
+    output [31:0] zz_pc_o,	
+    output [3:0] zz_wr_en_o,  
 
-        seg7led1,
-        seg7led2 ,
-
-        lcd_data,
-        lcd_rs,
-        lcd_rw,
-        lcd_en,
-
-        led1,
-        led2,
-
-        key1,
-        key2
+    input ser_rxd,
+    output ser_txd
 
     ) ;
-    input key1;
-    input key2;
 
-    input clk;
-    wire clk;
-
-    input rst;
-    wire rst;
-
-
-    output [6:0] seg7led1;
-    wire [6:0] seg7led1;
-    output [6:0] seg7led2;
-    wire [6:0] seg7led2;
-
-    output [7:0]lcd_data;
-    output lcd_rs;
-    output 	lcd_rw ;
-    output 	lcd_en	;
-    output led1;
-    output led2;
-
-
-    input [31:0] zz_din;
-    wire [31:0] zz_din;
-    input [31:0] zz_ins_i;
-    wire [31:0] zz_ins_i;
-    output [31:0] zz_addr_o;
-    wire [31:0] zz_addr_o;
-    output [31:0] zz_dout;
-    wire [31:0] zz_dout;
-    output [31:0] zz_pc_o;
-    wire [31:0] zz_pc_o;
-    output [3:0] zz_wr_en_o;
-    wire [3:0] zz_wr_en_o;
-
-    input ser_rxd;
-    output ser_txd;
 
     wire [31:0] cop_addr;
     wire [3:0] cop_mem_ctl;
     wire [31:0] data2cop;
     wire [31:0]cop_data;
     wire clk_sys=clk;
-    wire [31:0]irq_addr;
+    wire [31:0]irq_addr; 
     wire w_irq;
 
     mips_core i_mips_core
               (
+                  .pause(pause),
                   .clk(clk_sys),
                   .cop_addr_o(cop_addr),
                   .cop_data_o(data2cop),

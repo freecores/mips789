@@ -14,50 +14,30 @@
 `include "mips789_defs.v"
 
 module exec_stage
-    (		 pause,
-        clk,rst,spc_cls_i,alu_func,
-        dmem_fw_ctl,ext_i,fw_alu,fw_dmem,
-        muxa_ctl_i,muxa_fw_ctl,muxb_ctl_i,
-        muxb_fw_ctl,pc_i,rs_i,rt_i,alu_ur_o,
-        dmem_data_ur_o,zz_spc_o
+    (
+        input pause,
+        input clk,
+        input rst,
+        input spc_cls_i,
+        input [4:0] alu_func,
+        input [2:0] dmem_fw_ctl,
+        input [31:0] ext_i,
+        input [31:0] fw_alu,
+        input [31:0] fw_dmem,
+        input [1:0] muxa_ctl_i,
+        input [2:0] muxa_fw_ctl,
+        input [1:0] muxb_ctl_i,
+   //     input [2:0] muxb_fw_ctl,
+        input [31:0] pc_i,
+        input [31:0] rs_i,
+        input [31:0] rt_i,
+        output [31:0] alu_ur_o,
+        output [31:0] dmem_data_ur_o	,
+        output [31:0]  zz_spc_o
+
+
+
     );
-	input pause;
-    input clk;
-    wire clk;
-    input rst;
-    wire rst;
-    input spc_cls_i;
-    wire spc_cls_i;
-    input [4:0] alu_func;
-    wire [4:0] alu_func;
-    input [2:0] dmem_fw_ctl;
-    wire [2:0] dmem_fw_ctl;
-    input [31:0] ext_i;
-    wire [31:0] ext_i;
-    input [31:0] fw_alu;
-    wire [31:0] fw_alu;
-    input [31:0] fw_dmem;
-    wire [31:0] fw_dmem;
-    input [1:0] muxa_ctl_i;
-    wire [1:0] muxa_ctl_i;
-    input [2:0] muxa_fw_ctl;
-    wire [2:0] muxa_fw_ctl;
-    input [1:0] muxb_ctl_i;
-    wire [1:0] muxb_ctl_i;
-    input [2:0] muxb_fw_ctl;
-    wire [2:0] muxb_fw_ctl;
-    input [31:0] pc_i;
-    wire [31:0] pc_i;
-    input [31:0] rs_i;
-    wire [31:0] rs_i;
-    input [31:0] rt_i;
-    wire [31:0] rt_i;
-    output [31:0] alu_ur_o;
-    wire [31:0] alu_ur_o;
-    output [31:0] dmem_data_ur_o;
-    wire [31:0] dmem_data_ur_o;
-    output [31:0] zz_spc_o;
-    wire [31:0] zz_spc_o;
 
     wire [31:0] BUS2332;
     wire [31:0] BUS2446;
@@ -66,14 +46,14 @@ module exec_stage
 
 
     mips_alu MIPS_alu
-            (
-                .a(BUS476),
-                .b(BUS468),
-                .c(alu_ur_o),
-                .clk(clk),
-                .ctl(alu_func),
-                .rst(rst)
-            );
+             (
+                 .a(BUS476),
+                 .b(BUS468),
+                 .c(alu_ur_o),
+                 .clk(clk),
+                 .ctl(alu_func),
+                 .rst(rst)
+             );
 
     add32 add4
           (
@@ -90,27 +70,14 @@ module exec_stage
                 .fw_dmem(fw_dmem),
                 .din(rt_i)
             );
-			
-		/*	    alu_muxb1 i_alu_muxb
+
+
+
+    alu_muxb i_alu_muxb
              (
                  .b_o(BUS468),
                  .ctl(muxb_ctl_i),
                  .ext(ext_i),
-                 .fw_alu(fw_alu),
-                 .fw_ctl(muxb_fw_ctl),
-                 .fw_mem(fw_dmem),
-                 .rt(rt_i)
-             );
-		  */
-		  			
-			    alu_muxb i_alu_muxb
-             (
-                 .b_o(BUS468),
-                 .ctl(muxb_ctl_i),
-                 .ext(ext_i),
-               //  .fw_alu(fw_alu),
-              //   .fw_ctl(muxb_fw_ctl),
-              //   .fw_mem(fw_dmem),
                  .rt(dmem_data_ur_o)
              );
 
@@ -135,23 +102,24 @@ module exec_stage
 
 
     r32_reg_clr_cls  pc_nxt
-	(			 
-	.cls(pause),
-	.clr(0),
-                .clk(clk),
-                .r32_i(BUS2446),
-                .r32_o(BUS2332)	
-            );
+                     (
+                         .cls(pause),
+                         .clr(0),
+                         .clk(clk),
+                         .r32_i(BUS2446),
+                         .r32_o(BUS2332)
+                     );
 
 
 
     r32_reg_clr_cls spc
-                (
-                    .clk(clk),.clr(0),
-                    .cls(spc_cls_i|pause),
-                    .r32_i(pc_i),
-                    .r32_o(zz_spc_o)
-                );
+                    (
+                        .clk(clk),
+                        .clr(0),
+                        .cls(spc_cls_i|pause),
+                        .r32_i(pc_i),
+                        .r32_o(zz_spc_o)
+                    );
 
 endmodule
 
@@ -188,19 +156,19 @@ module mips_alu(clk,rst,a,b,c,ctl);
                    .func(ctl)
                );
     */
-   /* shifter_ff mips_shifter(
-                    .a(b),
-                    .shift_out(shift_c),
-                    .shift_func(ctl),
-                    .shift_amount(a)
-                ); 
-*/				    shifter_tak mips_shifter(
-                    .a(b),
-                    .shift_out(shift_c),
-                    .shift_func(ctl),
-                    .shift_amount(a)
-                );
- /* */
+    /* shifter_ff mips_shifter(
+                     .a(b),
+                     .shift_out(shift_c),
+                     .shift_func(ctl),
+                     .shift_amount(a)
+                 ); 
+    */				    shifter_tak mips_shifter(
+        .a(b),
+        .shift_out(shift_c),
+        .shift_func(ctl),
+        .shift_amount(a)
+    );
+    /* */
 
 
     alu mips_alu(
@@ -237,14 +205,14 @@ module alu_muxa(
 endmodule
 
 module alu_muxb(
-        input [31:0] rt,	
+        input [31:0] rt,
         input [31:0]ext ,
-        input [1:0]ctl ,	 
+        input [1:0]ctl ,
         output reg [31:0] b_o
     );
     always@(*)
     case (ctl)
-      //  `MUXB_RT :b_o =rt; //(fw_ctl ==`FW_ALU )?fw_alu:(fw_ctl==`FW_MEM)?fw_mem:rt;
+        //  `MUXB_RT :b_o =rt; //(fw_ctl ==`FW_ALU )?fw_alu:(fw_ctl==`FW_MEM)?fw_mem:rt;
         `MUXB_EXT :	b_o=ext;
         default b_o=rt;
     endcase
@@ -255,11 +223,11 @@ endmodule
 //This file is based on YACC ->alu.v and  UCORE ->alu.v
 
 module alu (
-    input [31:0] a,
-	input [31:0]b,
-    output reg [31:0] alu_out,
-    input [4:0]	alu_func
-	);
+        input [31:0] a,
+        input [31:0]b,
+        output reg [31:0] alu_out,
+        input [4:0]	alu_func
+    );
 
     reg [32:0] sum;
 
@@ -316,11 +284,11 @@ endmodule
 
 
 module  shifter_tak(
-            input [31:0] a,
-            output reg [31:0] shift_out,
-            input [4:0] shift_func,//connect to alu_func_ctl
-            input [31:0] shift_amount//connect to b
-        );
+        input [31:0] a,
+        output reg [31:0] shift_out,
+        input [4:0] shift_func,//connect to alu_func_ctl
+        input [31:0] shift_amount//connect to b
+    );
 
     always @ (*)
     case( shift_func )
@@ -491,10 +459,10 @@ module muldiv(ready,rst,op1,op2,clk,dout,func);
         begin
             mul_bit=0;
             div_bit=0;
-            
+
             hi=32'bx;
             lo=32'bx;
-            
+
             negative_output = 0;
         end
         else

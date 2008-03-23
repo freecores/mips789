@@ -966,7 +966,7 @@ module decoder(
             'd34://LWL rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `LWL ;
-            //replaceID  = `LW ;
+                //replaceID  = `LW ;
                 ext_ctl = `EXT_SIGN;
                 rd_sel = `RD_RT;
                 cmp_ctl = `CMP_NOP;
@@ -1086,7 +1086,7 @@ module decoder(
             'd42://SWL rt,offset(base) (offset:signed;base:rs)
             begin
                 //replaceID  = `SWL ;
-                  ext_ctl = `EXT_SIGN;
+                ext_ctl = `EXT_SIGN;
                 rd_sel = `RD_NOP;
                 cmp_ctl = `CMP_NOP;
                 pc_gen_ctl = `PC_NEXT;
@@ -1157,70 +1157,39 @@ endmodule
 
 
 
-module pipelinedregs (pause,
-        clk,id2ra_ctl_clr,id2ra_ctl_cls,ra2ex_ctl_clr,
-        alu_func_i,alu_we_i,cmp_ctl_i,dmem_ctl_i,ext_ctl_i,
-        muxa_ctl_i,muxb_ctl_i,pc_gen_ctl_i,rd_sel_i,wb_mux_ctl_i,
-        wb_we_i,alu_func_o,alu_we_o,cmp_ctl_o,dmem_ctl_o,dmem_ctl_ur_o,
-        ext_ctl,muxa_ctl_o,muxb_ctl_o,pc_gen_ctl_o,rd_sel_o,wb_mux_ctl_o,wb_we_o
-    ) ;
-    input pause;
-    input clk;
-    wire clk;
-    input id2ra_ctl_clr;
-    wire id2ra_ctl_clr;
-    input id2ra_ctl_cls;
-    wire id2ra_ctl_cls;
-    input ra2ex_ctl_clr;
-    wire ra2ex_ctl_clr;
-    input [4:0] alu_func_i;
-    wire [4:0] alu_func_i;
-    input [0:0] alu_we_i;
-    wire [0:0] alu_we_i;
-    input [2:0] cmp_ctl_i;
-    wire [2:0] cmp_ctl_i;
-    input [3:0] dmem_ctl_i;
-    wire [3:0] dmem_ctl_i;
-    input [2:0] ext_ctl_i;
-    wire [2:0] ext_ctl_i;
-    input [1:0] muxa_ctl_i;
-    wire [1:0] muxa_ctl_i;
-    input [1:0] muxb_ctl_i;
-    wire [1:0] muxb_ctl_i;
-    input [2:0] pc_gen_ctl_i;
-    wire [2:0] pc_gen_ctl_i;
-    input [1:0] rd_sel_i;
-    wire [1:0] rd_sel_i;
-    input [0:0] wb_mux_ctl_i;
-    wire [0:0] wb_mux_ctl_i;
-    input [0:0] wb_we_i;
-    wire [0:0] wb_we_i;
-    output [4:0] alu_func_o;
-    wire [4:0] alu_func_o;
-    output [0:0] alu_we_o;
-    wire [0:0] alu_we_o;
-    output [2:0] cmp_ctl_o;
-    wire [2:0] cmp_ctl_o;
-    output [3:0] dmem_ctl_o;
-    wire [3:0] dmem_ctl_o;
-    output [3:0] dmem_ctl_ur_o;
-    wire [3:0] dmem_ctl_ur_o;
-    output [2:0] ext_ctl;
-    wire [2:0] ext_ctl;
-    output [1:0] muxa_ctl_o;
-    wire [1:0] muxa_ctl_o;
-    output [1:0] muxb_ctl_o;
-    wire [1:0] muxb_ctl_o;
-    output [2:0] pc_gen_ctl_o;
-    wire [2:0] pc_gen_ctl_o;
-    output [1:0] rd_sel_o;
-    wire [1:0] rd_sel_o;
-    output [0:0] wb_mux_ctl_o;
-    wire [0:0] wb_mux_ctl_o;
-    output [0:0] wb_we_o;
-    wire [0:0] wb_we_o;
+module pipelinedregs (
 
-
+    input pause,
+    input clk,	  
+    input id2ra_ctl_clr,	 
+    input id2ra_ctl_cls,	 
+    input ra2ex_ctl_clr,	  
+    input [4:0] alu_func_i,	   
+    input [0:0] alu_we_i,	   
+    input [2:0] cmp_ctl_i,	  
+    input [3:0] dmem_ctl_i,	   
+    input [2:0] ext_ctl_i,	  
+    input [1:0] muxa_ctl_i,	  
+    input [1:0] muxb_ctl_i,	  
+    input [2:0] pc_gen_ctl_i,	
+    input [1:0] rd_sel_i,		
+    input [0:0] wb_mux_ctl_i,	
+    input [0:0] wb_we_i,		
+    output [4:0] alu_func_o,   
+    output [0:0] alu_we_o,	   
+    output [2:0] cmp_ctl_o,	   
+    output [3:0] dmem_ctl_o,  
+    output [3:0] dmem_ctl_ur_o,	
+    output [2:0] ext_ctl,		 
+    output [1:0] muxa_ctl_o,	  
+    output [1:0] muxb_ctl_o,	 
+    output [2:0] pc_gen_ctl_o,	 
+    output [1:0] rd_sel_o,		
+    output [0:0] wb_mux_ctl_o,	 
+    output [0:0] wb_we_o		 
+	
+		) ;
+ 
     wire NET7643;
     wire [0:0] BUS4987;
     wire [1:0] BUS5008;
@@ -1270,86 +1239,86 @@ module pipelinedregs (pause,
 
 
     wb_we_reg_clr_cls U12
-              (
-              .cls(pause),
-              .clr(0),
-                  .clk(clk),
-                  .wb_we_i(NET7643),
-                  .wb_we_o(wb_we_o)
-              );
+                      (
+                          .cls(pause),
+                          .clr(0),
+                          .clk(clk),
+                          .wb_we_i(NET7643),
+                          .wb_we_o(wb_we_o)
+                      );
 
 
 
     wb_mux_ctl_reg_clr_cls U13
-                       (
-                           .cls(pause),
-                           .clk(clk),
-                           .clr(ra2ex_ctl_clr),
-                           .wb_mux_ctl_i(BUS5651),
-                           .wb_mux_ctl_o(BUS5690)
-                       );
+                           (
+                               .cls(pause),
+                               .clk(clk),
+                               .clr(ra2ex_ctl_clr),
+                               .wb_mux_ctl_i(BUS5651),
+                               .wb_mux_ctl_o(BUS5690)
+                           );
 
 
 
     muxb_ctl_reg_clr_cls U14
-                     (
-                         .clk(clk),.cls(pause),
-                         .clr(ra2ex_ctl_clr),
-                         .muxb_ctl_i(BUS5483),
-                         .muxb_ctl_o(muxb_ctl_o)
-                     );
+                         (
+                             .clk(clk),.cls(pause),
+                             .clr(ra2ex_ctl_clr),
+                             .muxb_ctl_i(BUS5483),
+                             .muxb_ctl_o(muxb_ctl_o)
+                         );
 
 
 
     dmem_ctl_reg_clr_cls U15
-                     (
-                         .clk(clk),
+                         (
+                             .clk(clk),
                              .cls(pause),
-                         .clr(ra2ex_ctl_clr),
-                         .dmem_ctl_i(BUS5666),
-                         .dmem_ctl_o(dmem_ctl_ur_o)
-                     );
+                             .clr(ra2ex_ctl_clr),
+                             .dmem_ctl_i(BUS5666),
+                             .dmem_ctl_o(dmem_ctl_ur_o)
+                         );
 
 
 
     alu_func_reg_clr_cls U16
-                     (
-                         .alu_func_i(BUS5674),
-                         .alu_func_o(alu_func_o),
-                         .clk(clk),
+                         (
+                             .alu_func_i(BUS5674),
+                             .alu_func_o(alu_func_o),
+                             .clk(clk),
                              .cls(pause),
-                         .clr(ra2ex_ctl_clr)
-                     );
+                             .clr(ra2ex_ctl_clr)
+                         );
 
 
 
     muxa_ctl_reg_clr_cls U17
-                     (
-                .cls(pause),         .clk(clk),
-                         .clr(ra2ex_ctl_clr),
-                         .muxa_ctl_i(BUS5008),
-                         .muxa_ctl_o(muxa_ctl_o)
-                     );
+                         (
+                             .cls(pause),         .clk(clk),
+                             .clr(ra2ex_ctl_clr),
+                             .muxa_ctl_i(BUS5008),
+                             .muxa_ctl_o(muxa_ctl_o)
+                         );
 
 
 
     wb_mux_ctl_reg_clr_cls U18
-                   (
-                       .clk(clk),    .cls(pause),
-              .clr(0),
-                       .wb_mux_ctl_i(BUS5790),
-                       .wb_mux_ctl_o(wb_mux_ctl_o)
-                   );
+                           (
+                               .clk(clk),    .cls(pause),
+                               .clr(0),
+                               .wb_mux_ctl_i(BUS5790),
+                               .wb_mux_ctl_o(wb_mux_ctl_o)
+                           );
 
 
 
     wb_we_reg_clr_cls U19
-                  (
-                      .clk(clk),.cls(pause),
-                      .clr(ra2ex_ctl_clr),
-                      .wb_we_i(BUS5639),
-                      .wb_we_o(BUS5682)
-                  );
+                      (
+                          .clk(clk),.cls(pause),
+                          .clr(ra2ex_ctl_clr),
+                          .wb_we_i(BUS5639),
+                          .wb_we_o(BUS5682)
+                      );
 
 
 
@@ -1365,32 +1334,32 @@ module pipelinedregs (pause,
 
 
     wb_we_reg_clr_cls U20
-              (
-                  .clk(clk),.clr(0),.cls(pause),
-                  .wb_we_i(BUS5682),
-                  .wb_we_o(BUS7822)
-              );
+                      (
+                          .clk(clk),.clr(0),.cls(pause),
+                          .wb_we_i(BUS5682),
+                          .wb_we_o(BUS7822)
+                      );
 
 
 
     wb_mux_ctl_reg_clr_cls U21
-                   (
-                       .clk(clk),
-                       .cls(pause),
-                       .clr(0),
-                       .wb_mux_ctl_i(BUS5690),
-                       .wb_mux_ctl_o(BUS5790)
-                   );
+                           (
+                               .clk(clk),
+                               .cls(pause),
+                               .clr(0),
+                               .wb_mux_ctl_i(BUS5690),
+                               .wb_mux_ctl_o(BUS5790)
+                           );
 
 
 
     wb_we_reg_clr_cls U22
-              (
-                  .clk(clk),    .cls(pause),
-              .clr(0),
-                  .wb_we_i(BUS7299),
-                  .wb_we_o(alu_we_o)
-              );
+                      (
+                          .clk(clk),    .cls(pause),
+                          .clr(0),
+                          .wb_we_i(BUS7299),
+                          .wb_we_o(alu_we_o)
+                      );
 
 
 
@@ -1398,14 +1367,14 @@ module pipelinedregs (pause,
 
 
     alu_we_reg_clr_cls U24
-                   (
-                          .cls(pause),
-         
-               .alu_we_i(BUS4987),
-                       .alu_we_o(BUS7299),
-                       .clk(clk),
-                       .clr(ra2ex_ctl_clr)
-                   );
+                       (
+                           .cls(pause),
+
+                           .alu_we_i(BUS4987),
+                           .alu_we_o(BUS7299),
+                           .clk(clk),
+                           .clr(ra2ex_ctl_clr)
+                       );
 
 
 
@@ -1487,67 +1456,43 @@ module pipelinedregs (pause,
 
 
     dmem_ctl_reg_clr_cls U9
-                 (
-                
-                    .cls(pause),
-              			.clr(0),     
-              			.clk(clk),
-                     .dmem_ctl_i(dmem_ctl_ur_o),
-                     .dmem_ctl_o(dmem_ctl_o)
-                 );
+                         (
+
+                             .cls(pause),
+                             .clr(0),
+                             .clk(clk),
+                             .dmem_ctl_i(dmem_ctl_ur_o),
+                             .dmem_ctl_o(dmem_ctl_o)
+                         );
 
 
 
 endmodule
 
-module decode_pipe
+module decode_pipe				
+	
     (
-   pause,
-        clk,id2ra_ctl_clr,id2ra_ctl_cls,
-        ra2ex_ctl_clr,ins_i,alu_func_o,alu_we_o,
-        cmp_ctl_o,dmem_ctl_o,dmem_ctl_ur_o,ext_ctl_o,
-        fsm_dly,muxa_ctl_o,muxb_ctl_o,pc_gen_ctl_o,rd_sel_o,
-        wb_mux_ctl_o,wb_we_o
-    ) ;
-input pause;
-    input clk;
-    wire clk;
-    input id2ra_ctl_clr;
-    wire id2ra_ctl_clr;
-    input id2ra_ctl_cls;
-    wire id2ra_ctl_cls;
-    input ra2ex_ctl_clr;
-    wire ra2ex_ctl_clr;
-    input [31:0] ins_i;
-    wire [31:0] ins_i;
-    output [4:0] alu_func_o;
-    wire [4:0] alu_func_o;
-    output [0:0] alu_we_o;
-    wire [0:0] alu_we_o;
-    output [2:0] cmp_ctl_o;
-    wire [2:0] cmp_ctl_o;
-    output [3:0] dmem_ctl_o;
-    wire [3:0] dmem_ctl_o;
-    output [3:0] dmem_ctl_ur_o;
-    wire [3:0] dmem_ctl_ur_o;
-    output [2:0] ext_ctl_o;
-    wire [2:0] ext_ctl_o;
-    output [2:0] fsm_dly;
-    wire [2:0] fsm_dly;
-    output [1:0] muxa_ctl_o;
-    wire [1:0] muxa_ctl_o;
-    output [1:0] muxb_ctl_o;
-    wire [1:0] muxb_ctl_o;
-    output [2:0] pc_gen_ctl_o;
-    wire [2:0] pc_gen_ctl_o;
-    output [1:0] rd_sel_o;
-    wire [1:0] rd_sel_o;
-    output [0:0] wb_mux_ctl_o;
-    wire [0:0] wb_mux_ctl_o;
-    output [0:0] wb_we_o;
-    wire [0:0] wb_we_o;
-
-
+    input pause,
+    input clk,		   
+    input id2ra_ctl_clr,   
+    input id2ra_ctl_cls,	
+    input ra2ex_ctl_clr,	 
+    input [31:0] ins_i,		 
+    output [4:0] alu_func_o,  
+    output [0:0] alu_we_o,	  
+    output [2:0] cmp_ctl_o,	  
+    output [3:0] dmem_ctl_o,   
+    output [3:0] dmem_ctl_ur_o,	 
+    output [2:0] ext_ctl_o,		
+    output [2:0] fsm_dly,		
+    output [1:0] muxa_ctl_o,	
+    output [1:0] muxb_ctl_o,	
+    output [2:0] pc_gen_ctl_o, 
+    output [1:0] rd_sel_o,		
+    output [0:0] wb_mux_ctl_o,	
+    output [0:0] wb_we_o	     
+) ;
+ 
     wire [4:0] BUS2040;
     wire [0:0] BUS2048;
     wire [2:0] BUS2056;
@@ -1582,11 +1527,11 @@ input pause;
 
     pipelinedregs pipereg
                   (
-                  .pause(pause),
+                      .pause(pause),
                       .id2ra_ctl_cls(id2ra_ctl_cls),
                       .id2ra_ctl_clr(id2ra_ctl_clr),
                       .ra2ex_ctl_clr(ra2ex_ctl_clr),
-                      
+
                       .alu_func_i(BUS2040),
                       .alu_func_o(alu_func_o),
                       .alu_we_i(BUS2048),
@@ -1599,15 +1544,13 @@ input pause;
                       .dmem_ctl_ur_o(dmem_ctl_ur_o),
                       .ext_ctl(ext_ctl_o),
                       .ext_ctl_i(BUS2072),
-                      
 
-                      
                       .muxa_ctl_i(BUS2086),
                       .muxa_ctl_o(muxa_ctl_o),
                       .muxb_ctl_i(BUS2094),
                       .muxb_ctl_o(muxb_ctl_o),
                       .pc_gen_ctl_i(BUS2102),
-                      .pc_gen_ctl_o(pc_gen_ctl_o),                      
+                      .pc_gen_ctl_o(pc_gen_ctl_o),
                       .rd_sel_i(BUS2110),
                       .rd_sel_o(rd_sel_o),
                       .wb_mux_ctl_i(BUS2118),
@@ -1615,8 +1558,6 @@ input pause;
                       .wb_we_i(BUS2126),
                       .wb_we_o(wb_we_o)
                   );
-
-
 
 endmodule
 

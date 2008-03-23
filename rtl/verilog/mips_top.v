@@ -14,6 +14,7 @@
 `include "mips789_defs.v" 	
 
 module mips_top (
+        input pause,
         input clk,
         input rst,
         input ser_rxd,
@@ -47,6 +48,10 @@ module mips_top (
 
     wire sys_rst = rr_rst;
 
+
+    wire [31:0] pc_s ;
+    wire [31:0] ins2core_s;
+
 `ifdef ALTERA
     pll50 Ipll(
               .inclk0(clk),
@@ -56,19 +61,31 @@ module mips_top (
 `else 	 
     assign CLK = clk;//clock for simultation
     sim_mem_array sim_array//memory for simultion
-`endif
+`endif	   
+
+              //assign pc_s=pc;
+
               (
                   .clk(CLK),
                   .pc_i(pc),
-                  .ins_o(ins2core),
+                  .ins_o(ins2core_s),
                   .wren(wr_en),
                   .din(data2mem),
                   .data_addr_i(mem_Addr),
                   .dout(data2core)
               );
 
+
+    b_d_save  u2u(
+                  .clk(CLK),
+                  .pause(pause) ,
+                  .din(ins2core_s),
+                  .dout(ins2core)
+              );
+
     mips_sys isys
              (
+                 .pause(pause),
                  .zz_addr_o(mem_Addr),
                  .zz_din(data2core),
                  .zz_dout(data2mem),

@@ -76,8 +76,8 @@ module pc_gen(
                 `PC_J		:	pc_next ={pc[31:28],imm[27:0]};
                 `PC_JR		: 	pc_next = s;
                 `PC_BC		: 	pc_next = (check)?({br_addr[31:0]}):(pc+4);
-             default   
-			 /* `PC_NEXT	:*/	pc_next = pc + 4 ;              	
+                default
+                /* `PC_NEXT	:*/	pc_next = pc + 4 ;
             endcase
         end
         else
@@ -85,9 +85,9 @@ module pc_gen(
             case (pc_prectl)
                 `PC_KEP 	: pc_next=pc;
                 `PC_IRQ 	: pc_next=irq;
-             default	    
-			 /* `PC_RST 	: pc_next='d0;*/
-               	  pc_next =0;
+                default
+                /* `PC_RST 	: pc_next='d0;*/
+                pc_next =0;
             endcase
         end
 
@@ -96,26 +96,18 @@ endmodule
 
 
 module reg_array(
-        data,
-        wraddress,
-        rdaddress_a,
-        rdaddress_b,
-        wren,
-        clock,
-        qa,
-        qb,
-        rd_clk_cls 
-//		pause
-    //    bank_sel
+    input pause,
+    input	[31:0]  data,
+    input	[4:0]  wraddress,
+    input	[4:0]  rdaddress_a,
+    input	[4:0]  rdaddress_b, 	  
+    input rd_clk_cls,
+    input	wren,	      
+	input	clock,
+    output	[31:0]  qa,
+    output	[31:0]  qb 	  
     );
-	// input pause;
-    input	[31:0]  data;
-    input	[4:0]  wraddress;
-    input	[4:0]  rdaddress_a;
-    input	[4:0]  rdaddress_b;
-   // input bank_sel;
-    input rd_clk_cls;
-    input	wren;
+
 
     reg	[31:0]  r_data;
     reg	[4:0]  r_wraddress;
@@ -123,9 +115,7 @@ module reg_array(
     reg	[4:0]  r_rdaddress_b;
 
     reg r_wren;
-    input	clock;
-    output	[31:0]  qa;
-    output	[31:0]  qb;
+
     reg [31:0]reg_bank[0:31];
 
     integer i;
@@ -135,16 +125,16 @@ module reg_array(
             reg_bank[i]=0;
     end
 
-    always@(posedge clock)	   
-	//	if( ~pause )
-    begin
-        r_data <=data;
-        r_wraddress<=wraddress;
-        r_wren<=wren;
-    end
+    always@(posedge clock)
+        if(0==pause )
+        begin
+            r_data <=data;
+            r_wraddress<=wraddress;
+            r_wren<=wren;
+        end
 
-	    always@(posedge clock)		//	||( 0==pause )
-        if(( 0==rd_clk_cls ))
+    always@(posedge clock)
+        if(( 0==rd_clk_cls )&&( 0==pause ))
         begin
             r_rdaddress_a <=rdaddress_a;
             r_rdaddress_b <=rdaddress_b;

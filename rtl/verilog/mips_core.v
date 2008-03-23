@@ -14,21 +14,22 @@
 `include "mips789_defs.v"
 
 module mips_core (
-    input clk,
-    input irq_i,
-    input rst,
-    input [31:0] cop_dout,
-    input [31:0] irq_addr,
-    input [31:0] zz_din,
-    input [31:0] zz_ins_i,
-    output [31:0] zz_addr_o,
-    output [31:0] zz_dout,
-    output [31:0] zz_pc_o,
-    output [3:0] zz_wr_en_o,
-    output iack_o,
-    output [31:0] cop_addr_o,
-    output [31:0] cop_data_o,
-    output [3:0] cop_mem_ctl_o 
+        input pause,
+        input clk,
+        input irq_i,
+        input rst,
+        input [31:0] cop_dout,
+        input [31:0] irq_addr,
+        input [31:0] zz_din,
+        input [31:0] zz_ins_i,
+        output [31:0] zz_addr_o,
+        output [31:0] zz_dout,
+        output [31:0] zz_pc_o,
+        output [3:0] zz_wr_en_o,
+        output iack_o,
+        output [31:0] cop_addr_o,
+        output [31:0] cop_data_o,
+        output [3:0] cop_mem_ctl_o
 
     );
 
@@ -79,9 +80,8 @@ module mips_core (
 
 
     mem_module MEM_CTL
-	(		
-	.pause(0),	   
-//	.rt_i(BUS9884),
+               (
+                   .pause(pause),
                    .Zz_addr(zz_addr_o),
                    .Zz_dout(zz_dout),
                    .Zz_wr_en(zz_wr_en_o),
@@ -96,8 +96,8 @@ module mips_core (
     assign NET21531 = NET1572 | iack_o;
 
     rf_stage iRF_stage
-	(	   
-	.pause(0),
+             (
+                 .pause(pause),
                  .clk(clk),
                  .cmp_ctl_i(BUS109),
                  .ext_ctl_i(BUS117),
@@ -144,8 +144,7 @@ module mips_core (
                    .fw_dmem(BUS15471),
                    .muxa_ctl_i(BUS5832),
                    .muxa_fw_ctl(BUS1158),
-                   .muxb_ctl_i(BUS5840),
-                   .muxb_fw_ctl(BUS1196),
+                   .muxb_ctl_i(BUS5840),	
                    .pc_i(BUS27031),
                    .rs_i(BUS7101),
                    .rst(rst),
@@ -157,21 +156,24 @@ module mips_core (
 
 
     r32_reg_clr_cls alu_pass0
-	(	
-	.cls(pause),.clr(0),
-                .clk(clk),
-                .r32_i(BUS9589),
-                .r32_o(cop_addr_o)
-            );
+                    (
+                        .cls(pause),
+                        .clr(0),
+                        .clk(clk),
+                        .r32_i(BUS9589),
+                        .r32_o(cop_addr_o)
+                    );
 
 
 
     r32_reg_clr_cls alu_pass1
-            (	  	.cls(pause),.clr(0),
-                .clk(clk),
-                .r32_i(cop_addr_o),
-                .r32_o(BUS422)
-            );
+                    (
+                        .cls(pause),
+                        .clr(0),
+                        .clk(clk),
+                        .r32_i(cop_addr_o),
+                        .r32_o(BUS422)
+                    );
 
 
 
@@ -185,27 +187,31 @@ module mips_core (
 
 
     r32_reg_clr_cls	cop_data_reg
-            (	 .cls(pause),.clr(0), 
-                .clk(clk),
-                .r32_i(BUS9884),
-                .r32_o(cop_data_o)
-            );
+                    (
+                        .cls(pause),
+                        .clr(0),
+                        .clk(clk),
+                        .r32_i(BUS9884),
+                        .r32_o(cop_data_o)
+                    );
 
 
 
     r32_reg_clr_cls cop_dout_reg
-	(	   
-		.clr(0),
-	.cls(pause),
-                .clk(clk),
-                .r32_i(BUS22401),
-                .r32_o(BUS7772)
-            );
+                    (
+
+                        .clr(0),
+                        .cls(pause),
+                        .clk(clk),
+                        .r32_i(BUS22401),
+                        .r32_o(BUS7772)
+                    );
 
 
 
     decode_pipe decoder_pipe
-                (	  .pause(0),
+				(	  
+					.pause(pause),
                     .alu_func_o(BUS6275),
                     .alu_we_o(NET767),
                     .clk(clk),
@@ -226,22 +232,20 @@ module mips_core (
                     .wb_we_o(NET1375)
                 );
 
-
-
     r32_reg_clr_cls ext_reg
-	(				 
-		.clr(0),
-	.cls(pause),
-                .clk(clk),
-                .r32_i(BUS7219),
-                .r32_o(BUS7231)
-            );
+                    (
+                        .clr(0),
+                        .cls(pause),
+                        .clk(clk),
+                        .r32_i(BUS7219),
+                        .r32_o(BUS7231)
+                    );
 
 
 
     forward iforward
             (
-			.pause(0),
+                .pause(pause),
                 .alu_rs_fw(BUS1158),
                 .alu_rt_fw(BUS1196),
                 .alu_we(NET767),
@@ -259,63 +263,68 @@ module mips_core (
 
 
     r32_reg_clr_cls pc
-            (
-           	.clr(0),
-	.cls(pause),
-			.clk(clk),
-                .r32_i(zz_pc_o),
-                .r32_o(BUS27031)
-            );
+                    (
+                        .clr(0),
+                        .cls(pause),
+                        .clk(clk),
+                        .r32_i(zz_pc_o),
+                        .r32_o(BUS27031)
+                    );
 
 
 
     r5_reg_clr_cls rnd_pass0
-           (
-               .clk(clk),
-               .r5_i(BUS775),
-               .r5_o(BUS1726)
-           );
+                   (
+                       .clr(0),
+                       .cls(pause),
+                       .clk(clk),
+                       .r5_i(BUS775),
+                       .r5_o(BUS1726)
+                   );
 
 
 
     r5_reg_clr_cls rnd_pass1
-           ( .clr(0),
-	.cls(pause),
-               .clk(clk),
-               .r5_i(BUS1726),
-               .r5_o(BUS1724)
-           );
+                   (
+                       .clr(0),
+                       .cls(pause),
+                       .clk(clk),
+                       .r5_i(BUS1726),
+                       .r5_o(BUS1724)
+                   );
 
 
 
     r5_reg_clr_cls rnd_pass2
-           ( .clr(0),
-	.cls(pause),
-               .clk(clk),
-               .r5_i(BUS1724),
-               .r5_o(BUS18211)
-           );
+                   (
+                       .clr(0),
+                       .cls(pause),
+                       .clk(clk),
+                       .r5_i(BUS1724),
+                       .r5_o(BUS18211)
+                   );
 
 
 
     r32_reg_clr_cls rs_reg
-	(	   
-	.clr(0),
-	.cls(pause),
-                .clk(clk),
-                .r32_i(BUS24839),
-                .r32_o(BUS7101)
-            );
+                    (
+                        .clr(0),
+                        .cls(pause),
+                        .clk(clk),
+                        .r32_i(BUS24839),
+                        .r32_o(BUS7101)
+                    );
 
 
 
     r32_reg_clr_cls rt_reg
-            (  .clr(0),
-	.cls(pause),
-                .clk(clk),
-                .r32_i(BUS7160),
-                .r32_o(BUS7117)
-            );
+                    (
+                        .clr(0),
+                        .cls(pause),
+                        .clk(clk),
+                        .r32_i(BUS7160),
+                        .r32_o(BUS7117)
+                    );
 
 
 

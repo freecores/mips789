@@ -71,6 +71,13 @@ module mips_dvc (
     wire ld_wd = (mem_ctl==`DMEM_LW);
 
 
+    wire wr_dis_byte   =	  addr==`DIS_DATA_ADDR 	&& 		sv_byte;
+
+    always @ (posedge clk)
+    begin
+        if ( wr_dis_byte )	$display("HEX=>%x<  CHAR=>%c<",din[7:0],din[7:0]);
+    end
+
     wire wr_uartdata   =	  addr==`UART_DATA_ADDR 	&& 		sv_byte;
     wire wr_lcddata    =	  addr==`LCD_DATA_ADDR 		&& 		sv_byte;
     wire rd_uartdata   =	  addr==`UART_DATA_ADDR 	&& 		ld_byte;
@@ -112,6 +119,9 @@ module mips_dvc (
     wire w_txd_busy;
     wire w_rx_rdy;
 
+
+
+
     always@(posedge clk )
         if (~rst)
         begin
@@ -125,6 +135,8 @@ module mips_dvc (
             if ( rd_tmr_data )dout<=w_tmr_data;	else
             dout<=0;
         end
+
+
 
     always @(posedge clk)
         if (~rst)

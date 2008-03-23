@@ -47,29 +47,26 @@ module fwd_mux(
     case (fw_ctl)
         `FW_ALU :dout=fw_alu;
         `FW_MEM :dout=fw_dmem;
-         default
-	    /*`FW_NOP :dout=din;*/
-         dout=din;
+        default
+        dout=din;
     endcase
 endmodule
 
 module forward  (
-input pause,
-    input alu_we,
-    input clk,
-    input mem_We,
-    input [4:0] fw_alu_rn,
-    input [4:0] fw_mem_rn,
-    input [4:0] rns_i,
-    input [4:0] rnt_i,
-    output [2:0] alu_rs_fw,
-    output [2:0] alu_rt_fw,
-    output [2:0] cmp_rs_fw,
-    output [2:0] cmp_rt_fw,
-    output [2:0] dmem_fw 
-) ;
-
-
+        input pause,
+        input alu_we,
+        input clk,
+        input mem_We,
+        input [4:0] fw_alu_rn,
+        input [4:0] fw_mem_rn,
+        input [4:0] rns_i,
+        input [4:0] rnt_i,
+        output [2:0] alu_rs_fw,
+        output [2:0] alu_rt_fw,
+        output [2:0] cmp_rs_fw,
+        output [2:0] cmp_rt_fw,
+        output [2:0] dmem_fw
+    ) ;			 
 
     wire [2:0] BUS1345;
     wire [4:0] BUS82;
@@ -124,21 +121,24 @@ input pause,
 
 
     r5_reg_clr_cls fw_reg_rns
-              (
-                  .clk(clk),.cls(pause),.clr(0),
-                  .r5_i(rns_i),
-                  .r5_o(BUS82)
-              );
+                   (
+				   .clk(clk),
+				   .cls(pause),
+				   .clr(0),
+                       .r5_i(rns_i),
+                       .r5_o(BUS82)
+                   );
 
 
 
-   r1_reg_clr_cls fw_reg_rnt
-              (
-.cls(pause),.clr(0),
-              .clk(clk),
-                  .r1_i(rnt_i),
-                  .r1_o(BUS937)
-              );
+    r5_reg_clr_cls fw_reg_rnt
+                   (
+                       .cls(pause),
+                       .clr(0),
+                       .clk(clk),
+                       .r5_i(rnt_i),
+                       .r5_o(BUS937)
+                   );
 
 
     assign alu_rt_fw[2:0] = BUS1345[2:0];

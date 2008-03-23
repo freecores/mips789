@@ -14,40 +14,38 @@
 `include "mips789_defs.v"		   
 
 module rf_stage (
-	input pause,
-    input clk,	 
-	       input irq_i,
-    input rst_i,   
-    input wb_we_i,	
-    input [2:0] cmp_ctl_i,	
-    input [2:0] ext_ctl_i,	
-    input [31:0] fw_alu_i,	
-    input [2:0] fw_cmp_rs,	
-    input [2:0] fw_cmp_rt, 
-    input [31:0] fw_mem_i, 
-    input [2:0] id_cmd,	  
-    input [31:0] ins_i,	 
-    input [31:0] irq_addr_i,   
-    input [2:0] pc_gen_ctl,	  
-    input [31:0] pc_i,		
-    input [1:0] rd_sel_i,	
-    input [4:0] wb_addr_i,	
-    input [31:0] wb_din_i, 
-    input [31:0] zz_spc_i,	
-    output iack_o,		   
-    output id2ra_ctl_clr_o,	
-    output id2ra_ctl_cls_o,	
-    output ra2ex_ctl_clr_o,	
-    output [31:0] ext_o,   
-    output [31:0] pc_next, 
-    output [4:0] rd_index_o, 
-    output [4:0] rs_n_o, 
-    output [31:0] rs_o,		
-    output [4:0] rt_n_o, 
-    output [31:0] rt_o	  
+        input pause,
+        input clk,
+        input irq_i,
+        input rst_i,
+        input wb_we_i,
+        input [2:0] cmp_ctl_i,
+        input [2:0] ext_ctl_i,
+        input [31:0] fw_alu_i,
+        input [2:0] fw_cmp_rs,
+        input [2:0] fw_cmp_rt,
+        input [31:0] fw_mem_i,
+        input [2:0] id_cmd,
+        input [31:0] ins_i,
+        input [31:0] irq_addr_i,
+        input [2:0] pc_gen_ctl,
+        input [31:0] pc_i,
+        input [1:0] rd_sel_i,
+        input [4:0] wb_addr_i,
+        input [31:0] wb_din_i,
+        input [31:0] zz_spc_i,
+        output iack_o,
+        output id2ra_ctl_clr_o,
+        output id2ra_ctl_cls_o,
+        output ra2ex_ctl_clr_o,
+        output [31:0] ext_o,
+        output [31:0] pc_next,
+        output [4:0] rd_index_o,
+        output [4:0] rs_n_o,
+        output [31:0] rs_o,
+        output [4:0] rt_n_o,
+        output [31:0] rt_o
     ) ;
-	
-
 
 
     wire NET6609;
@@ -75,11 +73,9 @@ module rf_stage (
                 .rst(rst_i)
             );
 
-
-
     ctl_FSM MAIN_FSM
-	(	 
-				.pause(pause),
+            (
+                .pause(pause),
                 .clk(clk),
                 .iack(iack_o),
                 .id2ra_ctl_clr(id2ra_ctl_clr_o),
@@ -164,28 +160,19 @@ module rf_stage (
                .rd_i(BUS5421),
                .rd_o(rd_index_o),
                .rt_i(rt_n_o)
-           );/*
-    wire bank_sel;
-    dly3clk bank_sel_dly
-            (
-                .r1_i(iack_o),
-                .r1_o(bank_sel),
-                .clk(clk),
-                .rst(rst_i)
-            );*/
+           );
 
     reg_array reg_bank
-              (	//	.pause(pause),
-                  .clock(clk),
-                  .data(wb_din_i),
-                  .qa(BUS6061),
-                  .qb(BUS6095),
-                  .rd_clk_cls(NET6658),
-                  .rdaddress_a(BUS3237),
-                  .rdaddress_b(BUS3236),
-                  .wraddress(wb_addr_i),
-                  .wren(wb_we_i)/*,
-                  .bank_sel(1'b0)*/
+              (	.pause(pause),
+                .clock(clk),
+                .data(wb_din_i),
+                .qa(BUS6061),
+                .qb(BUS6095),
+                .rd_clk_cls(NET6658),
+                .rdaddress_a(BUS3237),
+                .rdaddress_b(BUS3236),
+                .wraddress(wb_addr_i),
+                .wren(wb_we_i) 
               );
 
     fwd_mux rf_fwd_rt
