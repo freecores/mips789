@@ -74,107 +74,110 @@ module ctl_FSM (
         case (CurrState)
             `IDLE:
             begin
-                if (~rst)                    NextState  = `RST;
-                else if ((irq)&&(~riack))    NextState  = `IRQ;
-                else if (id_cmd ==ID_NOI)    NextState  = `NOI;
-                else if (id_cmd==ID_CUR)     NextState  = `CUR;
-                else if (id_cmd==ID_MUL)     NextState  = `MUL;
-                else if (id_cmd==ID_LD)      NextState  = `LD;
-                else if (id_cmd==ID_RET)     NextState  = `RET;
-                else                         NextState  = `IDLE;
+                if (~rst)                    NextState  =`__TP `RST;
+                else if ((irq)&&(~riack))    NextState  = `__TP `IRQ;
+                else if (id_cmd ==ID_NOI)    NextState  =`__TP `NOI;
+                else if (id_cmd==ID_CUR)     NextState  =`__TP `CUR;
+                else if (id_cmd==ID_MUL)     NextState  =`__TP `MUL;
+                else if (id_cmd==ID_LD)      NextState  =`__TP `LD;
+                else if (id_cmd==ID_RET)     NextState  =`__TP `RET;
+                else                         NextState  = `__TP`IDLE;
             end
             `NOI:
             begin
-                if (id_cmd ==ID_NOI)         NextState  = `NOI;
-                else if (id_cmd==ID_CUR)     NextState  = `CUR;
-                else if (id_cmd==ID_MUL)     NextState  = `MUL;
-                else if (id_cmd==ID_LD)      NextState  = `LD;
-                else if (id_cmd==ID_RET)     NextState  = `RET;
-                else                         NextState  = `IDLE;
+                if (id_cmd ==ID_NOI)         NextState  =`__TP `NOI;
+                else if (id_cmd==ID_CUR)     NextState  =`__TP `CUR;
+                else if (id_cmd==ID_MUL)     NextState  =`__TP `MUL;
+                else if (id_cmd==ID_LD)      NextState  =`__TP `LD;
+                else if (id_cmd==ID_RET)     NextState  =`__TP `RET;
+                else                         NextState  = `__TP `IDLE;
             end
-            `CUR:   NextState  = `NOI;
-            `RET:   NextState  = `IDLE;
-            `IRQ:   NextState  = `IDLE;
-            `RST:   NextState  = `IDLE;
-            `LD:    NextState  = `IDLE;
-            `MUL:   NextState  = (delay_counter==32)?`IDLE:`MUL;
-            default NextState  =`IDLE;
+            `CUR:   NextState  = `__TP `NOI;
+            `RET:   NextState  = `__TP `IDLE;
+            `IRQ:   NextState  =`__TP  `IDLE;
+            `RST:   NextState  =`__TP `IDLE;
+            `LD:    NextState  = `__TP `IDLE;
+            `MUL:  begin // NextState  = (delay_counter==32)?`IDLE:`MUL;
+                if (delay_counter==32) NextState  = `__TP  `IDLE;
+                else  NextState  = `__TP  `MUL;
+            end
+            default NextState  =`__TP `IDLE;
         endcase
     end
 
     always @ (*)/*Finite State Machine part3*/
     begin
         case (CurrState )
-            `IDLE: begin id2ra_ins_clr  =  1'b0;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b0;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr   =  1'b0;
+            `IDLE: begin id2ra_ins_clr  = `__TP  1'b0;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  =  `__TP 1'b0;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr   = `__TP  1'b0;
                 pc_prectl=PC_IGN;
                 zz_is_nop = 0;end
             `MUL:  begin
-                id2ra_ins_clr  =  1'b1;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b1;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr  =  1'b0;
+                id2ra_ins_clr  =  `__TP 1'b1;
+                id2ra_ins_cls  =  `__TP 1'b0;
+                id2ra_ctl_clr  =  `__TP 1'b1;
+                id2ra_ctl_cls  =  `__TP 1'b0;
+                ra2exec_ctl_clr  = `__TP  1'b0;
                 pc_prectl =PC_KEP;
                 zz_is_nop =0; end
             `CUR:  begin
-                id2ra_ins_clr  =  1'b0;
-                id2ra_ins_cls  =  1'b1;
-                id2ra_ctl_clr  =  1'b0;
-                id2ra_ctl_cls  =  1'b1;
-                ra2exec_ctl_clr  =  1'b1;
-                pc_prectl =PC_KEP;
-                zz_is_nop = 1; end
-            `RET: begin id2ra_ins_clr  =  1'b0;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b0;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr   =  1'b0;
-                pc_prectl =PC_IGN;
-                zz_is_nop = 1'b0;  end
+                id2ra_ins_clr  = `__TP  1'b0;
+                id2ra_ins_cls  =  `__TP 1'b1;
+                id2ra_ctl_clr  = `__TP  1'b0;
+                id2ra_ctl_cls  = `__TP  1'b1;
+                ra2exec_ctl_clr  = `__TP  1'b1;
+                pc_prectl =`__TP PC_KEP;
+                zz_is_nop = `__TP 1; end
+            `RET: begin id2ra_ins_clr  = `__TP  1'b0;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  = `__TP  1'b0;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr   =`__TP   1'b0;
+                pc_prectl =`__TP PC_IGN;
+                zz_is_nop = `__TP 1'b0;  end
             `IRQ: begin
-                id2ra_ins_clr  =  1'b1;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b1;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr  =  1'b1;
-                pc_prectl =PC_IRQ;
-                zz_is_nop = 1'b0;end
+                id2ra_ins_clr  = `__TP  1'b1;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  = `__TP  1'b1;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr  = `__TP  1'b1;
+                pc_prectl =`__TP PC_IRQ;
+                zz_is_nop =`__TP  1'b0;end
             `RST: begin
-                id2ra_ins_clr  =  1'b1;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b1;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr  =  1'b1;
-                pc_prectl=PC_RST;
-                zz_is_nop = 1'b1; end
+                id2ra_ins_clr  = `__TP  1'b1;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  = `__TP  1'b1;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr  =`__TP   1'b1;
+                pc_prectl=`__TP PC_RST;
+                zz_is_nop =`__TP  1'b1; end
             `LD:begin
-                id2ra_ins_clr  =  1'b1;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b1;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr  =  1'b0;
-                pc_prectl =PC_KEP;
-                zz_is_nop = 1'b0;end
+                id2ra_ins_clr  = `__TP  1'b1;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  = `__TP  1'b1;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr  = `__TP  1'b0;
+                pc_prectl =`__TP PC_KEP;
+                zz_is_nop = `__TP 1'b0;end
             `NOI:begin
-                id2ra_ins_clr  =  1'b0;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b0;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr   =  1'b0;
-                pc_prectl=PC_IGN;
-                zz_is_nop = 1'b0;end
+                id2ra_ins_clr  = `__TP  1'b0;
+                id2ra_ins_cls  =`__TP   1'b0;
+                id2ra_ctl_clr  = `__TP  1'b0;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr   = `__TP  1'b0;
+                pc_prectl=`__TP PC_IGN;
+                zz_is_nop =`__TP  1'b0;end
             default   begin
-                id2ra_ins_clr  =  1'b1;
-                id2ra_ins_cls  =  1'b0;
-                id2ra_ctl_clr  =  1'b1;
-                id2ra_ctl_cls  =  1'b0;
-                ra2exec_ctl_clr  =  1'b1;
-                pc_prectl=PC_RST;
-                zz_is_nop = 1'b1;end
+                id2ra_ins_clr  =`__TP   1'b1;
+                id2ra_ins_cls  = `__TP  1'b0;
+                id2ra_ctl_clr  = `__TP  1'b1;
+                id2ra_ctl_cls  = `__TP  1'b0;
+                ra2exec_ctl_clr  =  `__TP 1'b1;
+                pc_prectl=`__TP PC_RST;
+                zz_is_nop = `__TP 1'b1;end
         endcase
     end
 endmodule

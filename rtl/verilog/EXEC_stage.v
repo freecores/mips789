@@ -27,16 +27,12 @@ module exec_stage
         input [1:0] muxa_ctl_i,
         input [2:0] muxa_fw_ctl,
         input [1:0] muxb_ctl_i,
-   //     input [2:0] muxb_fw_ctl,
         input [31:0] pc_i,
         input [31:0] rs_i,
         input [31:0] rt_i,
         output [31:0] alu_ur_o,
         output [31:0] dmem_data_ur_o	,
         output [31:0]  zz_spc_o
-
-
-
     );
 
     wire [31:0] BUS2332;

@@ -121,8 +121,8 @@
  `define   PC_KEP                 2                   
  `define   PC_IRQ                 4                   
  `define   PC_RST                 8  
- 
- 
+
+
  `define   PC_J                   1                   
  `define   PC_JR                  2                   
  `define   PC_BC                  4                   
@@ -130,8 +130,8 @@
  `define   PC_NOP                 0                   
  `define   PC_RET                 6                   
  `define   PC_SPC                 6   
- 
- 
+
+
  `define   RF                     13                  
  `define   EXEC                   10                  
  `define   DMEM                   4                   
@@ -195,6 +195,15 @@
 
 
 
+`define __TP 		
+//#1
+
+
+`define WB_INS_LATCH_ADDR 1
+
+`define WB_INS_LATCH_DATA   ~`WB_INS_LATCH_ADDR
+        
+        //
 `define   ALTERA
         //this is DEBUG model ,
 

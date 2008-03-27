@@ -25,13 +25,13 @@ module ext(
 
     always @ (*)
     case (ctl)
-        `EXT_SIGN    :res ={sign,instr25_0[15:0]};//sign
-        `EXT_UNSIGN  :res ={16'b0,instr25_0[15:0]};//zeroext
-        `EXT_J       :res ={4'b0,instr25_0[25:0],2'b0};//jmp
-        `EXT_B       :res ={sign[13:0],instr25_0[15:0],2'B0};//branch
-        `EXT_SA      :res ={27'b0,instr25_0[10:6]} ;//sll,srl
-        `EXT_S2H     :res ={instr25_0[15:0],16'B0};//shift to high
-        default: res=32'bx;
+        `EXT_SIGN    :res = `__TP {sign,instr25_0[15:0]};//sign
+        `EXT_UNSIGN  :res = `__TP {16'b0,instr25_0[15:0]};//zeroext
+        `EXT_J       :res = `__TP {4'b0,instr25_0[25:0],2'b0};//jmp
+        `EXT_B       :res = `__TP {sign[13:0],instr25_0[15:0],2'B0};//branch
+        `EXT_SA      :res = `__TP {27'b0,instr25_0[10:6]} ;//sll,srl
+        `EXT_S2H     :res = `__TP {instr25_0[15:0],16'B0};//shift to high
+        default: res= `__TP 32'bx;
     endcase
 endmodule
 
@@ -44,18 +44,19 @@ module compare (
     );
     always @ (*)
     case  (ctl)
-        `CMP_BEQ:   res = (s==t);
-        `CMP_BNE:   res = (s!=t);
-        `CMP_BLTZ:  res = s[31];
-        `CMP_BGTZ:  res = ~s[31] && (|s[30:0]);
-        `CMP_BLEZ:  res = s[31] |(~|s);
-        `CMP_BGEZ:  res = ~s[31];
-        default res=1'Bx;
+        `CMP_BEQ:   res = `__TP  (s==t);
+        `CMP_BNE:   res = `__TP  (s!=t);
+        `CMP_BLTZ:  res = `__TP  s[31];
+        `CMP_BGTZ:  res = `__TP  ~s[31] && (|s[30:0]);
+        `CMP_BLEZ:  res =  `__TP s[31] |(~|s);
+        `CMP_BGEZ:  res = `__TP  ~s[31];
+        default res= `__TP 1'Bx;
     endcase
 endmodule
 
 
 module pc_gen(
+        input pause,
         input [2:0]ctl,
         output reg   [31:0]pc_next,
         input [3:0] pc_prectl,
@@ -69,26 +70,32 @@ module pc_gen(
 
     wire [32:0] br_addr = pc + imm ;
     always @ (*)
-        if(pc_prectl == `PC_IGN )
-        begin
-            case (ctl)
-                `PC_RET 	:	pc_next = zz_spc ;
-                `PC_J		:	pc_next ={pc[31:28],imm[27:0]};
-                `PC_JR		: 	pc_next = s;
-                `PC_BC		: 	pc_next = (check)?({br_addr[31:0]}):(pc+4);
-                default
-                /* `PC_NEXT	:*/	pc_next = pc + 4 ;
-            endcase
-        end
-        else
-        begin
-            case (pc_prectl)
-                `PC_KEP 	: pc_next=pc;
-                `PC_IRQ 	: pc_next=irq;
-                default
-                /* `PC_RST 	: pc_next='d0;*/
-                pc_next =0;
-            endcase
+        if (pause)	   pc_next = pc ;
+        else begin
+            if(pc_prectl == `PC_IGN )
+            begin
+                case (ctl)
+                    `PC_RET 	:	pc_next = `__TP  zz_spc ;
+                    `PC_J		:	pc_next = `__TP {pc[31:28],imm[27:0]};
+                    `PC_JR		: 	pc_next =  `__TP s;
+                    `PC_BC		: begin //	pc_next = (check)?({br_addr[31:0]}):(pc+4);
+                        if (check)pc_next =  `__TP {br_addr[31:0]};
+                        else pc_next =  `__TP pc+4;
+                    end
+                    default
+                    /* `PC_NEXT	:*/	pc_next = pc + 4 ;
+                endcase
+            end
+            else
+            begin
+                case (pc_prectl)
+                    `PC_KEP 	: pc_next= `__TP pc;
+                    `PC_IRQ 	: pc_next= `__TP irq;
+                    default
+                    /* `PC_RST 	: pc_next= `__TP 'd0;*/
+                    pc_next =`__TP 0;
+                endcase
+            end
         end
 
 endmodule
@@ -96,16 +103,16 @@ endmodule
 
 
 module reg_array(
-    input pause,
-    input	[31:0]  data,
-    input	[4:0]  wraddress,
-    input	[4:0]  rdaddress_a,
-    input	[4:0]  rdaddress_b, 	  
-    input rd_clk_cls,
-    input	wren,	      
-	input	clock,
-    output	[31:0]  qa,
-    output	[31:0]  qb 	  
+        input pause,
+        input	[31:0]  data,
+        input	[4:0]  wraddress,
+        input	[4:0]  rdaddress_a,
+        input	[4:0]  rdaddress_b,
+        input rd_clk_cls,
+        input	wren,
+        input	clock,
+        output	[31:0]  qa,
+        output	[31:0]  qb
     );
 
 
@@ -140,6 +147,7 @@ module reg_array(
             r_rdaddress_b <=rdaddress_b;
         end
 
+
     always@(posedge clock)
         if (r_wren)
             reg_bank[r_wraddress] <= r_data ;
@@ -152,4 +160,11 @@ module reg_array(
            ((r_wraddress==r_rdaddress_b)&&(1==r_wren))?r_data:
            reg_bank[r_rdaddress_b];
 
+
+
+    always@(posedge clock) //used only for debug
+        if((0==pause  )&&(wren)&&(wraddress!=0))
+        begin
+            $display("%9d ns => Write to register : R%d = %x",$realtime*10,wraddress,data);
+        end
 endmodule

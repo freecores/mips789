@@ -16,32 +16,32 @@
 
 
 module mips_sys (
-    input pause,
-    input key1,
-    input key2,
+        input pause,
+        input key1,
+        input key2,
 
-    input clk,	
-    input rst,	 
-  
-	output [6:0] seg7led1, 
-    output [6:0] seg7led2,	
+        input clk,
+        input rst,
 
-    output [7:0]lcd_data,
-    output lcd_rs,
-    output 	lcd_rw ,
-    output 	lcd_en	,
-    output led1,
-    output led2,
+        output [6:0] seg7led1,
+        output [6:0] seg7led2,
 
-    input [31:0] zz_din,	 
-    input [31:0] zz_ins_i,	
-    output [31:0] zz_addr_o, 
-    output [31:0] zz_dout,	
-    output [31:0] zz_pc_o,	
-    output [3:0] zz_wr_en_o,  
+        output [7:0]lcd_data,
+        output lcd_rs,
+        output 	lcd_rw ,
+        output 	lcd_en	,
+        output led1,
+        output led2,
 
-    input ser_rxd,
-    output ser_txd
+        input [31:0] zz_din,
+        input [31:0] zz_ins_i,
+        output [31:0] zz_addr_o,
+        output [31:0] zz_dout,
+        output [31:0] zz_pc_o,
+        output [3:0] zz_wr_en_o,
+
+        input ser_rxd,
+        output ser_txd
 
     ) ;
 
@@ -51,7 +51,7 @@ module mips_sys (
     wire [31:0] data2cop;
     wire [31:0]cop_data;
     wire clk_sys=clk;
-    wire [31:0]irq_addr; 
+    wire [31:0]irq_addr;
     wire w_irq;
 
     mips_core i_mips_core

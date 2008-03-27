@@ -1159,37 +1159,37 @@ endmodule
 
 module pipelinedregs (
 
-    input pause,
-    input clk,	  
-    input id2ra_ctl_clr,	 
-    input id2ra_ctl_cls,	 
-    input ra2ex_ctl_clr,	  
-    input [4:0] alu_func_i,	   
-    input [0:0] alu_we_i,	   
-    input [2:0] cmp_ctl_i,	  
-    input [3:0] dmem_ctl_i,	   
-    input [2:0] ext_ctl_i,	  
-    input [1:0] muxa_ctl_i,	  
-    input [1:0] muxb_ctl_i,	  
-    input [2:0] pc_gen_ctl_i,	
-    input [1:0] rd_sel_i,		
-    input [0:0] wb_mux_ctl_i,	
-    input [0:0] wb_we_i,		
-    output [4:0] alu_func_o,   
-    output [0:0] alu_we_o,	   
-    output [2:0] cmp_ctl_o,	   
-    output [3:0] dmem_ctl_o,  
-    output [3:0] dmem_ctl_ur_o,	
-    output [2:0] ext_ctl,		 
-    output [1:0] muxa_ctl_o,	  
-    output [1:0] muxb_ctl_o,	 
-    output [2:0] pc_gen_ctl_o,	 
-    output [1:0] rd_sel_o,		
-    output [0:0] wb_mux_ctl_o,	 
-    output [0:0] wb_we_o		 
-	
-		) ;
- 
+        input pause,
+        input clk,
+        input id2ra_ctl_clr,
+        input id2ra_ctl_cls,
+        input ra2ex_ctl_clr,
+        input [4:0] alu_func_i,
+        input [0:0] alu_we_i,
+        input [2:0] cmp_ctl_i,
+        input [3:0] dmem_ctl_i,
+        input [2:0] ext_ctl_i,
+        input [1:0] muxa_ctl_i,
+        input [1:0] muxb_ctl_i,
+        input [2:0] pc_gen_ctl_i,
+        input [1:0] rd_sel_i,
+        input [0:0] wb_mux_ctl_i,
+        input [0:0] wb_we_i,
+        output [4:0] alu_func_o,
+        output [0:0] alu_we_o,
+        output [2:0] cmp_ctl_o,
+        output [3:0] dmem_ctl_o,
+        output [3:0] dmem_ctl_ur_o,
+        output [2:0] ext_ctl,
+        output [1:0] muxa_ctl_o,
+        output [1:0] muxb_ctl_o,
+        output [2:0] pc_gen_ctl_o,
+        output [1:0] rd_sel_o,
+        output [0:0] wb_mux_ctl_o,
+        output [0:0] wb_we_o
+
+    ) ;
+
     wire NET7643;
     wire [0:0] BUS4987;
     wire [1:0] BUS5008;
@@ -1469,30 +1469,30 @@ module pipelinedregs (
 
 endmodule
 
-module decode_pipe				
-	
+module decode_pipe
+
     (
-    input pause,
-    input clk,		   
-    input id2ra_ctl_clr,   
-    input id2ra_ctl_cls,	
-    input ra2ex_ctl_clr,	 
-    input [31:0] ins_i,		 
-    output [4:0] alu_func_o,  
-    output [0:0] alu_we_o,	  
-    output [2:0] cmp_ctl_o,	  
-    output [3:0] dmem_ctl_o,   
-    output [3:0] dmem_ctl_ur_o,	 
-    output [2:0] ext_ctl_o,		
-    output [2:0] fsm_dly,		
-    output [1:0] muxa_ctl_o,	
-    output [1:0] muxb_ctl_o,	
-    output [2:0] pc_gen_ctl_o, 
-    output [1:0] rd_sel_o,		
-    output [0:0] wb_mux_ctl_o,	
-    output [0:0] wb_we_o	     
-) ;
- 
+        input pause,
+        input clk,
+        input id2ra_ctl_clr,
+        input id2ra_ctl_cls,
+        input ra2ex_ctl_clr,
+        input [31:0] ins_i,
+        output [4:0] alu_func_o,
+        output [0:0] alu_we_o,
+        output [2:0] cmp_ctl_o,
+        output [3:0] dmem_ctl_o,
+        output [3:0] dmem_ctl_ur_o,
+        output [2:0] ext_ctl_o,
+        output [2:0] fsm_dly,
+        output [1:0] muxa_ctl_o,
+        output [1:0] muxb_ctl_o,
+        output [2:0] pc_gen_ctl_o,
+        output [1:0] rd_sel_o,
+        output [0:0] wb_mux_ctl_o,
+        output [0:0] wb_we_o
+    ) ;
+
     wire [4:0] BUS2040;
     wire [0:0] BUS2048;
     wire [2:0] BUS2056;

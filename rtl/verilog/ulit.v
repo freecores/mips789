@@ -34,9 +34,9 @@ endmodule
 
 module add32(
         input [31:0]d_i,
-        output [31:0]d_o
+        output reg [31:0]d_o
     );
-    assign d_o = d_i + 4;
+    always@(*) d_o = `__TP d_i + 4;
 endmodule
 
 
@@ -57,20 +57,24 @@ module wb_mux(
         input [31:0]alu_i,
         input [31:0]dmem_i,
         input sel,
-        output [31:0]wb_o
+        output reg [31:0]wb_o
     );
-
-    assign wb_o = (sel==`WB_MEM)?dmem_i:alu_i;
+    /*
+        assign wb_o = (sel==`WB_MEM)?dmem_i:alu_i;
+    */
+    always@(*)
+        if (sel==`WB_MEM) wb_o = `__TP dmem_i;
+        else wb_o = `__TP  alu_i ;
 
 endmodule
 
 module or32(
         input [31:0]a,
         input [31:0]b,
-        output [31:0]c
+        output reg[31:0]c
     );
 
-    assign c = a|b ;
+    always@(*) c = `__TP  a|b ;
 
 endmodule
 
@@ -83,11 +87,11 @@ module rd_sel(
 
     always @(*)
     case (ctl)
-        `RD_RD:rd_o=rd_i;
-        `RD_RT:rd_o=rt_i;
-        `RD_R31:rd_o='d31;
+        `RD_RD:rd_o= `__TP rd_i;
+        `RD_RT:rd_o= `__TP rt_i;
+        `RD_R31:rd_o= `__TP 'd31;
         default :
-            rd_o=0;
+            rd_o= `__TP 0;
     endcase
 endmodule
 /*
@@ -214,36 +218,3 @@ module r32_reg_cls(input[`R32_LEN-1:0] r32_i,output reg[`R32_LEN-1:0] r32_o,inpu
 */		
 
 
-
-
-
-
-
-module f_d_save( // Added by Liwei 2008,3,17
-        input clk,
-        input pause ,
-        input [31:0] din,
-        output reg [31:0] dout
-    );
-    reg [31:0] save_data;  //temp register
-    always @(posedge clk) //latch data at posedge of clk
-        if (pause == 0 )save_data  <= din;
-
-    always@(*)	 	      //A MUX to select data for output port
-        if (pause ==0 )	dout = din;
-        else dout =save_data;
-endmodule
-
-module b_d_save( // Added by Liwei 2008,3,17
-        input clk,
-        input pause ,
-        input [31:0] din,
-        output reg [31:0] dout);
-    reg lpause;
-    always @(posedge clk)lpause = pause ;
-    reg [31:0] save_data;  //temp register
-    always @(posedge clk) //latch data at posedge of clk
-        if (lpause == 0)save_data  <= din;
-    always@(*)	 	      //A MUX to select data for output port
-        if (lpause ==0 )	dout = din;	else dout =save_data;
-endmodule

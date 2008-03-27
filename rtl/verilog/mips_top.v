@@ -61,13 +61,11 @@ module mips_top (
 `else 	 
     assign CLK = clk;//clock for simultation
     sim_mem_array sim_array//memory for simultion
-`endif	   
-
-              //assign pc_s=pc;
+`endif	   		   
 
               (
                   .clk(CLK),
-                  .pc_i(pc),
+                  .pc_i(pc_s),
                   .ins_o(ins2core_s),
                   .wren(wr_en),
                   .din(data2mem),
@@ -76,12 +74,31 @@ module mips_top (
               );
 
 
-    b_d_save  u2u(
+    `if  WB_INS_LATCH_ADDR
+
+         f_d_save  ins_addr_keep(
+             .clk(CLK),
+             .pause(pause) ,
+             .din(pc),
+             .dout(pc_s)
+         );
+
+    //  assign pc_s=pc;
+    assign ins2core =ins2core_s;
+
+			`else 
+
+    b_d_save  ins_data_keep(
                   .clk(CLK),
                   .pause(pause) ,
                   .din(ins2core_s),
                   .dout(ins2core)
               );
+
+    assign pc_s=pc;
+    //assign ins2core =ins2core_s;
+
+				 `endif 
 
     mips_sys isys
              (

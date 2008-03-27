@@ -29,11 +29,21 @@ module forward_node (
         input alu_we,
         input [4:0]mem_wr_rn,
         input mem_we,
-        output  wire[2:0]mux_fw
-    );
-    assign mux_fw = ((alu_we)&&(alu_wr_rn==rn)&&(alu_wr_rn!=0))?`FW_ALU:
-           ((mem_we)&&(mem_wr_rn==rn)&&(mem_wr_rn!=0))?`FW_MEM:
-           `FW_NOP;
+        output reg [2:0]mux_fw
+    )  ;
+    /*
+       assign mux_fw = ((alu_we)&&(alu_wr_rn==rn)&&(alu_wr_rn!=0))?`FW_ALU:
+              ((mem_we)&&(mem_wr_rn==rn)&&(mem_wr_rn!=0))?`FW_MEM:
+              `FW_NOP;
+             
+          		  */
+    always @(*)
+        if ((alu_we)&&(alu_wr_rn==rn)&&(alu_wr_rn!=0))
+            mux_fw= `__TP  `FW_ALU;
+        else if ((mem_we)&&(mem_wr_rn==rn)&&(mem_wr_rn!=0))
+            mux_fw=`__TP `FW_MEM;
+        else   mux_fw=  `__TP     `FW_NOP;
+
 endmodule
 
 module fwd_mux(
@@ -66,7 +76,7 @@ module forward  (
         output [2:0] cmp_rs_fw,
         output [2:0] cmp_rt_fw,
         output [2:0] dmem_fw
-    ) ;			 
+    ) ;
 
     wire [2:0] BUS1345;
     wire [4:0] BUS82;
@@ -122,9 +132,9 @@ module forward  (
 
     r5_reg_clr_cls fw_reg_rns
                    (
-				   .clk(clk),
-				   .cls(pause),
-				   .clr(0),
+                       .clk(clk),
+                       .cls(pause),
+                       .clr(0),
                        .r5_i(rns_i),
                        .r5_o(BUS82)
                    );

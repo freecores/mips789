@@ -126,7 +126,6 @@ module mem_module  (
                      .dout(dout_s)
                  );
 
-    //
     b_d_save  uu3(
                   .clk(clk),
                   .pause(pause) ,
@@ -137,9 +136,6 @@ module mem_module  (
     assign Zz_addr= dmem_addr_s;
 
 endmodule
-
-
-
 
 
 module infile_dmem_ctl_reg(
@@ -175,45 +171,45 @@ module mem_addr_ctl(
         `DMEM_SB:
         begin
             case(addr_i[1:0])
-                0:wr_en = 4'b1000;
-                1:wr_en = 4'b0100;
-                2:wr_en = 4'b0010;
-                3:wr_en = 4'b0001;
+                0:wr_en =  `__TP  4'b1000;
+                1:wr_en =  `__TP  4'b0100;
+                2:wr_en =  `__TP  4'b0010;
+                3:wr_en =  `__TP  4'b0001;
             endcase
         end
         `DMEM_SH  :
         begin
             case(addr_i[1:0])
-                'd0:wr_en=4'b1100;
-                'd2:wr_en=4'b0011;
-                default :wr_en = 4'b0000;
+                'd0:wr_en= `__TP  4'b1100;
+                'd2:wr_en= `__TP  4'b0011;
+                default :wr_en =  `__TP  4'b0000;
             endcase
         end
 
         `DMEM_SWL :
         begin
             case(addr_i[1:0])
-                0:wr_en = 4'b0001;
-                1:wr_en = 4'b0011;
-                2:wr_en = 4'b0111;
-                3:wr_en = 4'b1111;
+                0:wr_en =  `__TP  4'b0001;
+                1:wr_en =  `__TP  4'b0011;
+                2:wr_en = `__TP   4'b0111;
+                3:wr_en =  `__TP  4'b1111;
             endcase
         end
 
         `DMEM_SWR :
         begin
             case(addr_i[1:0])
-                0:wr_en = 4'b1000;
-                1:wr_en = 4'b1100;
-                2:wr_en = 4'b1110;
-                3:wr_en = 4'b1111;
+                0:wr_en =  `__TP  4'b1000;
+                1:wr_en =  `__TP  4'b1100;
+                2:wr_en =  `__TP  4'b1110;
+                3:wr_en =  `__TP  4'b1111;
             endcase
         end
         `DMEM_SW :
         begin
-            wr_en=4'b1111;
+            wr_en= `__TP  4'b1111;
         end
-        default wr_en=4'b0000;
+        default wr_en= `__TP  4'b0000;
     endcase
 
 endmodule
@@ -233,55 +229,55 @@ module mem_dout_ctl(
         `DMEM_LBS :
         case (byte_addr)
 
-            'd0:dout={{24{din[31]}},din[31:24]};
-            'd1:dout={{24{din[23]}},din[23:16]};
-            'd2:dout={{24{din[15]}},din[15:8]};
-            'd3:dout={{24{din[7]}},din[7:0] };
+            'd0:dout= `__TP  {{24{din[31]}},din[31:24]};
+            'd1:dout= `__TP  {{24{din[23]}},din[23:16]};
+            'd2:dout= `__TP  {{24{din[15]}},din[15:8]};
+            'd3:dout= `__TP  {{24{din[7]}},din[7:0] };
         endcase
         `DMEM_LBU :
         case (byte_addr)
-            'd3:dout={24'b0,din[7:0]};
-            'd2:dout={24'b0,din[15:8]};
-            'd1:dout={24'b0,din[23:16]};
-            'd0:dout={24'b0,din[31:24]};
+            'd3:dout= `__TP  {24'b0,din[7:0]};
+            'd2:dout= `__TP  {24'b0,din[15:8]};
+            'd1:dout= `__TP  {24'b0,din[23:16]};
+            'd0:dout= `__TP  {24'b0,din[31:24]};
         endcase
         `DMEM_LHU :
         case (byte_addr)
-            'd0:dout={16'b0,din[31:24],din[23:16]};
-            'd2:dout={16'b0,din[15:8],din[7 :0]};
-            default:dout=32'bX;
+            'd0:dout= `__TP  {16'b0,din[31:24],din[23:16]};
+            'd2:dout= `__TP  {16'b0,din[15:8],din[7 :0]};
+            default:dout= `__TP  32'bX;
         endcase
         `DMEM_LHS :
         case (byte_addr)
-            'd0 :dout={{16{din[31]}},din[31:24],din[23:16]};
-            'd2 :dout={{16{din[15]}},din[15:8],din[7 :0]};
-            default:dout=32'bX;
+            'd0 :dout= `__TP  {{16{din[31]}},din[31:24],din[23:16]};
+            'd2 :dout= `__TP  {{16{din[15]}},din[15:8],din[7 :0]};
+            default:dout= `__TP  32'bX;
         endcase
 
         `DMEM_LWL  :begin
             case (byte_addr)
 
-                'd0:dout={din[31:24],rt_r[23:0]};
-                'd1:dout={din[31:16],rt_r[15:0]};
-                'd2:dout={din[31:8],rt_r[7:0]};
+                'd0:dout= `__TP  {din[31:24],rt_r[23:0]};
+                'd1:dout= `__TP  {din[31:16],rt_r[15:0]};
+                'd2:dout= `__TP  {din[31:8],rt_r[7:0]};
                 default :
-                    dout=din;
+                    dout= `__TP  din;
             endcase
         end
         `DMEM_LWR  : begin
             case (byte_addr)
-                'd1:dout={rt_r[31:24],din[23:0]};
-                'd2:dout={rt_r[31:16],din[15:0]};
-                'd3:dout={rt_r[31:8],din[7:0]};
+                'd1:dout= `__TP  {rt_r[31:24],din[23:0]};
+                'd2:dout= `__TP  {rt_r[31:16],din[15:0]};
+                'd3:dout= `__TP  {rt_r[31:8],din[7:0]};
                 default :
-                    dout=din;
+                    dout= `__TP  din;
             endcase
         end
 
         `DMEM_LW  :
-            dout=din;
+            dout= `__TP  din;
         default :
-            dout=32'b0;
+            dout= `__TP  32'b0;
     endcase
 
 endmodule
@@ -296,13 +292,13 @@ module mem_din_ctl(
 
     case (ctl)
         `DMEM_SB   :
-            dout={din[7:0],din[7:0],din[7:0],din[7:0]};
+            dout= `__TP  {din[7:0],din[7:0],din[7:0],din[7:0]};
         `DMEM_SH   :
-            dout = {din[15:0],din[15:0]};
+            dout =  `__TP  {din[15:0],din[15:0]};
         `DMEM_SWL ,
         `DMEM_SWR ,
         `DMEM_SW  :
-            dout =din;
+            dout =  `__TP  din;
         default dout=32'bX;
     endcase
 

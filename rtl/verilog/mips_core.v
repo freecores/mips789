@@ -144,7 +144,7 @@ module mips_core (
                    .fw_dmem(BUS15471),
                    .muxa_ctl_i(BUS5832),
                    .muxa_fw_ctl(BUS1158),
-                   .muxb_ctl_i(BUS5840),	
+                   .muxb_ctl_i(BUS5840),
                    .pc_i(BUS27031),
                    .rs_i(BUS7101),
                    .rst(rst),
@@ -210,8 +210,8 @@ module mips_core (
 
 
     decode_pipe decoder_pipe
-				(	  
-					.pause(pause),
+                (
+                    .pause(pause),
                     .alu_func_o(BUS6275),
                     .alu_we_o(NET767),
                     .clk(clk),
@@ -261,16 +261,35 @@ module mips_core (
             );
 
 
-
+    /*
     r32_reg_clr_cls pc
-                    (
-                        .clr(0),
-                        .cls(pause),
-                        .clk(clk),
-                        .r32_i(zz_pc_o),
-                        .r32_o(BUS27031)
-                    );
+                 (
+                     .clr(0),
+                     .cls(pause),
+                     .clk(clk),
+                     .r32_i(zz_pc_o),
+                     .r32_o(BUS27031)
+                 );	   
+    */
 
+
+
+    pc new_pc (
+           .clr(0),
+           .pause(pause),
+           .clk(clk),
+           .pc_i(zz_pc_o),
+           .pc_o(BUS27031)
+       );
+
+    /*				module pc (
+    input clk,
+    input pause,  
+    inout clr,
+    input [31:0] pc_i,
+    input [31:0] pc_o
+    );
+    	*/			
 
 
     r5_reg_clr_cls rnd_pass0

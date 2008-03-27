@@ -94,6 +94,7 @@ module rf_stage (
 
     pc_gen i_pc_gen
            (
+               .pause(0)			   ,
                .check(NET904),
                .ctl(pc_gen_ctl),
                .imm(ext_o),
@@ -172,7 +173,7 @@ module rf_stage (
                 .rdaddress_a(BUS3237),
                 .rdaddress_b(BUS3236),
                 .wraddress(wb_addr_i),
-                .wren(wb_we_i) 
+                .wren(wb_we_i)
               );
 
     fwd_mux rf_fwd_rt

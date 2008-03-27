@@ -75,7 +75,8 @@ module mips_dvc (
 
     always @ (posedge clk)
     begin
-        if ( wr_dis_byte )	$display("HEX=>%x<  CHAR=>%c<",din[7:0],din[7:0]);
+        if ( wr_dis_byte )
+            $display("HEX=>%x<  CHAR=>%c<",din[7:0],din[7:0]);
     end
 
     wire wr_uartdata   =	  addr==`UART_DATA_ADDR 	&& 		sv_byte;
