@@ -74,7 +74,7 @@ module mips_top (
               );
 
 
-    `if  WB_INS_LATCH_ADDR
+    `ifdef  WB_INS_LATCH_ADDR
 
          f_d_save  ins_addr_keep(
              .clk(CLK),

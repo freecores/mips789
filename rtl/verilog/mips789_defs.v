@@ -199,9 +199,9 @@
 //#1
 
 
-`define WB_INS_LATCH_ADDR 1
+`define WB_INS_LATCH_ADDR 
 
-`define WB_INS_LATCH_DATA   ~`WB_INS_LATCH_ADDR
+
         
         //
 `define   ALTERA
