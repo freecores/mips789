@@ -35,7 +35,49 @@ module b_d_save( // Added by Liwei 2008,3,17
 endmodule 
 */ 
 
+
 module b_d_save( // Added by Liwei 2008,3,17
+        input clk,
+        input pause ,
+        input [31:0] din,
+        output reg [31:0] dout);
+
+    wire [31:0] w32_1;
+    wire w1;
+   wire [31:0] w32_2;
+    r32_reg_clr_cls r32(
+                        .r32_i(din),
+                        .r32_o(w32_1),
+                        .clk(clk),
+                      // .cls(w1),
+						.cls(pause),
+                        .clr(0)
+                    );		  
+					    r32_reg_clr_cls r32_1(
+                        .r32_i(w32_1),
+                        .r32_o(w32_2),
+                       .clk(clk),
+                      // .cls(w1),
+						.cls(pause),
+                        .clr(0)
+                    );
+    r1_reg_clr_cls r1(
+                       .r1_i(pause),
+                       .r1_o(w1),
+                       .clk(clk),
+                       .cls(0),
+                       .clr(0)
+                   );
+    always @(*)
+        if (pause==0)
+            dout=din;
+        else
+            dout=w32_2;
+
+endmodule					
+
+
+module b_d_save1( // Added by Liwei 2008,3,17
         input clk,
         input pause ,
         input [31:0] din,
